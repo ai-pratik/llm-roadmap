@@ -106,11 +106,69 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
 .guide-footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);margin-top:3rem;color:var(--tx3);font-size:.82rem}
 .guide-footer a{color:var(--acc);text-decoration:none}
 
+/* ═══ INTERACTIVE VISUALIZATIONS ═══ */
+.viz{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;overflow:hidden}
+.viz-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.viz-title .live{width:8px;height:8px;border-radius:50%;background:#34d399;animation:pulse-dot 1.5s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Attention Heatmap */
+.attn-grid{display:grid;gap:3px;margin:1rem auto;width:fit-content}
+.attn-cell{width:52px;height:52px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+font-size:.65rem;font-family:var(--mono);color:#fff;transition:all .4s ease;cursor:pointer;position:relative}
+.attn-cell:hover{transform:scale(1.15);z-index:2}
+.attn-label{font-size:.72rem;font-family:var(--mono);color:var(--tx2);display:flex;align-items:center;justify-content:center}
+.attn-cell.highlight{box-shadow:0 0 12px rgba(59,130,246,.5);border:1px solid var(--acc)}
+
+/* Token Flow */
+.flow-container{display:flex;align-items:center;gap:4px;padding:1rem 0;overflow-x:auto;justify-content:center;flex-wrap:wrap}
+.flow-token{padding:.4rem .8rem;border-radius:8px;font-size:.8rem;font-family:var(--mono);border:1px solid var(--border);
+transition:all .5s ease;opacity:.5;transform:translateY(10px)}
+.flow-token.active{opacity:1;transform:translateY(0);border-color:var(--acc);box-shadow:0 4px 15px rgba(59,130,246,.2)}
+.flow-arrow{color:var(--tx3);font-size:1.2rem;opacity:.3;transition:opacity .4s}
+.flow-arrow.active{opacity:1;color:var(--acc)}
+.flow-stage{text-align:center;padding:.5rem 1rem;border-radius:8px;font-size:.72rem;font-family:var(--mono);
+background:var(--card);border:1px solid var(--border);transition:all .5s;min-width:90px}
+.flow-stage.active{border-color:var(--acc);background:rgba(59,130,246,.1);box-shadow:0 0 20px rgba(59,130,246,.15)}
+.flow-stage .stage-icon{font-size:1.5rem;display:block;margin-bottom:.3rem}
+
+/* Softmax Viz */
+.softmax-bars{display:flex;align-items:flex-end;gap:8px;height:180px;padding-top:1rem;justify-content:center}
+.softmax-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.softmax-bar{width:50px;border-radius:6px 6px 0 0;transition:height .6s ease,background .6s ease;min-height:4px}
+.softmax-val{font-size:.7rem;font-family:var(--mono);color:var(--tx2);transition:color .3s}
+.softmax-label{font-size:.72rem;color:var(--tx3)}
+.slider-row{display:flex;align-items:center;gap:1rem;margin-top:1rem;justify-content:center;flex-wrap:wrap}
+.slider-row label{font-size:.82rem;color:var(--tx2)}
+.slider-row input[type=range]{width:200px;accent-color:var(--acc)}
+.slider-row .val{font-family:var(--mono);color:var(--cyan);font-size:.85rem;min-width:40px}
+
+/* PE Waves */
+.pe-canvas{width:100%;height:200px;border-radius:8px;display:block}
+
+/* Embedding Space */
+.embed-space{position:relative;width:100%;height:320px;border-radius:8px;background:radial-gradient(circle at 50% 50%,rgba(59,130,246,.05),transparent 70%);overflow:hidden}
+.embed-word{position:absolute;padding:.3rem .7rem;border-radius:20px;font-size:.78rem;font-family:var(--mono);
+cursor:default;transition:all 1.5s ease;opacity:0;transform:scale(0)}
+.embed-word.visible{opacity:1;transform:scale(1)}
+.embed-line{position:absolute;height:1px;transform-origin:left center;opacity:.15;transition:opacity .5s}
+.embed-cluster-label{position:absolute;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);opacity:0;transition:opacity 1s}
+.embed-cluster-label.visible{opacity:.5}
+
+/* Btns */
+.viz-btn{padding:.4rem 1rem;border-radius:6px;border:1px solid var(--border);background:var(--card);
+color:var(--tx);font-size:.8rem;cursor:pointer;transition:.2s;font-family:var(--mono)}
+.viz-btn:hover{border-color:var(--acc);background:rgba(59,130,246,.1)}
+.viz-controls{display:flex;gap:.5rem;margin-top:1rem;justify-content:center;flex-wrap:wrap}
+
 /* RESPONSIVE */
 @media(max-width:640px){
   .hero{padding:6rem 1rem 3rem}.hero h1{font-size:1.8rem}
   .container{padding:0 1rem 3rem}.concept-grid{grid-template-columns:1fr}
   .diagram{font-size:.7rem;padding:1rem}
+  .attn-cell{width:40px;height:40px;font-size:.55rem}
+  .softmax-bars{height:140px}
+  .embed-space{height:250px}
 }
 </style>
 </head>
@@ -263,6 +321,19 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
     </div>
   </div>
 
+  <!-- ▸▸▸ INTERACTIVE: Softmax Temperature Visualizer ▸▸▸ -->
+  <h4>⚡ Interactive: Softmax Temperature</h4>
+  <div class="viz">
+    <div class="viz-title"><span class="live"></span> LIVE — Adjust temperature to see how softmax changes</div>
+    <div class="softmax-bars" id="softmax-viz"></div>
+    <div class="slider-row">
+      <label>Temperature:</label>
+      <input type="range" id="temp-slider" min="0.1" max="5" step="0.1" value="1">
+      <span class="val" id="temp-val">1.0</span>
+      <span style="font-size:.75rem;color:var(--tx3)">Low = spiky · High = uniform</span>
+    </div>
+  </div>
+
   <!-- LAYER NORM -->
   <h3>1.5 — Layer Normalization: Keeping Numbers Stable</h3>
 
@@ -350,6 +421,16 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
   <div class="analogy">
     <div class="label">🎯 Analogy</div>
     <p>Imagine a city map where every word has a location. "King" is near "Queen" and "Ruler." "Dog" is near "Cat" and "Pet." "King" is far from "Toaster." Embeddings are these coordinates — words with similar meanings have similar vectors.</p>
+  </div>
+
+  <!-- ▸▸▸ INTERACTIVE: Embedding Space ▸▸▸ -->
+  <h4>⚡ Interactive: Embedding Space (2D Projection)</h4>
+  <div class="viz">
+    <div class="viz-title"><span class="live"></span> ANIMATED — Words clustering by meaning in vector space</div>
+    <div class="embed-space" id="embed-space"></div>
+    <div class="viz-controls">
+      <button class="viz-btn" onclick="animateEmbeddings()">▶ Replay Animation</button>
+    </div>
   </div>
 
   <div class="math-block">
@@ -528,6 +609,17 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
   Step 5: Output for "sat" = 0.04·<span class="c-v">V_the</span> + <span class="c-green">0.42</span>·<span class="c-v">V_cat</span> + 0.10·<span class="c-v">V_sat</span> + 0.06·<span class="c-v">V_on</span> + 0.03·<span class="c-v">V_the</span> + <span class="c-green">0.35</span>·<span class="c-v">V_mat</span>
 <div class="caption">Result: "sat" now carries information mostly about "cat" (42%) and "mat" (35%) — it learned WHO sat and WHERE!</div></div>
 
+  <!-- ▸▸▸ INTERACTIVE: Attention Heatmap ▸▸▸ -->
+  <h4>⚡ Interactive: Attention Heatmap</h4>
+  <div class="viz">
+    <div class="viz-title"><span class="live"></span> ANIMATED — Watch attention scores compute cell by cell</div>
+    <div id="attn-heatmap" style="overflow-x:auto"></div>
+    <div class="viz-controls">
+      <button class="viz-btn" onclick="animateHeatmap()">▶ Replay</button>
+      <button class="viz-btn" onclick="showAllHeatmap()">◼ Show All</button>
+    </div>
+  </div>
+
   <div class="key">
     <div class="label">💡 This is the magic</div>
     <p>Without being told grammar, without parsing, without rules — the model discovers that "sat" needs to know about "cat" (the subject) and "mat" (the location). It learned syntax from data alone.</p>
@@ -596,6 +688,16 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
     <div class="label">🧠 Why Sinusoids?</div>
     <p>For any fixed offset k, PE(pos+k) can be expressed as a linear function of PE(pos). This means the model can easily learn "3 words ago" or "5 words ahead" — relative positions are encoded naturally. Think of it like a clock: the hour hand and minute hand together tell you both absolute time and elapsed time.</p>
   </div>
+
+  <!-- ▸▸▸ INTERACTIVE: Positional Encoding Waves ▸▸▸ -->
+  <h4>⚡ Interactive: Positional Encoding Waves</h4>
+  <div class="viz">
+    <div class="viz-title"><span class="live"></span> LIVE — Each row = one dimension, each column = one position. Colors = sin/cos values</div>
+    <canvas id="pe-canvas" class="pe-canvas"></canvas>
+    <div class="viz-controls">
+      <button class="viz-btn" onclick="peAnimate=!peAnimate">⏯ Toggle Animation</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════ PART 7: FULL ARCHITECTURE ═══════════ -->
@@ -638,6 +740,16 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
        ▲                                    ▲
   "The cat sat"                     "&lt;start&gt; Le chat"
 <div class="caption">The complete Transformer — Encoder reads the full input, Decoder generates output one token at a time</div></div>
+
+  <!-- ▸▸▸ INTERACTIVE: Token Flow Animation ▸▸▸ -->
+  <h4>⚡ Interactive: Token Flow Through the Transformer</h4>
+  <div class="viz">
+    <div class="viz-title"><span class="live"></span> ANIMATED — Watch a token flow through each stage</div>
+    <div class="flow-container" id="token-flow"></div>
+    <div class="viz-controls">
+      <button class="viz-btn" onclick="animateFlow()">▶ Replay Flow</button>
+    </div>
+  </div>
 
   <h3>7.1 — Encoder Block (×6 layers)</h3>
   <p>Each encoder layer has two sub-layers:</p>
@@ -744,6 +856,198 @@ border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2r
 </div>
 
 </div><!-- /container -->
+
+<script>
+// ═══════════ 1. SOFTMAX TEMPERATURE VISUALIZER ═══════════
+const rawScores=[3.0,1.0,0.5,5.0];
+const labels=['Word A','Word B','Word C','Word D'];
+const barColors=['#3b82f6','#818cf8','#f472b6','#34d399'];
+function softmax(scores,temp){
+  const scaled=scores.map(s=>Math.exp(s/temp));
+  const sum=scaled.reduce((a,b)=>a+b,0);
+  return scaled.map(s=>s/sum);
+}
+function renderSoftmax(){
+  const t=parseFloat(document.getElementById('temp-slider').value);
+  document.getElementById('temp-val').textContent=t.toFixed(1);
+  const probs=softmax(rawScores,t);
+  const box=document.getElementById('softmax-viz');
+  box.innerHTML=probs.map((p,i)=>`<div class="softmax-bar-wrap">
+    <div class="softmax-val" style="color:${barColors[i]}">${(p*100).toFixed(1)}%</div>
+    <div class="softmax-bar" style="height:${p*160}px;background:${barColors[i]}"></div>
+    <div class="softmax-label">${labels[i]}</div>
+    <div style="font-size:.65rem;color:var(--tx3);font-family:var(--mono)">${rawScores[i]}</div>
+  </div>`).join('');
+}
+document.getElementById('temp-slider').addEventListener('input',renderSoftmax);
+renderSoftmax();
+
+// ═══════════ 2. ATTENTION HEATMAP ═══════════
+const words=['The','cat','sat','on','the','mat'];
+const attnScores=[
+ [.18,.08,.04,.05,.15,.02],
+ [.06,.22,.35,.04,.06,.12],
+ [.04,.42,.10,.06,.03,.35],
+ [.05,.05,.15,.10,.08,.45],
+ [.20,.06,.03,.04,.22,.08],
+ [.03,.10,.38,.08,.04,.32]
+];
+function heatColor(v){
+  const r=Math.round(59+v*196),g=Math.round(130-v*90),b=Math.round(246-v*200);
+  return `rgba(${r},${g},${b},${0.15+v*0.85})`;
+}
+function buildHeatmap(showAll){
+  const box=document.getElementById('attn-heatmap');
+  const cols=words.length+1;
+  let html=`<div class="attn-grid" style="grid-template-columns:repeat(${cols},1fr)">`;
+  html+=`<div class="attn-label"></div>`;
+  words.forEach(w=>{html+=`<div class="attn-label" style="color:var(--green)">K:${w}</div>`});
+  words.forEach((w,i)=>{
+    html+=`<div class="attn-label" style="color:var(--pink)">Q:${w}</div>`;
+    words.forEach((_,j)=>{
+      const v=attnScores[i][j],vis=showAll?1:0;
+      html+=`<div class="attn-cell" id="ac-${i}-${j}" style="background:${showAll?heatColor(v):'var(--card)'};opacity:${vis?1:0.3}" data-v="${v}">${showAll?(v*100).toFixed(0)+'%':''}</div>`;
+    });
+  });
+  html+='</div>';
+  box.innerHTML=html;
+}
+function animateHeatmap(){
+  buildHeatmap(false);
+  let idx=0;
+  const total=words.length*words.length;
+  const iv=setInterval(()=>{
+    if(idx>=total){clearInterval(iv);return;}
+    const i=Math.floor(idx/words.length),j=idx%words.length;
+    const cell=document.getElementById(`ac-${i}-${j}`);
+    const v=parseFloat(cell.dataset.v);
+    cell.style.background=heatColor(v);cell.style.opacity='1';
+    cell.textContent=(v*100).toFixed(0)+'%';
+    if(v>.25)cell.classList.add('highlight');
+    idx++;
+  },80);
+}
+function showAllHeatmap(){buildHeatmap(true);}
+buildHeatmap(true);
+
+// ═══════════ 3. EMBEDDING SPACE ═══════════
+const embedWords=[
+  {w:'King',x:.35,y:.25,c:'#fbbf24',cluster:'Royalty'},
+  {w:'Queen',x:.40,y:.20,c:'#fbbf24',cluster:'Royalty'},
+  {w:'Prince',x:.32,y:.30,c:'#fbbf24',cluster:'Royalty'},
+  {w:'Throne',x:.38,y:.32,c:'#f59e0b',cluster:'Royalty'},
+  {w:'Dog',x:.70,y:.65,c:'#34d399',cluster:'Animals'},
+  {w:'Cat',x:.75,y:.60,c:'#34d399',cluster:'Animals'},
+  {w:'Puppy',x:.68,y:.70,c:'#34d399',cluster:'Animals'},
+  {w:'Fish',x:.78,y:.72,c:'#34d399',cluster:'Animals'},
+  {w:'Car',x:.25,y:.75,c:'#f472b6',cluster:'Vehicles'},
+  {w:'Truck',x:.20,y:.80,c:'#f472b6',cluster:'Vehicles'},
+  {w:'Bike',x:.30,y:.82,c:'#f472b6',cluster:'Vehicles'},
+  {w:'Happy',x:.72,y:.22,c:'#818cf8',cluster:'Emotions'},
+  {w:'Joy',x:.76,y:.18,c:'#818cf8',cluster:'Emotions'},
+  {w:'Sad',x:.65,y:.35,c:'#818cf8',cluster:'Emotions'},
+];
+function animateEmbeddings(){
+  const space=document.getElementById('embed-space');
+  space.innerHTML='';
+  const cLabels={};
+  embedWords.forEach(ew=>{
+    if(!cLabels[ew.cluster]){
+      const cx=embedWords.filter(e=>e.cluster===ew.cluster).reduce((s,e)=>s+e.x,0)/embedWords.filter(e=>e.cluster===ew.cluster).length;
+      const cy=embedWords.filter(e=>e.cluster===ew.cluster).reduce((s,e)=>s+e.y,0)/embedWords.filter(e=>e.cluster===ew.cluster).length;
+      cLabels[ew.cluster]={x:cx,y:cy};
+    }
+  });
+  Object.entries(cLabels).forEach(([name,pos])=>{
+    const lbl=document.createElement('div');lbl.className='embed-cluster-label';
+    lbl.style.left=(pos.x*100)+'%';lbl.style.top=(pos.y*100-8)+'%';lbl.textContent=name;
+    space.appendChild(lbl);
+    setTimeout(()=>lbl.classList.add('visible'),800);
+  });
+  embedWords.forEach((ew,i)=>{
+    const dot=document.createElement('div');dot.className='embed-word';
+    dot.style.background=ew.c+'25';dot.style.color=ew.c;dot.style.border=`1px solid ${ew.c}50`;
+    dot.style.left='50%';dot.style.top='50%';dot.textContent=ew.w;
+    space.appendChild(dot);
+    setTimeout(()=>{
+      dot.classList.add('visible');
+      dot.style.left=(ew.x*90+2)+'%';dot.style.top=(ew.y*85+5)+'%';
+    },200+i*120);
+  });
+}
+animateEmbeddings();
+
+// ═══════════ 4. POSITIONAL ENCODING WAVES ═══════════
+let peAnimate=true;
+function drawPE(){
+  const canvas=document.getElementById('pe-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth*2;canvas.height=canvas.offsetHeight*2;
+  ctx.scale(2,2);
+  const W=canvas.offsetWidth,H=canvas.offsetHeight;
+  const positions=50,dims=32,cellW=W/positions,cellH=H/dims;
+  const t=peAnimate?performance.now()/3000:0;
+  for(let d=0;d<dims;d++){
+    const freq=1/Math.pow(10000,2*Math.floor(d/2)/512);
+    for(let p=0;p<positions;p++){
+      const val=d%2===0?Math.sin((p+t*10)*freq):Math.cos((p+t*10)*freq);
+      const r=val>0?Math.round(val*180+59):30,g=val>0?Math.round(130-val*60):50,b=val>0?Math.round(246-val*100):Math.round(180+val*80);
+      ctx.fillStyle=`rgb(${r},${g},${b})`;
+      ctx.fillRect(p*cellW,d*cellH,cellW-1,cellH-1);
+    }
+  }
+  requestAnimationFrame(drawPE);
+}
+drawPE();
+
+// ═══════════ 5. TOKEN FLOW ANIMATION ═══════════
+const stages=[
+  {icon:'📝',name:'Input','clr':'#818cf8'},
+  {icon:'🔢',name:'Embed','clr':'#3b82f6'},
+  {icon:'📍',name:'+PosEnc','clr':'#22d3ee'},
+  {icon:'🔍',name:'Self-Attn','clr':'#f472b6'},
+  {icon:'➕',name:'Add&Norm','clr':'#34d399'},
+  {icon:'🧠',name:'FFN','clr':'#fbbf24'},
+  {icon:'➕',name:'Add&Norm','clr':'#34d399'},
+  {icon:'🔄',name:'×6 Layers','clr':'#fb923c'},
+  {icon:'📊',name:'Linear','clr':'#818cf8'},
+  {icon:'📈',name:'Softmax','clr':'#3b82f6'},
+  {icon:'✅',name:'Output','clr':'#34d399'}
+];
+function buildFlow(){
+  const box=document.getElementById('token-flow');
+  box.innerHTML=stages.map((s,i)=>
+    `<div class="flow-stage" id="fs-${i}" style="border-color:${s.clr}30"><span class="stage-icon">${s.icon}</span>${s.name}</div>`+
+    (i<stages.length-1?`<div class="flow-arrow" id="fa-${i}">→</div>`:'')
+  ).join('');
+}
+function animateFlow(){
+  buildFlow();
+  stages.forEach((_,i)=>{
+    setTimeout(()=>{
+      const el=document.getElementById(`fs-${i}`);
+      el.classList.add('active');el.style.borderColor=stages[i].clr;
+      el.style.background=stages[i].clr+'18';
+      if(i>0){document.getElementById(`fa-${i-1}`).classList.add('active');}
+    },i*350);
+  });
+}
+buildFlow();
+setTimeout(animateFlow,500);
+
+// ═══════════ SCROLL REVEAL FOR VIZ ═══════════
+const vizObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const viz=e.target;
+      if(viz.id==='attn-heatmap'&&!viz.dataset.played){viz.dataset.played='1';animateHeatmap();}
+      if(viz.id==='embed-space'&&!viz.dataset.played){viz.dataset.played='1';animateEmbeddings();}
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('.viz').forEach(v=>vizObserver.observe(v));
+</script>
 
 </body>
 </html>
