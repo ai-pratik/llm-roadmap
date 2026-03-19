@@ -2,11 +2,14 @@
 
 > **From zero to research lab — your complete 38-week path to becoming an LLM Research Engineer at Anthropic, OpenAI, or Google DeepMind.**
 
+**Author:** [Pratik Gade](https://github.com/ai-pratik) · **License:** MIT · **Open Source** 🌍
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Last Updated](https://img.shields.io/badge/Last%20Updated-March%202025-brightgreen)]()
+[![Last Updated](https://img.shields.io/badge/Last%20Updated-March%202026-brightgreen)]()
 [![Papers](https://img.shields.io/badge/Papers-55%2B-purple)]()
-[![Weeks](https://img.shields.io/badge/Weeks-38%2B-orange)]()
-[![Hours](https://img.shields.io/badge/Hours-~820-red)]()
+[![Weeks](https://img.shields.io/badge/Weeks-44%2B-orange)]()
+[![Hours](https://img.shields.io/badge/Hours-~920-red)]()
+[![Author](https://img.shields.io/badge/Author-Pratik%20Gade-blueviolet)]()
 
 ---
 
@@ -165,7 +168,7 @@ git pull origin main
 
 ## 📋 Changelog
 
-### v3.1 — March 2025 (Current)
+### v3.1 — March 2026 (Current)
 - ✨ Animated hero with gradient + floating orbs + typing tagline
 - 🌙 Dark/light mode toggle
 - 🔍 Sidebar search functionality
@@ -212,7 +215,9 @@ Contributions are welcome! Here's how:
 
 ## 📜 License
 
-This project is open source under the [MIT License](LICENSE).
+This project is open source under the **[MIT License](LICENSE)**.
+
+**Copyright © 2026 Pratik Gade.** You are free to use, modify, and distribute this roadmap for any purpose — personal, educational, or commercial.
 
 ---
 
@@ -222,13 +227,16 @@ If this roadmap helped you, please:
 - ⭐ **Star** this repository
 - 🔄 **Share** it with fellow ML engineers
 - 📝 **Contribute** improvements back
+- 🐦 **Tag** [@pratikgade](https://github.com/ai-pratik) when you share
 
 ---
 
 <div align="center">
 
-**Built for the AI/ML community** 🧠
+**Built with ❤️ by [Pratik Gade](https://github.com/ai-pratik) for the AI/ML community** 🧠
 
 *From zero to research lab — one week at a time.*
+
+**Open Source · Free Forever · MIT License**
 
 </div>
