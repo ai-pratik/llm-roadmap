@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Attention Is All You Need — A Visual Guide | by Pratik Gade</title>
+<meta name="description" content="3Blue1Brown-style visual explanation of the Transformer paper with all prerequisite math, deep learning, and ML concepts.">
+<meta name="author" content="Pratik Gade">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a1a;--bg2:#111127;--bg3:#1a1a3a;--tx:#e0e6ff;--tx2:#9ca3af;--tx3:#6b7280;
+--acc:#3b82f6;--acc2:#818cf8;--gold:#fbbf24;--green:#34d399;--pink:#f472b6;--cyan:#22d3ee;--red:#f87171;
+--orange:#fb923c;--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.08);--font:'Inter',sans-serif;
+--mono:'JetBrains Mono',monospace;--serif:'Newsreader',serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--font);line-height:1.8;font-size:17px}
+
+/* NAV */
+.topnav{position:fixed;top:0;left:0;right:0;background:rgba(10,10,26,.85);backdrop-filter:blur(20px);
+border-bottom:1px solid var(--border);z-index:100;padding:.6rem 2rem;display:flex;align-items:center;gap:1rem}
+.topnav a{color:var(--tx2);text-decoration:none;font-size:.82rem;transition:.2s}
+.topnav a:hover{color:var(--acc)}
+.topnav .brand{color:var(--tx);font-weight:600;font-size:.9rem;margin-right:auto}
+
+/* HERO */
+.hero{padding:8rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;
+background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.08),transparent 60%)}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem;
+background:linear-gradient(135deg,var(--acc),var(--acc2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{font-size:1.1rem;color:var(--tx2);max-width:650px;margin:0 auto 1.5rem}
+.hero .meta{font-size:.82rem;color:var(--tx3);font-family:var(--mono)}
+.hero .paper-ref{display:inline-block;margin-top:1rem;padding:.5rem 1.2rem;border:1px solid var(--border);
+border-radius:8px;font-size:.8rem;color:var(--tx2);font-family:var(--mono);background:var(--card)}
+
+/* LAYOUT */
+.container{max-width:820px;margin:0 auto;padding:0 2rem 4rem}
+
+/* TOC */
+.toc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;margin:2rem 0 3rem}
+.toc h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin-bottom:1rem}
+.toc ol{padding-left:1.2rem}
+.toc li{margin:.4rem 0;font-size:.92rem;color:var(--tx2)}
+.toc a{color:var(--tx);text-decoration:none;border-bottom:1px solid var(--border);transition:.2s}
+.toc a:hover{color:var(--acc);border-color:var(--acc)}
+
+/* SECTIONS */
+.section{margin:3.5rem 0;padding-top:1rem}
+.section h2{font-size:1.6rem;font-weight:700;margin-bottom:.3rem;padding-bottom:.5rem;
+border-bottom:2px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.section h2 .num{font-size:.9rem;color:var(--acc);font-family:var(--mono);font-weight:500}
+.section h3{font-size:1.15rem;font-weight:600;margin:2rem 0 .5rem;color:var(--acc2)}
+.section h4{font-size:1rem;font-weight:600;margin:1.5rem 0 .5rem;color:var(--gold)}
+.section p{margin:.8rem 0;color:var(--tx2)}
+
+/* INTUITION BOXES */
+.intuition{background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(129,140,248,.06));
+border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:1rem 1.2rem;margin:1.2rem 0}
+.intuition .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--acc);font-weight:600;margin-bottom:.4rem}
+.intuition p{color:var(--tx);margin:.3rem 0;font-family:var(--serif);font-size:1.02rem;font-style:italic}
+
+/* KEY IDEA */
+.key{background:linear-gradient(135deg,rgba(251,191,36,.06),rgba(251,191,36,.03));
+border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:1rem 1.2rem;margin:1.2rem 0}
+.key .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;margin-bottom:.4rem}
+
+/* MATH */
+.math-block{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.5rem;
+margin:1.2rem 0;font-family:var(--mono);font-size:.92rem;overflow-x:auto;line-height:2;text-align:center}
+.math-block .explain{font-family:var(--font);font-size:.82rem;color:var(--tx3);text-align:left;margin-top:.8rem;
+border-top:1px solid var(--border);padding-top:.6rem}
+.m{font-family:var(--mono);font-size:.92rem;background:rgba(59,130,246,.1);padding:.1rem .4rem;border-radius:4px;color:var(--cyan)}
+
+/* VISUAL DIAGRAMS */
+.diagram{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;
+margin:1.5rem 0;font-family:var(--mono);font-size:.8rem;line-height:1.6;overflow-x:auto;white-space:pre}
+.diagram .caption{font-family:var(--font);font-size:.82rem;color:var(--tx3);margin-top:.8rem;
+text-align:center;font-style:italic;white-space:normal}
+
+/* COLOR LEGEND */
+.c-q{color:#f472b6}.c-k{color:#34d399}.c-v{color:#fbbf24}.c-att{color:#22d3ee}.c-out{color:#818cf8}
+.c-red{color:#f87171}.c-blue{color:#3b82f6}.c-green{color:#34d399}.c-gold{color:#fbbf24}.c-pink{color:#f472b6}
+.c-cyan{color:#22d3ee}.c-orange{color:#fb923c}
+
+/* GRID */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin:1.5rem 0}
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;transition:.2s}
+.concept-card:hover{border-color:var(--acc);transform:translateY(-2px)}
+.concept-card h5{font-size:.88rem;margin-bottom:.3rem;color:var(--tx)}
+.concept-card p{font-size:.8rem;color:var(--tx2);margin:0}
+
+/* STEP FLOW */
+.step{display:flex;gap:1rem;margin:1rem 0;align-items:flex-start}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;display:flex;
+align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;margin-top:.2rem}
+.step-content{flex:1}
+.step-content h5{font-size:.95rem;margin-bottom:.2rem}
+.step-content p{font-size:.88rem;margin:0;color:var(--tx2)}
+
+/* ANALOGY */
+.analogy{background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(52,211,153,.03));
+border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1rem 1.2rem;margin:1.2rem 0}
+.analogy .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--green);font-weight:600;margin-bottom:.4rem}
+
+/* FOOTER */
+.guide-footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);margin-top:3rem;color:var(--tx3);font-size:.82rem}
+.guide-footer a{color:var(--acc);text-decoration:none}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .hero{padding:6rem 1rem 3rem}.hero h1{font-size:1.8rem}
+  .container{padding:0 1rem 3rem}.concept-grid{grid-template-columns:1fr}
+  .diagram{font-size:.7rem;padding:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <span class="brand">📐 Visual Guide</span>
+  <a href="../index.html">← Back to Roadmap</a>
+  <a href="#prereqs">Prerequisites</a>
+  <a href="#dl">Deep Learning</a>
+  <a href="#transformer">Transformer</a>
+  <a href="#attention">Attention</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Attention Is All You Need</h1>
+  <div class="sub">A 3Blue1Brown-style visual guide — from the math prerequisites to the full Transformer architecture. Every concept built from intuition first.</div>
+  <div class="meta">by Pratik Gade · ~45 min read · March 2026</div>
+  <div class="paper-ref">📄 Vaswani et al., 2017 · arXiv:1706.03762 · NeurIPS</div>
+</div>
+
+<div class="container">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h3>📑 Table of Contents</h3>
+  <ol>
+    <li><a href="#why">Why This Paper Changed Everything</a></li>
+    <li><a href="#prereqs">Math Prerequisites</a> — Vectors, Matrices, Dot Products, Softmax, Norms</li>
+    <li><a href="#dl">Deep Learning Foundations</a> — Neurons, Backprop, Embeddings, Loss Functions</li>
+    <li><a href="#seq2seq">The Sequence-to-Sequence Problem</a> — Why RNNs Failed</li>
+    <li><a href="#attention">Self-Attention — The Core Idea</a> — Query, Key, Value from Intuition</li>
+    <li><a href="#multihead">Multi-Head Attention</a> — Why Multiple Perspectives Matter</li>
+    <li><a href="#positional">Positional Encoding</a> — Teaching Order Without Recurrence</li>
+    <li><a href="#architecture">The Full Transformer Architecture</a> — Encoder, Decoder, Layer Norm, FFN</li>
+    <li><a href="#training">Training the Transformer</a> — Cross-Entropy, Masking, Label Smoothing</li>
+    <li><a href="#legacy">Why It Still Matters in 2026</a></li>
+  </ol>
+</div>
+
+<!-- ═══════════ PART 0: WHY ═══════════ -->
+<div class="section" id="why">
+  <h2><span class="num">00</span> Why This Paper Changed Everything</h2>
+  
+  <p>In June 2017, eight Google researchers published a paper that would reshape artificial intelligence. Before this paper, the best language models used <strong>recurrent neural networks (RNNs)</strong> — processing words one at a time, like reading a book letter by letter.</p>
+
+  <p>The Transformer introduced a radical idea: <strong>what if a model could look at all words simultaneously and decide which ones matter for each other?</strong></p>
+
+  <div class="key">
+    <div class="label">💡 The Key Insight</div>
+    <p>You don't need recurrence (processing one word at a time). You don't need convolution. <strong>Attention alone</strong> — letting every word "look at" every other word — is sufficient to understand language.</p>
+  </div>
+
+  <p>Every major AI model in 2026 — GPT-4, Claude, Gemini, LLaMA — is built on this architecture. Understanding this paper is understanding the foundation of modern AI.</p>
+
+  <p>Let's build up to it, from the absolute basics.</p>
+</div>
+
+<!-- ═══════════ PART 1: MATH PREREQUISITES ═══════════ -->
+<div class="section" id="prereqs">
+  <h2><span class="num">01</span> Math Prerequisites</h2>
+  <p>Before diving into the Transformer, you need to be comfortable with a few mathematical tools. Don't worry — we'll build every concept from intuition, not memorization.</p>
+
+  <!-- VECTORS -->
+  <h3>1.1 — Vectors: The Language of AI</h3>
+  
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>A vector is a list of numbers that describes something. Think of it like a GPS coordinate — but instead of 2 numbers (latitude, longitude), we use hundreds of numbers to describe the "location" of a word in meaning-space.</p>
+  </div>
+
+  <p>A vector is an ordered list of numbers. In AI, we use vectors to represent <strong>everything</strong> — words, sentences, images, concepts.</p>
+
+  <div class="math-block">
+    <span class="c-blue">v⃗</span> = [0.2, -0.5, 0.8, 0.1, -0.3] &nbsp;&nbsp;← a 5-dimensional vector
+    <div class="explain">
+      Each number captures one "feature" of whatever we're representing. For a word like "king," one dimension might encode "royalty," another "gender," another "power." The model learns what each dimension means.
+    </div>
+  </div>
+
+  <p><strong>Why vectors matter for Transformers:</strong> Every word in a sentence is converted into a vector (called an <em>embedding</em>). The Transformer then manipulates these vectors to understand meaning.</p>
+
+  <!-- MATRICES -->
+  <h3>1.2 — Matrices: Transforming Vectors</h3>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>If a vector is a point in space, a matrix is a <em>machine</em> that takes points and moves them to new locations. Multiplying a vector by a matrix transforms it — rotates, stretches, or projects it into a different space.</p>
+  </div>
+
+  <p>A matrix is a grid of numbers. When you multiply a matrix <span class="m">W</span> by a vector <span class="m">x</span>, you get a new vector <span class="m">y</span>.</p>
+
+  <div class="math-block">
+    <span class="c-gold">W</span> · <span class="c-blue">x</span> = <span class="c-green">y</span>
+    <br><br>
+    ┌ 0.1  0.3 ┐   ┌ 2.0 ┐     ┌ 0.1×2 + 0.3×1 ┐     ┌ 0.5 ┐
+    │ 0.5  0.2 │ · │ 1.0 │  =  │ 0.5×2 + 0.2×1 │  =  │ 1.2 │
+    └ 0.4  0.6 ┘   └     ┘     └ 0.4×2 + 0.6×1 ┘     └ 1.4 ┘
+    <div class="explain">
+      Each row of <span class="c-gold">W</span> performs a dot product with <span class="c-blue">x</span> to produce one number in <span class="c-green">y</span>. This is how neural networks transform data — every layer multiplies inputs by a learned weight matrix <span class="c-gold">W</span>.
+    </div>
+  </div>
+
+  <div class="intuition">
+    <div class="label">🧠 Intuition — Why This Matters</div>
+    <p>In the Transformer, there are three critical matrices: W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup>. They transform each word's embedding into a Query, a Key, and a Value. This single operation is the heart of attention.</p>
+  </div>
+
+  <!-- DOT PRODUCT -->
+  <h3>1.3 — Dot Product: Measuring Similarity</h3>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>The dot product tells you "how much do these two vectors point in the same direction?" If two word vectors have a high dot product, the words are related. If it's zero, they're unrelated. If negative, they're opposites.</p>
+  </div>
+
+  <div class="math-block">
+    <span class="c-blue">a⃗</span> · <span class="c-green">b⃗</span> = a₁b₁ + a₂b₂ + ... + aₙbₙ
+    <br><br>
+    [1, 0, 2] · [3, 1, 1] = 1×3 + 0×1 + 2×1 = <span class="c-gold">5</span>
+    <br>
+    [1, 0, 0] · [0, 1, 0] = 1×0 + 0×1 + 0×0 = <span class="c-red">0</span>  ← perpendicular = unrelated
+    <div class="explain">
+      <strong>In attention:</strong> The dot product between a Query vector (what am I looking for?) and a Key vector (what do I contain?) produces an <em>attention score</em> — how relevant is word B to word A?
+    </div>
+  </div>
+
+  <!-- SOFTMAX -->
+  <h3>1.4 — Softmax: Turning Scores into Probabilities</h3>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>Imagine you rated 4 restaurants: scores [3, 1, 0.5, 5]. Softmax converts these raw scores into probabilities that sum to 1 — like saying "I'm 64% likely to pick restaurant #4, 9% for #1, etc." It amplifies the differences: winners win bigger, losers shrink more.</p>
+  </div>
+
+  <div class="math-block">
+    softmax(zᵢ) = <span class="c-gold">e<sup>zᵢ</sup></span> / Σⱼ <span class="c-gold">e<sup>zⱼ</sup></span>
+    <br><br>
+    Input:   [3.0,  1.0,  0.5,   5.0]
+    <br>
+    e^z:     [20.1, 2.7,  1.6, 148.4]  ← exponentiate each
+    <br>
+    Sum:     172.8
+    <br>
+    Output:  [<span class="c-blue">0.12</span>, <span class="c-red">0.02</span>, <span class="c-red">0.01</span>, <span class="c-green">0.86</span>]  ← probabilities sum to 1
+    <div class="explain">
+      <strong>In attention:</strong> After computing dot products between Q and K, softmax converts them into attention weights — a probability distribution over all words, telling the model "pay 86% attention to word 4, 12% to word 1, nearly ignore the rest."
+    </div>
+  </div>
+
+  <!-- LAYER NORM -->
+  <h3>1.5 — Layer Normalization: Keeping Numbers Stable</h3>
+
+  <p>As data flows through many layers, the numbers can grow very large or very small (<em>exploding/vanishing gradients</em>). Layer normalization rescales values to have <strong>mean ≈ 0</strong> and <strong>standard deviation ≈ 1</strong> at each layer.</p>
+
+  <div class="math-block">
+    LayerNorm(<span class="c-blue">x</span>) = <span class="c-gold">γ</span> · (<span class="c-blue">x</span> - μ) / (σ + ε) + <span class="c-green">β</span>
+    <div class="explain">
+      μ = mean of x, σ = std deviation, ε = tiny number to prevent division by zero.<br>
+      <span class="c-gold">γ</span> (scale) and <span class="c-green">β</span> (shift) are learned — the model can undo normalization if needed.
+    </div>
+  </div>
+
+  <!-- SUMMARY GRID -->
+  <h3>1.6 — Prerequisite Summary</h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h5>📐 Vectors</h5>
+      <p>Lists of numbers that represent words/concepts in high-dimensional space</p>
+    </div>
+    <div class="concept-card">
+      <h5>📊 Matrices</h5>
+      <p>Grids of numbers that transform vectors. Neural network weights are matrices</p>
+    </div>
+    <div class="concept-card">
+      <h5>🎯 Dot Product</h5>
+      <p>Measures similarity between two vectors. Core of attention scoring</p>
+    </div>
+    <div class="concept-card">
+      <h5>📈 Softmax</h5>
+      <p>Converts raw scores to probabilities. Makes attention weights sum to 1</p>
+    </div>
+    <div class="concept-card">
+      <h5>⚖️ Layer Norm</h5>
+      <p>Normalizes values to prevent numbers from exploding/vanishing across layers</p>
+    </div>
+    <div class="concept-card">
+      <h5>📉 Gradient Descent</h5>
+      <p>Algorithm to update weights by moving in the direction that reduces error</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PART 2: DEEP LEARNING FOUNDATIONS ═══════════ -->
+<div class="section" id="dl">
+  <h2><span class="num">02</span> Deep Learning Foundations</h2>
+  <p>Now that you have the math tools, let's understand the building blocks of neural networks that the Transformer is built from.</p>
+
+  <!-- NEURONS -->
+  <h3>2.1 — What Is a Neuron?</h3>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>A neuron is a tiny decision-maker. It receives several inputs, multiplies each by a weight (how important is this input?), adds a bias (default preference), then passes the result through an activation function (should I fire or not?).</p>
+  </div>
+
+  <div class="math-block">
+    y = activation(<span class="c-gold">w₁</span>x₁ + <span class="c-gold">w₂</span>x₂ + ... + <span class="c-gold">wₙ</span>xₙ + <span class="c-green">b</span>)
+    <br><br>
+    = activation(<span class="c-gold">W</span> · <span class="c-blue">x</span> + <span class="c-green">b</span>)
+    <div class="explain">
+      <span class="c-gold">W</span> = weights (learned), <span class="c-green">b</span> = bias (learned), <span class="c-blue">x</span> = input. The activation function introduces non-linearity — without it, stacking layers would be pointless (a stack of linear operations = one linear operation).
+    </div>
+  </div>
+
+  <h4>Common Activation Functions</h4>
+  <div class="math-block">
+    <span class="c-blue">ReLU(x)</span>    = max(0, x)          ← simple, fast, most common
+    <br>
+    <span class="c-green">GELU(x)</span>    = x · Φ(x)           ← smooth ReLU, used in Transformers
+    <br>
+    <span class="c-gold">Sigmoid(x)</span> = 1 / (1 + e⁻ˣ)      ← squashes to [0, 1]
+    <br>
+    <span class="c-pink">Tanh(x)</span>    = (eˣ - e⁻ˣ)/(eˣ + e⁻ˣ) ← squashes to [-1, 1]
+    <div class="explain">
+      The Transformer uses <span class="c-green">GELU</span> in its feed-forward layers — it's smoother than ReLU and handles negative values better. The original paper uses ReLU, but GELU became standard.
+    </div>
+  </div>
+
+  <!-- EMBEDDINGS -->
+  <h3>2.2 — Embeddings: Words as Vectors</h3>
+
+  <p>Computers can't read words. We need to convert each word into a vector of numbers — this is called an <strong>embedding</strong>.</p>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>Imagine a city map where every word has a location. "King" is near "Queen" and "Ruler." "Dog" is near "Cat" and "Pet." "King" is far from "Toaster." Embeddings are these coordinates — words with similar meanings have similar vectors.</p>
+  </div>
+
+  <div class="math-block">
+    Embedding("king")  →  [0.2, -0.5, 0.8, 0.1, ...] ← 512 numbers
+    <br>
+    Embedding("queen") →  [0.3, -0.4, 0.7, 0.3, ...] ← nearby in vector space!
+    <br>
+    Embedding("car")   →  [0.9,  0.1, -0.6, 0.7, ...]  ← far away
+    <br><br>
+    Famous result: king - man + woman ≈ queen
+    <div class="explain">
+      In the Transformer, the <strong>embedding layer</strong> is a learned lookup table: each word in the vocabulary (e.g., 50,000 words) maps to a 512-dimensional vector. These vectors are trained — the model learns the best "addresses" for each word.
+    </div>
+  </div>
+
+  <!-- BACKPROPAGATION -->
+  <h3>2.3 — Backpropagation: How Networks Learn</h3>
+
+  <p>A neural network learns by:</p>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h5>Forward Pass</h5><p>Feed input through all layers → get prediction</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h5>Compute Loss</h5><p>Compare prediction to correct answer → how wrong are we?</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h5>Backward Pass</h5><p>Use chain rule of calculus to compute: "how much did each weight contribute to the error?"</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h5>Update Weights</h5><p>Nudge each weight in the direction that reduces the error: <span class="m">w = w - lr × ∂Loss/∂w</span></p></div></div>
+
+  <div class="intuition">
+    <div class="label">🧠 Intuition</div>
+    <p>Backpropagation is asking: "For each knob (weight) in the machine, which way should I turn it to make the output less wrong?" The chain rule lets us compute this efficiently for millions of weights simultaneously.</p>
+  </div>
+
+  <!-- LOSS FUNCTION -->
+  <h3>2.4 — Cross-Entropy Loss: The Transformer's Error Signal</h3>
+
+  <p>For language models, the loss function is <strong>cross-entropy</strong> — it measures how surprised the model is by the correct answer.</p>
+
+  <div class="math-block">
+    Loss = -log(P(correct word))
+    <br><br>
+    If model predicts P("the") = 0.9, correct = "the" → Loss = -log(0.9) = <span class="c-green">0.105</span> ← low, good!
+    <br>
+    If model predicts P("the") = 0.01, correct = "the" → Loss = -log(0.01) = <span class="c-red">4.605</span> ← high, bad!
+    <div class="explain">
+      When the model is confident and correct, loss is near 0. When it's wrong, loss is huge. The model learns to minimize this across all training examples.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PART 3: SEQ2SEQ PROBLEM ═══════════ -->
+<div class="section" id="seq2seq">
+  <h2><span class="num">03</span> The Sequence-to-Sequence Problem</h2>
+
+  <p>The Transformer was designed for <strong>sequence-to-sequence tasks</strong> — turning one sequence into another. Translation is the classic example:</p>
+
+  <div class="diagram">  Input:  "The cat sat on the mat"  (English)
+     ↓
+  [ MODEL ]
+     ↓
+  Output: "Le chat était assis sur le tapis"  (French)
+<div class="caption">Seq2seq: variable-length input → variable-length output</div></div>
+
+  <h3>3.1 — Why RNNs Failed</h3>
+
+  <p>Before Transformers, we used <strong>Recurrent Neural Networks (RNNs/LSTMs)</strong>. They processed words <em>sequentially</em> — one at a time, left to right:</p>
+
+  <div class="diagram">  "The" → [RNN] → h₁ → "cat" → [RNN] → h₂ → "sat" → [RNN] → h₃ → ...
+                                                                        ↓
+  The final hidden state h₃ must compress the ENTIRE sentence into one vector!
+<div class="caption">RNNs create a "bottleneck" — all meaning compressed into a single vector</div></div>
+
+  <p><strong>Three fatal problems:</strong></p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h5>🐌 Sequential = Slow</h5>
+      <p>Must process word 1 before word 2. Can't parallelize across GPUs. Training is painfully slow.</p>
+    </div>
+    <div class="concept-card">
+      <h5>🧠 Forgetting</h5>
+      <p>By the time you reach word 100, you've largely forgotten word 1. Long-range dependencies vanish.</p>
+    </div>
+    <div class="concept-card">
+      <h5>📦 Bottleneck</h5>
+      <p>The entire input meaning must be compressed into one fixed-size vector. Information is inevitably lost.</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="label">💡 The Transformer Solution</div>
+    <p>What if instead of reading sequentially, the model could look at <strong>all words at once</strong> and let each word decide which other words are relevant to it? This is <strong>self-attention</strong> — and it's fully parallelizable.</p>
+  </div>
+</div>
+
+<!-- ═══════════ PART 4: SELF-ATTENTION ═══════════ -->
+<div class="section" id="attention">
+  <h2><span class="num">04</span> Self-Attention — The Core Idea</h2>
+
+  <p>This is the most important section. If you understand this, you understand Transformers.</p>
+
+  <h3>4.1 — The Library Analogy</h3>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy — Attention as a Library</div>
+    <p>Imagine you're in a library. You have a <span class="c-q"><strong>question</strong></span> (Query). Each book on the shelf has a <span class="c-k"><strong>title</strong></span> (Key) and <span class="c-v"><strong>content</strong></span> (Value). You compare your question to every title, find the most relevant books, and read a weighted mix of their content. That's attention.</p>
+  </div>
+
+  <p>For each word in a sentence, self-attention computes three vectors:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card" style="border-color:#f472b6">
+      <h5><span class="c-q">Q — Query</span></h5>
+      <p>"What am I looking for?" — what this word wants to find in other words</p>
+    </div>
+    <div class="concept-card" style="border-color:#34d399">
+      <h5><span class="c-k">K — Key</span></h5>
+      <p>"What do I contain?" — what this word advertises about itself</p>
+    </div>
+    <div class="concept-card" style="border-color:#fbbf24">
+      <h5><span class="c-v">V — Value</span></h5>
+      <p>"Here's my actual content" — the information to pass along if selected</p>
+    </div>
+  </div>
+
+  <h3>4.2 — Computing Q, K, V</h3>
+  <p>Each word's embedding <span class="m">x</span> is multiplied by three learned weight matrices:</p>
+
+  <div class="math-block">
+    <span class="c-q">Q</span> = <span class="c-blue">x</span> · <span class="c-q">W<sup>Q</sup></span> &nbsp;&nbsp;&nbsp; 
+    <span class="c-k">K</span> = <span class="c-blue">x</span> · <span class="c-k">W<sup>K</sup></span> &nbsp;&nbsp;&nbsp; 
+    <span class="c-v">V</span> = <span class="c-blue">x</span> · <span class="c-v">W<sup>V</sup></span>
+    <div class="explain">
+      If x is 512-dimensional and we project to d_k = 64, then each W matrix is 512 × 64. The model <em>learns</em> these matrices during training — learning what makes a good query, key, and value for each word.
+    </div>
+  </div>
+
+  <h3>4.3 — The Attention Formula</h3>
+
+  <div class="math-block" style="font-size:1rem">
+    Attention(<span class="c-q">Q</span>, <span class="c-k">K</span>, <span class="c-v">V</span>) = softmax( <span class="c-q">Q</span> · <span class="c-k">K<sup>T</sup></span> / √d<sub>k</sub> ) · <span class="c-v">V</span>
+  </div>
+
+  <p>Let's break this down step by step:</p>
+
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h5><span class="c-q">Q</span> · <span class="c-k">K<sup>T</sup></span> — Compute Similarity</h5><p>Dot product of every Query with every Key. Result: a matrix of "how much should word i attend to word j?"</p></div></div>
+
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h5>÷ √d<sub>k</sub> — Scale Down</h5><p>Divide by √64 = 8. Without this, dot products grow too large → softmax becomes too "spiky" (one word gets 99.9% attention). This keeps gradients flowing.</p></div></div>
+
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h5>softmax() — Normalize to Probabilities</h5><p>Convert raw scores to probabilities (sum to 1). Now each word has a probability distribution over all other words.</p></div></div>
+
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h5>× <span class="c-v">V</span> — Weighted Sum of Values</h5><p>Multiply attention weights by Values. Each word's output = weighted mix of all other words' Values, weighted by relevance.</p></div></div>
+
+  <h3>4.4 — Worked Example</h3>
+  <p>Sentence: <strong>"The cat sat on the mat"</strong></p>
+  <p>Let's trace what happens for the word <strong>"sat"</strong>:</p>
+
+  <div class="diagram">  Word: "sat"
+  
+  Step 1: Create <span class="c-q">Query</span> for "sat" → <span class="c-q">Q_sat</span> = x_sat · W^Q = "What did the action?"
+  
+  Step 2: Create <span class="c-k">Keys</span> for ALL words:
+    <span class="c-k">K_the</span>  = x_the · W^K    <span class="c-k">K_cat</span>  = x_cat · W^K
+    <span class="c-k">K_sat</span>  = x_sat · W^K    <span class="c-k">K_on</span>   = x_on  · W^K
+    <span class="c-k">K_the2</span> = x_the · W^K    <span class="c-k">K_mat</span>  = x_mat · W^K
+  
+  Step 3: Dot product <span class="c-q">Q_sat</span> with each <span class="c-k">Key</span>:
+    <span class="c-q">Q_sat</span> · <span class="c-k">K_the</span>  = 1.2    (low)
+    <span class="c-q">Q_sat</span> · <span class="c-k">K_cat</span>  = <span class="c-green">8.5</span>    ← HIGH! "cat" is relevant to "sat"
+    <span class="c-q">Q_sat</span> · <span class="c-k">K_sat</span>  = 3.1    (moderate - self)
+    <span class="c-q">Q_sat</span> · <span class="c-k">K_on</span>   = 2.0    (low)
+    <span class="c-q">Q_sat</span> · <span class="c-k">K_the2</span> = 0.8    (very low)
+    <span class="c-q">Q_sat</span> · <span class="c-k">K_mat</span>  = <span class="c-green">6.2</span>    ← HIGH! "mat" is relevant to "sat"
+  
+  Step 4: Scale by √64 = 8, then softmax:
+    Scores: [0.15, 0.15, 1.06, <span class="c-green">0.56</span>, 0.25, 0.39, 0.10, <span class="c-green">0.46</span>]
+    After softmax: [0.04, <span class="c-green">0.42</span>, 0.10, 0.06, 0.03, <span class="c-green">0.35</span>]
+                     the   cat    sat   on    the    mat
+  
+  Step 5: Output for "sat" = 0.04·<span class="c-v">V_the</span> + <span class="c-green">0.42</span>·<span class="c-v">V_cat</span> + 0.10·<span class="c-v">V_sat</span> + 0.06·<span class="c-v">V_on</span> + 0.03·<span class="c-v">V_the</span> + <span class="c-green">0.35</span>·<span class="c-v">V_mat</span>
+<div class="caption">Result: "sat" now carries information mostly about "cat" (42%) and "mat" (35%) — it learned WHO sat and WHERE!</div></div>
+
+  <div class="key">
+    <div class="label">💡 This is the magic</div>
+    <p>Without being told grammar, without parsing, without rules — the model discovers that "sat" needs to know about "cat" (the subject) and "mat" (the location). It learned syntax from data alone.</p>
+  </div>
+</div>
+
+<!-- ═══════════ PART 5: MULTI-HEAD ATTENTION ═══════════ -->
+<div class="section" id="multihead">
+  <h2><span class="num">05</span> Multi-Head Attention</h2>
+
+  <div class="analogy">
+    <div class="label">🎯 Analogy</div>
+    <p>One attention head asks one type of question. But language has many relationships: syntax (who did what), semantics (what does it mean), coreference (who does "it" refer to). Multi-head attention is like having 8 different experts, each noticing different patterns, then combining their insights.</p>
+  </div>
+
+  <p>Instead of one large attention operation, the Transformer runs <strong>h = 8 parallel attention heads</strong>, each with its own W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup>:</p>
+
+  <div class="math-block">
+    head<sub>i</sub> = Attention(<span class="c-blue">x</span>·<span class="c-q">W<sub>i</sub><sup>Q</sup></span>, <span class="c-blue">x</span>·<span class="c-k">W<sub>i</sub><sup>K</sup></span>, <span class="c-blue">x</span>·<span class="c-v">W<sub>i</sub><sup>V</sup></span>)
+    <br><br>
+    MultiHead = Concat(head₁, head₂, ..., head₈) · <span class="c-orange">W<sup>O</sup></span>
+    <div class="explain">
+      If d_model = 512 and h = 8 heads, each head works in d_k = 512/8 = 64 dimensions. After concatenation (8 × 64 = 512), we multiply by W<sup>O</sup> (512×512) to mix the heads' outputs. Total computation cost ≈ same as single large attention.
+    </div>
+  </div>
+
+  <div class="diagram">  Input (512-dim)
+       │
+  ┌────┼────┬────┬────┬────┬────┬────┬────┐
+  │    │    │    │    │    │    │    │    │
+  ▼    ▼    ▼    ▼    ▼    ▼    ▼    ▼    ▼
+ Head  Head Head Head Head Head Head Head Head
+  1    2    3    4    5    6    7    8
+ (64d)(64d)(64d)(64d)(64d)(64d)(64d)(64d)
+  │    │    │    │    │    │    │    │
+  └────┴────┴────┴────┴────┴────┴────┘
+                 │
+            Concatenate → 512-dim
+                 │
+              × W^O
+                 │
+           Output (512-dim)
+<div class="caption">Each head learns a different "type of relationship" — one might learn syntax, another semantics, another position</div></div>
+</div>
+
+<!-- ═══════════ PART 6: POSITIONAL ENCODING ═══════════ -->
+<div class="section" id="positional">
+  <h2><span class="num">06</span> Positional Encoding</h2>
+
+  <p><strong>Problem:</strong> Unlike RNNs, attention treats all words as a <em>set</em> — it has no concept of order. "The cat sat on the mat" and "mat the on sat cat the" look identical to vanilla attention.</p>
+
+  <p><strong>Solution:</strong> Add a unique "position signal" to each word's embedding before feeding it to the Transformer.</p>
+
+  <div class="math-block">
+    PE(pos, 2i)   = sin(pos / 10000<sup>2i/d_model</sup>)
+    <br>
+    PE(pos, 2i+1) = cos(pos / 10000<sup>2i/d_model</sup>)
+    <div class="explain">
+      <strong>pos</strong> = position in the sentence (0, 1, 2, ...)<br>
+      <strong>i</strong> = dimension index (0 to 255 for d_model=512)<br>
+      Even dimensions use sin, odd dimensions use cos. Different frequencies at different dimensions let the model learn to attend to relative positions.
+    </div>
+  </div>
+
+  <div class="intuition">
+    <div class="label">🧠 Why Sinusoids?</div>
+    <p>For any fixed offset k, PE(pos+k) can be expressed as a linear function of PE(pos). This means the model can easily learn "3 words ago" or "5 words ahead" — relative positions are encoded naturally. Think of it like a clock: the hour hand and minute hand together tell you both absolute time and elapsed time.</p>
+  </div>
+</div>
+
+<!-- ═══════════ PART 7: FULL ARCHITECTURE ═══════════ -->
+<div class="section" id="architecture">
+  <h2><span class="num">07</span> The Full Transformer Architecture</h2>
+
+  <p>Now we assemble all the pieces. The Transformer has two halves: an <strong>Encoder</strong> (reads the input) and a <strong>Decoder</strong> (generates the output).</p>
+
+  <div class="diagram">                         THE TRANSFORMER
+  ┌──────────────────────────────────────────────────────────────┐
+  │                                                              │
+  │  ┌─── ENCODER (×6) ───┐      ┌─── DECODER (×6) ───┐        │
+  │  │                     │      │                     │        │
+  │  │  ┌───────────────┐  │      │  ┌───────────────┐  │        │
+  │  │  │  Multi-Head    │  │      │  │ Masked Multi- │  │        │
+  │  │  │  Self-Attention│  │      │  │ Head Self-Attn│  │        │
+  │  │  └───────┬───────┘  │      │  └───────┬───────┘  │        │
+  │  │   Add & Norm        │      │   Add & Norm        │        │
+  │  │  ┌───────┴───────┐  │      │  ┌───────┴───────┐  │        │
+  │  │  │  Feed-Forward  │  │  ┌──│──│ Cross-Attention│  │        │
+  │  │  │  Network       │  │  │  │  │ (Q from dec,   │  │        │
+  │  │  └───────┬───────┘  │  │  │  │  K,V from enc) │  │        │
+  │  │   Add & Norm        │  │  │  └───────┬───────┘  │        │
+  │  └──────────┼──────────┘  │  │   Add & Norm        │        │
+  │             │             │  │  ┌───────┴───────┐  │        │
+  │             └─────────────┘  │  │  Feed-Forward  │  │        │
+  │                              │  │  Network       │  │        │
+  │                              │  └───────┬───────┘  │        │
+  │                              │   Add & Norm        │        │
+  │                              └──────────┼──────────┘        │
+  │                                         │                    │
+  │                                    Linear + Softmax          │
+  │                                         │                    │
+  │                                   Output Probabilities       │
+  └──────────────────────────────────────────────────────────────┘
+  
+       ▲                                    ▲
+  Input Embeddings                   Output Embeddings
+  + Positional Encoding              + Positional Encoding
+       ▲                                    ▲
+  "The cat sat"                     "&lt;start&gt; Le chat"
+<div class="caption">The complete Transformer — Encoder reads the full input, Decoder generates output one token at a time</div></div>
+
+  <h3>7.1 — Encoder Block (×6 layers)</h3>
+  <p>Each encoder layer has two sub-layers:</p>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h5>Multi-Head Self-Attention</h5><p>Every input word attends to every other input word. "sat" discovers it relates to "cat" and "mat."</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h5>Feed-Forward Network (FFN)</h5><p>Two linear layers with GELU activation: <span class="m">FFN(x) = W₂ · GELU(W₁ · x + b₁) + b₂</span>. The inner dimension is 4× the model dimension (512 → 2048 → 512). This is where the model stores "knowledge."</p></div></div>
+
+  <p>Both sub-layers use <strong>residual connections</strong> and <strong>layer normalization</strong>:</p>
+  <div class="math-block">
+    output = LayerNorm(<span class="c-blue">x</span> + SubLayer(<span class="c-blue">x</span>))
+    <div class="explain">
+      The residual connection (<span class="c-blue">x</span> + result) lets gradients flow directly through the network. Without it, training 6+ layers would be nearly impossible. Think of it as a "highway" for information.
+    </div>
+  </div>
+
+  <h3>7.2 — Decoder Block (×6 layers)</h3>
+  <p>Each decoder layer has <strong>three</strong> sub-layers:</p>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h5>Masked Self-Attention</h5><p>Same as encoder, but with a mask: each output word can only attend to <em>previous</em> output words. The model can't "cheat" by looking at future words it hasn't generated yet.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h5>Cross-Attention</h5><p>Queries come from the decoder, but Keys and Values come from the <em>encoder output</em>. This is how the decoder reads the input: "Based on what I've generated so far (Q), which parts of the input (K, V) should I focus on?"</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h5>Feed-Forward Network</h5><p>Same as encoder — 2-layer FFN with residual + layer norm.</p></div></div>
+
+  <div class="key">
+    <div class="label">💡 Why the mask?</div>
+    <p>During training, we feed the entire correct output at once (for speed). The mask prevents position i from seeing positions > i, simulating autoregressive generation. Without it, the model would just memorize the answer instead of learning to predict it.</p>
+  </div>
+</div>
+
+<!-- ═══════════ PART 8: TRAINING ═══════════ -->
+<div class="section" id="training">
+  <h2><span class="num">08</span> Training the Transformer</h2>
+
+  <h3>8.1 — The Training Objective</h3>
+  <p>For each training example, the model predicts the next word at every position, and we minimize cross-entropy loss across all positions:</p>
+
+  <div class="math-block">
+    Loss = - Σ<sub>t</sub> log P(word<sub>t</sub> | word<sub>1</sub>, ..., word<sub>t-1</sub>)
+    <div class="explain">Sum of negative log-probabilities at every position. Lower = better predictions.</div>
+  </div>
+
+  <h3>8.2 — Key Training Details from the Paper</h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h5>📐 d_model = 512</h5>
+      <p>Embedding dimension — every vector in the model is 512-dimensional</p>
+    </div>
+    <div class="concept-card">
+      <h5>🔢 h = 8 heads</h5>
+      <p>8 parallel attention heads, each with d_k = d_v = 64</p>
+    </div>
+    <div class="concept-card">
+      <h5>📚 N = 6 layers</h5>
+      <p>6 encoder layers + 6 decoder layers stacked</p>
+    </div>
+    <div class="concept-card">
+      <h5>📈 d_ff = 2048</h5>
+      <p>Inner dimension of FFN = 4× model dimension</p>
+    </div>
+    <div class="concept-card">
+      <h5>⚡ Adam Optimizer</h5>
+      <p>With warmup: LR increases for 4000 steps, then decays proportional to 1/√step</p>
+    </div>
+    <div class="concept-card">
+      <h5>🎲 Dropout = 0.1</h5>
+      <p>Applied to attention weights, FFN, and embeddings to prevent overfitting</p>
+    </div>
+  </div>
+
+  <h3>8.3 — Label Smoothing</h3>
+  <p>Instead of training with "100% confident" targets, the paper uses <strong>label smoothing (ε=0.1)</strong>: the target is 90% on the correct word and 10% spread across all other words. This makes the model less overconfident and improves generalization.</p>
+</div>
+
+<!-- ═══════════ PART 9: LEGACY ═══════════ -->
+<div class="section" id="legacy">
+  <h2><span class="num">09</span> Why It Still Matters in 2026</h2>
+
+  <p>The Transformer from 2017 is the <strong>direct ancestor</strong> of every frontier model:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card"><h5>GPT-4 / GPT-4o</h5><p>Decoder-only Transformer with trillions of parameters</p></div>
+    <div class="concept-card"><h5>Claude 3.5</h5><p>Constitutional AI built on Transformer backbone</p></div>
+    <div class="concept-card"><h5>Gemini 2.0</h5><p>Multimodal Transformer with MoE (Mixture of Experts)</p></div>
+    <div class="concept-card"><h5>LLaMA 3</h5><p>Open-source Transformer with RoPE + GQA</p></div>
+  </div>
+
+  <p>The core ideas — Q/K/V attention, multi-head parallelism, positional encoding, residual connections — are unchanged. What has evolved:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card"><h5>RoPE replaced sinusoidal PE</h5><p>Rotary position embeddings handle longer contexts better</p></div>
+    <div class="concept-card"><h5>GQA replaced MHA</h5><p>Grouped-Query Attention reduces KV cache memory</p></div>
+    <div class="concept-card"><h5>Pre-norm replaced post-norm</h5><p>LayerNorm before (not after) attention stabilizes training</p></div>
+    <div class="concept-card"><h5>SwiGLU replaced ReLU</h5><p>Better activation function in FFN layers</p></div>
+  </div>
+
+  <div class="intuition">
+    <div class="label">🧠 Key takeaway</div>
+    <p>If you deeply understand this 2017 paper, you understand the skeleton of every 2026 model. The innovations since then are optimizations — the architecture is fundamentally the same. This paper is your foundation. Build on it.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="guide-footer">
+  <p><strong>📐 Attention Is All You Need — A Visual Guide</strong></p>
+  <p>Written by <a href="https://github.com/ai-pratik">Pratik Gade</a> · Part of the <a href="../index.html">LLM Research Engineer Roadmap v3</a></p>
+  <p>© 2026 Pratik Gade · MIT License</p>
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>
