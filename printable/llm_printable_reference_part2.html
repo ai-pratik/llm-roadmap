@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LLM Research Engineer — Printable Reference Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f7fc;--surf:#ffffff;--b1:#e2e0f0;--b2:#ccc8e8;--tx:#1a1830;--tx2:#5a5880;--tx3:#9896b8;--ac:#5248d4;--ac2:#1ab89a;--ac3:#d4a017;--ac4:#d44848;--pu:#7c4dcc;--gn:#16a34a;--code-bg:#f0eefa;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);font-size:11pt;line-height:1.55}
+.screen-nav{background:var(--tx);color:#fff;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;position:sticky;top:0;z-index:10}
+.screen-nav h1{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:-.02em}
+.screen-nav p{font-size:.72rem;opacity:.65;font-family:'JetBrains Mono',monospace}
+.nav-btns{display:flex;gap:.5rem}
+.print-btn{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:5px 12px;border-radius:4px;background:var(--ac);color:#fff;border:none;cursor:pointer}
+.part1-btn{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:5px 12px;border-radius:4px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.sheets{max-width:800px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.sheet{background:var(--surf);border:1px solid var(--b1);border-radius:10px;margin-bottom:2rem;overflow:hidden;page-break-inside:avoid;break-inside:avoid;box-shadow:0 2px 12px rgba(82,72,212,.06)}
+.sh-head{padding:.75rem 1.2rem .55rem;border-bottom:1px solid var(--b1);display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;background:linear-gradient(135deg,rgba(82,72,212,.03) 0%,transparent 60%)}
+.sh-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--tx3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.1em}
+.sh-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:var(--tx)}
+.sh-sub{font-size:.7rem;color:var(--tx2);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.sh-tag{font-size:.58rem;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:20px;border:1px solid;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.tag-w{border-color:rgba(82,72,212,.35);color:var(--ac);background:rgba(82,72,212,.06)}
+.tag-g{border-color:rgba(26,184,154,.35);color:var(--ac2);background:rgba(26,184,154,.06)}
+.tag-y{border-color:rgba(212,160,23,.35);color:var(--ac3);background:rgba(212,160,23,.06)}
+.tag-r{border-color:rgba(212,72,72,.35);color:var(--ac4);background:rgba(212,72,72,.06)}
+.tag-p{border-color:rgba(124,77,204,.35);color:var(--pu);background:rgba(124,77,204,.06)}
+.tag-k{border-color:rgba(22,163,74,.35);color:var(--gn);background:rgba(22,163,74,.06)}
+.sh-body{padding:.9rem 1.2rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem}
+.label{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3);margin:.85rem 0 .3rem;display:flex;align-items:center;gap:8px}
+.label::after{content:'';flex:1;height:1px;background:var(--b1)}
+.label:first-child{margin-top:0}
+.eq{background:var(--code-bg);border:1px solid var(--b2);border-radius:5px;padding:.5rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--ac);line-height:1.7;margin:.25rem 0}
+.eq-label{font-size:.6rem;color:var(--tx3);margin-bottom:2px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.07em}
+.eq-note{font-size:.68rem;color:var(--tx2);margin-top:.25rem;font-style:italic;line-height:1.4}
+.kv{display:flex;flex-direction:column;gap:3px}
+.kv-row{display:flex;gap:6px;font-size:.76rem;line-height:1.4;padding:3px 0;border-bottom:1px dashed var(--b1)}
+.kv-row:last-child{border:none}
+.kv-key{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac);min-width:88px;flex-shrink:0;font-weight:500}
+.kv-val{color:var(--tx2)}
+.blist{list-style:none;display:flex;flex-direction:column;gap:2px}
+.blist li{font-size:.76rem;color:var(--tx2);padding:2px 0 2px 11px;position:relative;line-height:1.4}
+.blist li::before{content:'·';position:absolute;left:0;color:var(--ac);font-weight:700}
+.slist{display:flex;flex-direction:column;gap:4px}
+.slist-item{display:flex;gap:7px;font-size:.76rem;line-height:1.45}
+.slist-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--surf);background:var(--ac);border-radius:3px;width:15px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.slist-text{color:var(--tx2)}
+.slist-text strong{color:var(--tx);font-weight:500}
+.ctable{width:100%;border-collapse:collapse;font-size:.73rem}
+.ctable th{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.07em;padding:4px 7px;text-align:left;border-bottom:1.5px solid var(--b1);font-weight:500}
+.ctable td{padding:4px 7px;border-bottom:1px dashed var(--b1);vertical-align:top;color:var(--tx2);line-height:1.35}
+.ctable tr:last-child td{border:none}
+.ctable td:first-child{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--ac);font-weight:500}
+.good{color:var(--ac2)}.bad{color:var(--ac4)}.mid{color:var(--ac3)}
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:3px;margin:.25rem 0}
+.fbox{background:var(--code-bg);border:1px solid var(--b2);border-radius:4px;padding:3px 7px;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ac);white-space:nowrap}
+.farr{font-size:.68rem;color:var(--tx3)}
+.fbox-g{background:rgba(26,184,154,.07);border-color:rgba(26,184,154,.28);color:var(--ac2)}
+.fbox-y{background:rgba(212,160,23,.07);border-color:rgba(212,160,23,.28);color:var(--ac3)}
+.fbox-r{background:rgba(212,72,72,.07);border-color:rgba(212,72,72,.28);color:var(--ac4)}
+.fbox-p{background:rgba(124,77,204,.07);border-color:rgba(124,77,204,.28);color:var(--pu)}
+.note{font-size:.72rem;color:var(--tx2);padding:.4rem .65rem;background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.22);border-radius:4px;margin:.3rem 0;line-height:1.4}
+.note::before{content:'⚑ ';color:var(--ac3);font-weight:700}
+.iq{background:rgba(82,72,212,.04);border:1px solid rgba(82,72,212,.1);border-radius:5px;padding:.5rem .75rem;margin:.3rem 0}
+.iq-q{font-size:.73rem;font-weight:500;color:var(--tx);margin-bottom:2px}
+.iq-a{font-size:.7rem;color:var(--tx2);line-height:1.4}
+.tldr{font-size:.78rem;color:var(--tx);line-height:1.5;padding:.45rem .65rem;background:rgba(82,72,212,.04);border-left:2px solid var(--ac);border-radius:0 4px 4px 0;margin:.3rem 0}
+/* TIMELINE SPECIFIC */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-row{display:grid;grid-template-columns:70px 12px 1fr;gap:0 8px;align-items:stretch;min-height:38px}
+.tl-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ac);text-align:right;padding-top:4px;font-weight:500}
+.tl-line{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;border:2px solid}
+.tl-vert{flex:1;width:2px;background:var(--b1)}
+.tl-content{padding:3px 0 6px}
+.tl-title{font-size:.8rem;font-weight:500;color:var(--tx);line-height:1.2}
+.tl-detail{font-size:.7rem;color:var(--tx2);line-height:1.35;margin-top:2px}
+.tl-deliverable{font-size:.67rem;font-family:'JetBrains Mono',monospace;color:var(--ac2);margin-top:2px}
+/* MATH BOXES */
+.math-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.math-box{background:var(--code-bg);border:1px solid var(--b2);border-radius:6px;padding:.55rem .7rem}
+.math-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ac3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem}
+.math-eq{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ac);line-height:1.6}
+.math-note{font-size:.67rem;color:var(--tx2);margin-top:.25rem;font-style:italic}
+/* RESOURCE ROW */
+.res-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px dashed var(--b1)}
+.res-row:last-child{border:none}
+.res-type{font-family:'JetBrains Mono',monospace;font-size:.56rem;padding:2px 5px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:1px;text-transform:uppercase;letter-spacing:.04em}
+.rt-book{background:rgba(212,160,23,.1);color:var(--ac3)}
+.rt-video{background:rgba(82,72,212,.1);color:var(--ac)}
+.rt-blog{background:rgba(26,184,154,.1);color:var(--ac2)}
+.rt-course{background:rgba(124,77,204,.1);color:var(--pu)}
+.res-info{flex:1;min-width:0}
+.res-name{font-size:.76rem;font-weight:500;color:var(--tx);line-height:1.25}
+.res-week{font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--ac3)}
+.res-desc{font-size:.7rem;color:var(--tx2);line-height:1.35;margin-top:1px}
+/* WEEK GRID */
+.week-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:.4rem}
+.wg-cell{border:1px solid var(--b1);border-radius:4px;padding:4px 6px;position:relative}
+.wg-num{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--tx3);margin-bottom:1px}
+.wg-title{font-size:.65rem;color:var(--tx);font-weight:500;line-height:1.2}
+.wg-tag{font-size:.55rem;color:var(--tx3);margin-top:2px}
+.wg-cell.done-style{background:rgba(26,184,154,.05);border-color:rgba(26,184,154,.25)}
+.wg-cell.cap{background:rgba(82,72,212,.05);border-color:rgba(82,72,212,.25)}
+/* PRINT */
+@media print{
+  @page{size:A4;margin:12mm 13mm}
+  body{font-size:9pt;background:#fff}
+  .screen-nav{display:none}
+  .sheets{padding:0;max-width:100%}
+  .sheet{border:1px solid #ccc;border-radius:0;margin-bottom:0;page-break-after:always;break-after:page;box-shadow:none}
+  .sheet:last-child{page-break-after:auto}
+  a{text-decoration:none;color:inherit}
+  .sh-head{background:none}
+}
+</style>
+</head>
+<body>
+
+<div class="screen-nav">
+  <div>
+    <h1>LLM Research Engineer — Printable Reference Part 2</h1>
+    <p>9 additional sheets · Part 1 has 11 sheets · Print both for complete set</p>
+  </div>
+  <div class="nav-btns">
+    <button class="print-btn" onclick="window.print()">🖨 Print Part 2</button>
+  </div>
+</div>
+
+<div class="sheets">
+
+<!-- ═══ SHEET 12 — MATH FOUNDATIONS ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 12 · Week 0</div>
+      <div class="sh-title">Math Foundations Cheat Sheet</div>
+      <div class="sh-sub">Linear Algebra · Calculus · Probability · Matrix Calculus</div>
+    </div>
+    <span class="sh-tag tag-w">W0 · Prerequisites</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Linear Algebra — Must Know</div>
+        <div class="math-grid">
+          <div class="math-box">
+            <div class="math-title">Matrix multiply</div>
+            <div class="math-eq">(AB)ᵢⱼ = Σₖ AᵢₖBₖⱼ<br>dims: (m×n)(n×p)→(m×p)</div>
+          </div>
+          <div class="math-box">
+            <div class="math-title">Dot product</div>
+            <div class="math-eq">a·b = Σᵢ aᵢbᵢ = ‖a‖‖b‖cos(θ)</div>
+          </div>
+          <div class="math-box">
+            <div class="math-title">Eigenvectors</div>
+            <div class="math-eq">Av = λv<br>v = eigenvec, λ = eigenval</div>
+          </div>
+          <div class="math-box">
+            <div class="math-title">Transpose rules</div>
+            <div class="math-eq">(AB)ᵀ = BᵀAᵀ<br>(A+B)ᵀ = Aᵀ+Bᵀ</div>
+          </div>
+        </div>
+        <div class="label">Calculus — Chain Rule + Gradients</div>
+        <div class="eq-label">Chain rule (fundamental for backprop)</div>
+        <div class="eq">dz/dx = (dz/dy)(dy/dx)<br>∂L/∂x = (∂L/∂y)(∂y/∂x)</div>
+        <div class="eq-label">Gradient of common functions</div>
+        <div class="eq">∂(Wx)/∂W = xᵀ      ∂(Wx)/∂x = Wᵀ<br>∂(‖x‖²)/∂x = 2x   ∂(aᵀx)/∂x = a</div>
+        <div class="eq-label">Softmax gradient (derive in interviews)</div>
+        <div class="eq">∂σᵢ/∂zⱼ = σᵢ(δᵢⱼ - σⱼ)<br>δᵢⱼ = 1 if i=j, else 0</div>
+        <div class="eq-note">When i=j: σᵢ(1-σᵢ). When i≠j: -σᵢσⱼ. The Jacobian of softmax is a full matrix, not a diagonal.</div>
+      </div>
+      <div>
+        <div class="label">Probability — LLM-Relevant Concepts</div>
+        <div class="math-grid">
+          <div class="math-box">
+            <div class="math-title">Bayes theorem</div>
+            <div class="math-eq">P(A|B) = P(B|A)P(A)/P(B)</div>
+          </div>
+          <div class="math-box">
+            <div class="math-title">KL divergence</div>
+            <div class="math-eq">KL(P‖Q) = Σ P(x)log(P(x)/Q(x))<br>≥ 0, not symmetric</div>
+          </div>
+          <div class="math-box">
+            <div class="math-title">Cross-entropy loss</div>
+            <div class="math-eq">H(y,ŷ) = -Σ yᵢlog(ŷᵢ)<br>= NLL for LM training</div>
+          </div>
+          <div class="math-box">
+            <div class="math-title">MLE objective</div>
+            <div class="math-eq">θ* = argmax Σ log P(xᵢ|θ)<br>= argmin NLL</div>
+          </div>
+        </div>
+        <div class="label">Backprop on 2-layer MLP — Step by Step</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">F</span><span class="slist-text"><strong>Forward:</strong> z₁=W₁x+b₁, a₁=ReLU(z₁), z₂=W₂a₁+b₂, ŷ=softmax(z₂)</span></div>
+          <div class="slist-item"><span class="slist-num">L</span><span class="slist-text"><strong>Loss:</strong> L = -Σ yᵢlog(ŷᵢ) (cross-entropy)</span></div>
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>∂L/∂z₂:</strong> = ŷ - y (softmax + CE gradient, clean result)</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>∂L/∂W₂:</strong> = (∂L/∂z₂) · a₁ᵀ &nbsp;&nbsp; <strong>∂L/∂b₂:</strong> = ∂L/∂z₂</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>∂L/∂a₁:</strong> = W₂ᵀ · (∂L/∂z₂)</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>∂L/∂z₁:</strong> = (∂L/∂a₁) ⊙ ReLU'(z₁) &nbsp; [⊙ = elementwise, ReLU'=1 if z>0]</span></div>
+          <div class="slist-item"><span class="slist-num">5</span><span class="slist-text"><strong>∂L/∂W₁:</strong> = (∂L/∂z₁) · xᵀ &nbsp;&nbsp; <strong>∂L/∂b₁:</strong> = ∂L/∂z₁</span></div>
+        </div>
+        <div class="note">Numerical gradient check: ∂L/∂w ≈ [L(w+ε) - L(w-ε)] / 2ε. Use ε=1e-5. Analytical and numerical gradients should match to 1e-5 precision.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 13 — FULL 38-WEEK ROADMAP TIMELINE ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 13 · Overview</div>
+      <div class="sh-title">38-Week Roadmap — Full Timeline</div>
+      <div class="sh-sub">Anthropic · OpenAI · DeepMind · ~820 hours total</div>
+    </div>
+    <span class="sh-tag tag-k">All months · Timeline</span>
+  </div>
+  <div class="sh-body">
+    <div class="week-grid">
+      <div class="wg-cell" style="background:rgba(212,160,23,.06);border-color:rgba(212,160,23,.3)">
+        <div class="wg-num">W0</div>
+        <div class="wg-title">Math Prerequisites</div>
+        <div class="wg-tag">Linear algebra, calculus, prob</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W1 · M1</div>
+        <div class="wg-title">Transformer Architecture</div>
+        <div class="wg-tag">Attention, RoPE, ALiBi</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W2 · M1</div>
+        <div class="wg-title">BERT + Scaling Laws</div>
+        <div class="wg-tag">Kaplan, Chinchilla, BPE</div>
+      </div>
+      <div class="wg-cell" style="background:rgba(212,160,23,.06);border-color:rgba(212,160,23,.3)">
+        <div class="wg-num">W3 · M1 ★</div>
+        <div class="wg-title">Modern Architectures</div>
+        <div class="wg-tag">MoE, Mamba/SSM, GQA</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W4 · M1</div>
+        <div class="wg-title">RAG Evaluation</div>
+        <div class="wg-tag">RAGAS, BM25, hybrid search</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W5 · M2</div>
+        <div class="wg-title">RAG + Security</div>
+        <div class="wg-tag">HyDE, reranking, Prompt Guard</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W6 · M2</div>
+        <div class="wg-title">Production RAG API</div>
+        <div class="wg-tag">FastAPI, Redis, Docker, CI</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W7 · M2</div>
+        <div class="wg-title">LoRA + QLoRA + DoRA</div>
+        <div class="wg-tag">Fine-tuning foundations</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W8 · M2</div>
+        <div class="wg-title">DPO + SimPO</div>
+        <div class="wg-tag">Alignment, preference data</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W9 · M3</div>
+        <div class="wg-title">Data Curation</div>
+        <div class="wg-tag">Synthetic data, Self-Instruct</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W10 · M3</div>
+        <div class="wg-title">vLLM Serving</div>
+        <div class="wg-tag">PagedAttention, benchmarks</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W11 · M3</div>
+        <div class="wg-title">RAFT</div>
+        <div class="wg-tag">RAG + fine-tuning combined</div>
+      </div>
+      <div class="wg-cell cap">
+        <div class="wg-num">W12 · M3 ✦</div>
+        <div class="wg-title">Capstone #2</div>
+        <div class="wg-tag">Fine-tuned LLM pipeline</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W13 · M4</div>
+        <div class="wg-title">ReAct + CoT + ToT</div>
+        <div class="wg-tag">Agent foundations</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W14 · M4</div>
+        <div class="wg-title">Structured Outputs</div>
+        <div class="wg-tag">Instructor, tool use, AgentBench</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W15 · M4</div>
+        <div class="wg-title">Multi-Agent + STORM</div>
+        <div class="wg-tag">Supervisor/worker pattern</div>
+      </div>
+      <div class="wg-cell cap">
+        <div class="wg-num">W16 · M4 ✦</div>
+        <div class="wg-title">Capstone #3 + MCP</div>
+        <div class="wg-tag">Research agent + MCP server</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W17 · M5</div>
+        <div class="wg-title">CI Evals</div>
+        <div class="wg-tag">DeepEval, pytest, GitHub Actions</div>
+      </div>
+      <div class="wg-cell" style="background:rgba(212,160,23,.06);border-color:rgba(212,160,23,.3)">
+        <div class="wg-num">W18 · M5 ★</div>
+        <div class="wg-title">LLM Security</div>
+        <div class="wg-tag">GCG, red-teaming, Garak</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W19 · M5</div>
+        <div class="wg-title">Kubernetes</div>
+        <div class="wg-tag">k8s, HPA, Prometheus, Grafana</div>
+      </div>
+      <div class="wg-cell cap">
+        <div class="wg-num">W20 · M5 ✦</div>
+        <div class="wg-title">Capstone #1</div>
+        <div class="wg-tag">Production RAG API</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W21 · M6</div>
+        <div class="wg-title">Distributed Training</div>
+        <div class="wg-tag">FlashAttention, DDP, ZeRO</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W22 · M6</div>
+        <div class="wg-title">Mech. Interpretability</div>
+        <div class="wg-tag">SAE, superposition, steering</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W23 · M6</div>
+        <div class="wg-title">RLHF + CAI + RLAIF</div>
+        <div class="wg-tag">InstructGPT, Constitutional AI</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W24 · M6</div>
+        <div class="wg-title">LeetCode + ML Design</div>
+        <div class="wg-tag">DSA, system design, scratch impl.</div>
+      </div>
+      <div class="wg-cell" style="background:rgba(124,77,204,.06);border-color:rgba(124,77,204,.25)">
+        <div class="wg-num">W25–28 · M7</div>
+        <div class="wg-title">Specialization Track</div>
+        <div class="wg-tag">A: Multimodal · B: Safety · C: Code</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W29 · M8</div>
+        <div class="wg-title">Portfolio Polish</div>
+        <div class="wg-tag">READMEs, demos, arXiv, blog</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W30–31 · M8</div>
+        <div class="wg-title">Mock Interviews + OSS</div>
+        <div class="wg-tag">interviewing.io, contributions</div>
+      </div>
+      <div class="wg-cell">
+        <div class="wg-num">W32–36 · M9</div>
+        <div class="wg-title">Applications + Interviews</div>
+        <div class="wg-tag">Apply, network, negotiate</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:.8rem;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--tx2);font-family:'JetBrains Mono',monospace"><div style="width:10px;height:10px;border-radius:2px;background:rgba(82,72,212,.08);border:1px solid rgba(82,72,212,.25)"></div>Capstone ✦</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--tx2);font-family:'JetBrains Mono',monospace"><div style="width:10px;height:10px;border-radius:2px;background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.3)"></div>New in v3 ★</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--tx2);font-family:'JetBrains Mono',monospace"><div style="width:10px;height:10px;border-radius:2px;background:rgba(124,77,204,.07);border:1px solid rgba(124,77,204,.25)"></div>Specialization</div>
+    </div>
+    <div class="label">4 Capstones — What You Ship</div>
+    <div class="three-col">
+      <div class="iq"><div class="iq-q">✦ Capstone #1 (W20)</div><div class="iq-a">Production RAG API — LiteLLM + Langfuse + Redis + Guardrails + security + k8s + CI evals. Load tested to 100 concurrent users.</div></div>
+      <div class="iq"><div class="iq-q">✦ Capstone #2 (W12)</div><div class="iq-a">Fine-tuned LLM pipeline — synthetic data → QLoRA → DPO/SimPO → vLLM → RAGAS → Langfuse. End-to-end with Loom demo.</div></div>
+      <div class="iq"><div class="iq-q">✦ Capstone #3 (W16)</div><div class="iq-a">Multi-agent Research System — arXiv agent + custom MCP server + persistent memory + LangSmith traces. Works as Claude Desktop extension.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 14 — SEBASTIAN RASCHKA RESOURCE MAP ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 14 · All months</div>
+      <div class="sh-title">Sebastian Raschka — Complete Resource Map</div>
+      <div class="sh-sub">Book · Newsletter · YouTube · Blog posts mapped to each roadmap week</div>
+    </div>
+    <span class="sh-tag tag-y">All months · Raschka</span>
+  </div>
+  <div class="sh-body">
+    <div style="padding:.6rem .9rem;background:rgba(212,160,23,.05);border:1px solid rgba(212,160,23,.2);border-radius:6px;margin-bottom:.8rem">
+      <div style="font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;color:var(--tx)">Why Sebastian Raschka for this roadmap</div>
+      <div style="font-size:.75rem;color:var(--tx2);margin-top:3px;line-height:1.5">Professor-turned-Lightning AI researcher. Author of the best LLM-from-scratch book. His writing style is exceptionally clear — he explains math at the right level for someone building implementations, not just reading theory. Every resource below maps directly to a specific week.</div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-book">book</span>
+      <div class="res-info">
+        <div class="res-name">Build a Large Language Model From Scratch <span class="res-week">W1–W2 · Primary</span></div>
+        <div class="res-desc">Implements GPT from token embeddings to RLHF fine-tuning in pure PyTorch. Each chapter maps to a week in Month 1–2. Use this as your coding companion alongside the papers. GitHub: rasbt/LLMs-from-scratch</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">newsletter</span>
+      <div class="res-info">
+        <div class="res-name">Ahead of AI — Weekly Newsletter <span class="res-week">All months · Subscribe</span></div>
+        <div class="res-desc">Best ML research newsletter. Every issue covers 3–5 new papers with clear explanations. Subscribe and read every issue — it keeps you current without having to read every paper yourself. magazine.sebastianraschka.com</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-video">youtube</span>
+      <div class="res-info">
+        <div class="res-name">Sebastian Raschka YouTube Channel <span class="res-week">W1–W8 · Core</span></div>
+        <div class="res-desc">Step-by-step lecture videos covering transformers, fine-tuning, evaluation. Pairs directly with the book chapters. youtube.com/@SebastianRaschka</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">blog</span>
+      <div class="res-info">
+        <div class="res-name">Understanding Large Language Models (survey) <span class="res-week">W0 · Read first</span></div>
+        <div class="res-desc">Comprehensive survey of LLM architectures, training, and alignment. Read before starting Week 1 — gives you the map before you explore the territory. magazine.sebastianraschka.com/p/understanding-large-language-models</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">blog</span>
+      <div class="res-info">
+        <div class="res-name">Finetuning LLMs with LoRA and QLoRA: Insights from Hundreds of Experiments <span class="res-week">W7 · Essential</span></div>
+        <div class="res-desc">The most useful LoRA hyperparameter guide. Empirical findings on rank, alpha, target modules, learning rates from hundreds of real runs. Read before you start your first QLoRA experiment. magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">blog</span>
+      <div class="res-info">
+        <div class="res-name">Improving LoRA: From DoRA to QLoRA and Beyond <span class="res-week">W7 · After LoRA paper</span></div>
+        <div class="res-desc">Full comparison of PEFT methods with empirical results. Answers the LoRA vs DoRA vs QLoRA question definitively. magazine.sebastianraschka.com/p/lora-and-dora-from-scratch</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">blog</span>
+      <div class="res-info">
+        <div class="res-name">LLM Training: RLHF and Its Variants <span class="res-week">W23 · Alongside InstructGPT</span></div>
+        <div class="res-desc">Clearest written explanation of the full RLHF pipeline — SFT, reward model, PPO — with PyTorch code. Read alongside the InstructGPT paper as a complement. magazine.sebastianraschka.com/p/llm-training-rlhf-and-its-variants</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">blog</span>
+      <div class="res-info">
+        <div class="res-name">LLM Evaluation Deep Dive <span class="res-week">W17 · Before DeepEval</span></div>
+        <div class="res-desc">Comprehensive guide to LLM evaluation metrics, LLM-as-judge methodology, and benchmark design. Read before setting up your CI eval pipeline. magazine.sebastianraschka.com/p/llm-evaluation</div>
+      </div>
+    </div>
+    <div class="res-row">
+      <span class="res-type rt-blog">blog</span>
+      <div class="res-info">
+        <div class="res-name">Model Merging, Mixture of Experts, and More <span class="res-week">W3 · MoE week</span></div>
+        <div class="res-desc">Deep dive into MoE architectures, model merging techniques, and sparse activation. Pairs with Mixtral paper. magazine.sebastianraschka.com/p/research-papers-in-january-2024</div>
+      </div>
+    </div>
+    <div class="res-row" style="border:none">
+      <span class="res-type rt-course">course</span>
+      <div class="res-info">
+        <div class="res-name">Introduction to Deep Learning (course notes) <span class="res-week">W0 · Math check</span></div>
+        <div class="res-desc">Raschka's full university course materials — free on GitHub. Covers backprop, CNNs, RNNs before transformers. Good for filling gaps found in Week 0 self-check. github.com/rasbt/stat453-deep-learning-ss21</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 15 — PAPER ANNOTATION GUIDE ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 15 · All months</div>
+      <div class="sh-title">How to Read and Annotate ML Papers</div>
+      <div class="sh-sub">Three-pass method · What to annotate · How to take notes</div>
+    </div>
+    <span class="sh-tag tag-w">All months · Paper reading</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">The Three-Pass Method</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Pass 1 — 10 minutes:</strong> Read title, abstract, intro, conclusion, all figure captions. Decide: is this worth a full read? What problem does it solve?</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Pass 2 — 1 hour:</strong> Read fully but skip dense proofs. Understand every figure. Mark equations you don't understand. Write the core idea in one sentence in the margin.</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>Pass 3 — 2–4 hours (print-worthy papers only):</strong> Derive every equation. Understand every proof. Implement from scratch. Find at least one flaw or open question.</span></div>
+        </div>
+        <div class="note">For this roadmap: do Pass 3 only on the 7 Tier-1 print papers. Do Pass 2 on the remaining 30–40 papers. Do Pass 1 on papers you're skimming for breadth.</div>
+        <div class="label">What to Write in Margins</div>
+        <ul class="blist">
+          <li><strong>✓</strong> — I understand this. Can re-derive.</li>
+          <li><strong>?</strong> — I don't fully understand. Come back.</li>
+          <li><strong>!</strong> — Important result. Likely interview question.</li>
+          <li><strong>★</strong> — Key insight. Worth memorizing.</li>
+          <li><strong>→impl</strong> — I should implement this.</li>
+          <li><strong>cf.</strong> — Compare with [other paper].</li>
+          <li>Circle undefined symbols. Write definitions in margin.</li>
+          <li>Draw alternative diagrams if figures are unclear.</li>
+          <li>Write the "why" next to every equation — not just what.</li>
+        </ul>
+        <div class="label">After Reading — Feynman Test</div>
+        <div class="tldr">Close the paper. Explain the core idea out loud as if teaching a first-year student. If you stumble, go back. You only truly understand what you can teach.</div>
+      </div>
+      <div>
+        <div class="label">For Each Paper — Write a One-Page Summary</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Problem</span><span class="kv-val">What problem does this paper solve? What was broken before?</span></div>
+          <div class="kv-row"><span class="kv-key">Key idea</span><span class="kv-val">One sentence. What is the novel contribution?</span></div>
+          <div class="kv-row"><span class="kv-key">Method</span><span class="kv-val">How does it work? Key equations + intuition.</span></div>
+          <div class="kv-row"><span class="kv-key">Results</span><span class="kv-val">What did they show? Key table/figure numbers.</span></div>
+          <div class="kv-row"><span class="kv-key">Limitations</span><span class="kv-val">What doesn't this solve? What follow-up papers address this?</span></div>
+          <div class="kv-row"><span class="kv-key">My question</span><span class="kv-val">Something you'd ask the author if you could.</span></div>
+        </div>
+        <div class="label">12 Papers — What to Focus On</div>
+        <table class="ctable">
+          <tr><th>Paper</th><th>Focus on</th></tr>
+          <tr><td>Attention Is All You Need</td><td>Derive every equation in §3. Especially §3.2 attention, §3.4 embeddings.</td></tr>
+          <tr><td>LoRA</td><td>§4 — the BA decomposition. Why r ≪ min(d,k) works.</td></tr>
+          <tr><td>QLoRA</td><td>§2.1 NF4 quantization. §3 double quantization. Memory calculation in Table 1.</td></tr>
+          <tr><td>DPO</td><td>§4 — the full derivation from RLHF to DPO. The Bradley-Terry model connection.</td></tr>
+          <tr><td>InstructGPT</td><td>§3 — RM training. §3 PPO setup. Table 6 alignment tax results.</td></tr>
+          <tr><td>ReAct</td><td>Figure 1 — the TAO loop. Table 1 benchmark comparison.</td></tr>
+          <tr><td>CoT</td><td>Figure 1 — standard vs chain-of-thought. Table 2 benchmark results.</td></tr>
+          <tr><td>FlashAttention-2</td><td>Algorithm 1 (tiling). §3 recomputation explanation. Figure 2 memory comparison.</td></tr>
+          <tr><td>Toy Models of Superposition</td><td>Every figure. §3 the geometry of superposition. §5 implications.</td></tr>
+          <tr><td>Constitutional AI</td><td>Figure 1 — the pipeline. §3 SL-CAI. §4 RL-CAI with RLAIF.</td></tr>
+          <tr><td>BERT</td><td>§3.1 pre-training objectives. Figure 1 architecture.</td></tr>
+          <tr><td>Scaling Laws</td><td>Figure 1, 6, 7. The power-law plots. §4 allocation.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 16 — TOKENIZATION + BERT + EMBEDDINGS ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 16 · Week 2</div>
+      <div class="sh-title">Tokenization + Embeddings + BERT</div>
+      <div class="sh-sub">BPE · WordPiece · BERT pre-training · Word2Vec · Sentence embeddings</div>
+    </div>
+    <span class="sh-tag tag-w">W2 · Foundations</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">BPE Tokenizer — How It Works</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Initialize:</strong> character vocabulary. Each word = sequence of chars + end-of-word token ⟨/w⟩</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Count pairs:</strong> find most frequent adjacent pair in corpus (e.g. "t h" appearing 800 times)</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>Merge:</strong> create new token "th". Replace all "t h" with "th" in corpus.</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>Repeat</strong> for N merge operations (GPT-2: 50,000 merges)</span></div>
+        </div>
+        <div class="note">BPE balances vocabulary size vs token length. Common words get single tokens. Rare words split into subwords. Unknown words handled via character fallback.</div>
+        <div class="label">Tokenizer Comparison</div>
+        <table class="ctable">
+          <tr><th>Method</th><th>Used by</th><th>Key difference</th></tr>
+          <tr><td>BPE</td><td>GPT-2/3/4, LLaMA</td><td>Frequency-based merges</td></tr>
+          <tr><td>WordPiece</td><td>BERT</td><td>Likelihood-based merges</td></tr>
+          <tr><td>SentencePiece</td><td>T5, LLaMA-2</td><td>Language-agnostic, no whitespace assumption</td></tr>
+          <tr><td>Unigram</td><td>XLNet, ALBERT</td><td>Probabilistic, can remove tokens</td></tr>
+        </table>
+        <div class="label">Embedding Types</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Token embed.</span><span class="kv-val">Token ID → dense vector (learned lookup table). Dim = d_model</span></div>
+          <div class="kv-row"><span class="kv-key">Positional</span><span class="kv-val">Encodes token position. Sinusoidal (fixed) or RoPE (rotated Q,K)</span></div>
+          <div class="kv-row"><span class="kv-key">Segment</span><span class="kv-val">BERT-specific: which sentence (A vs B) the token belongs to</span></div>
+          <div class="kv-row"><span class="kv-key">Sentence embed</span><span class="kv-val">Whole sentence → single vector. Use [CLS] token or mean pooling</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="label">BERT Pre-Training Objectives</div>
+        <div class="eq-label">Masked Language Modeling (MLM)</div>
+        <div class="eq">15% of tokens replaced:<br>80% → [MASK], 10% → random, 10% → unchanged<br>Predict original token from context</div>
+        <div class="eq-note">MLM forces bidirectional context — each token can attend to all others. Unlike GPT (left-to-right only).</div>
+        <div class="eq-label">Next Sentence Prediction (NSP)</div>
+        <div class="eq">Input: [CLS] Sentence A [SEP] Sentence B [SEP]<br>Predict: IsNext (50%) or NotNext (50%)</div>
+        <div class="eq-note">NSP is now considered less useful — RoBERTa removed it and improved BERT. But know it for the BERT paper.</div>
+        <div class="label">Fine-tuning BERT — Task Patterns</div>
+        <table class="ctable">
+          <tr><th>Task</th><th>Input</th><th>Output</th></tr>
+          <tr><td>Classification</td><td>[CLS] + text</td><td>[CLS] embedding → linear</td></tr>
+          <tr><td>Token labeling</td><td>[CLS] + text</td><td>Each token → linear</td></tr>
+          <tr><td>Question answering</td><td>[CLS] Q [SEP] A [SEP]</td><td>Start + end span</td></tr>
+          <tr><td>Sentence similarity</td><td>[CLS] S1 [SEP] S2 [SEP]</td><td>[CLS] → linear</td></tr>
+        </table>
+        <div class="label">Key Interview Questions</div>
+        <div class="iq"><div class="iq-q">Why does BERT use bidirectional attention while GPT uses causal?</div><div class="iq-a">BERT is designed for understanding tasks (classification, QA) where full context is available. GPT is designed for generation where future tokens aren't available at decode time. Different objectives → different attention masks.</div></div>
+        <div class="iq"><div class="iq-q">Why replace 10% of masked tokens with random tokens in MLM?</div><div class="iq-a">Without random replacement, the model learns that [MASK] tokens always need prediction and ignores non-masked tokens during fine-tuning. Random tokens force the model to maintain good representations of all tokens.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 17 — DATA CURATION + SYNTHETIC DATA ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 17 · Week 9</div>
+      <div class="sh-title">Data Curation + Synthetic Data Generation</div>
+      <div class="sh-sub">Self-Instruct · Phi-1 · MinHash dedup · ChatML format · Distilabel</div>
+    </div>
+    <span class="sh-tag tag-g">W9 · Data</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Data Quality Hierarchy (LIMA + Phi-1 insight)</div>
+        <div class="tldr">1000 expert-curated examples > 100,000 scraped examples. Quality signals: diversity, correctness, clarity, appropriate difficulty. Quantity is the last lever to pull.</div>
+        <div class="label">ChatML Format — Standard Fine-Tuning Structure</div>
+        <div class="eq">&lt;|im_start|&gt;system<br>You are a helpful assistant.&lt;|im_end|&gt;<br>&lt;|im_start|&gt;user<br>What is LoRA?&lt;|im_end|&gt;<br>&lt;|im_start|&gt;assistant<br>LoRA is...&lt;|im_end|&gt;</div>
+        <div class="eq-note">Used by Mistral, LLaMA-3, Qwen. Each conversation has system/user/assistant roles. im_start/im_end are special tokens added to vocabulary.</div>
+        <div class="label">Self-Instruct Pipeline (Wang et al., 2022)</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Seed tasks:</strong> 175 manually written instruction-response pairs</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Task generation:</strong> GPT samples 8 random seeds → generates 20 new instructions</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>Filter:</strong> remove exact duplicates, low-quality, non-English</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>Response gen:</strong> GPT generates response for each instruction</span></div>
+          <div class="slist-item"><span class="slist-num">5</span><span class="slist-text"><strong>Fine-tune:</strong> use instruction-response pairs to fine-tune base model</span></div>
+        </div>
+        <div class="note">Alpaca (Stanford) applied Self-Instruct to LLaMA using GPT-3.5 — generated 52K examples for $500. Result was competitive with InstructGPT-175B at the time.</div>
+      </div>
+      <div>
+        <div class="label">MinHash Near-Deduplication</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Shingling:</strong> convert each document to a set of n-grams (n=5)</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>MinHash:</strong> apply k hash functions to shingle set → k-dim signature vector</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>LSH:</strong> bucket similar signatures together (Jaccard similarity estimation)</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>Remove:</strong> keep one doc per near-duplicate cluster (Jaccard > 0.8)</span></div>
+        </div>
+        <div class="eq-label">Jaccard similarity</div>
+        <div class="eq">J(A,B) = |A ∩ B| / |A ∪ B|<br>MinHash estimates this in O(k) instead of O(|A|+|B|)</div>
+        <div class="label">Data Pipeline Checklist</div>
+        <table class="ctable">
+          <tr><th>Stage</th><th>Action</th><th>Tool</th></tr>
+          <tr><td>Collect</td><td>Scrape + download domain data</td><td>requests, BeautifulSoup</td></tr>
+          <tr><td>Clean</td><td>Remove HTML, short docs, non-target-lang</td><td>langdetect, regex</td></tr>
+          <tr><td>Deduplicate</td><td>Exact + near dedup (Jaccard > 0.8)</td><td>datasketch, MinHash</td></tr>
+          <tr><td>Quality filter</td><td>Perplexity filter, length filter</td><td>KenLM, custom</td></tr>
+          <tr><td>Format</td><td>Convert to ChatML</td><td>datasets, custom</td></tr>
+          <tr><td>Split</td><td>Train/val/test (90/5/5)</td><td>sklearn, datasets</td></tr>
+          <tr><td>Log stats</td><td>Token count, length dist., topic dist.</td><td>W&B, pandas</td></tr>
+        </table>
+        <div class="label">Phi-1 Key Finding (Gunasekar et al., 2023)</div>
+        <div class="tldr">"Textbooks are all you need" — a 1.3B model trained on 1B synthetic textbook-quality tokens matched or exceeded 12B+ models trained on 100B web-scraped tokens. The synthetic data was generated by GPT-4 with explicit "write a clear, pedagogical explanation" prompts.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 18 — SPECIALIZATION TRACKS ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 18 · Month 7</div>
+      <div class="sh-title">Specialization Tracks — M7 Deep Dive</div>
+      <div class="sh-sub">Track A: Multimodal · Track B: Alignment/Safety · Track C: Reasoning+Code</div>
+    </div>
+    <span class="sh-tag tag-p">M7 · Specialization</span>
+  </div>
+  <div class="sh-body">
+    <div class="three-col">
+      <div>
+        <div style="padding:.5rem .7rem;background:rgba(26,184,154,.06);border:1px solid rgba(26,184,154,.2);border-radius:6px;margin-bottom:.6rem">
+          <div style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:800;color:var(--ac2)">Track A — Multimodal</div>
+          <div style="font-size:.68rem;color:var(--tx2);margin-top:2px">Target: Google DeepMind</div>
+        </div>
+        <div class="label">Papers</div>
+        <ul class="blist">
+          <li>CLIP (Radford, 2021) arXiv:2103.00020</li>
+          <li>LLaVA (Liu, 2023) arXiv:2304.08485</li>
+          <li>Flamingo (Alayrac, 2022) arXiv:2204.14198</li>
+          <li>Gemini 1.5 (2024) arXiv:2403.05530</li>
+          <li>InternVL2 (Chen, 2024) arXiv:2404.16821</li>
+        </ul>
+        <div class="label">Key Concepts</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">CLIP loss</span><span class="kv-val">Contrastive: maximize cos(img,text) for matched pairs, minimize for unmatched</span></div>
+          <div class="kv-row"><span class="kv-key">Visual tokens</span><span class="kv-val">Image patches → embeddings fed as context to LLM alongside text tokens</span></div>
+          <div class="kv-row"><span class="kv-key">Cross-modal</span><span class="kv-val">LLM attends over both text tokens and image patch embeddings</span></div>
+          <div class="kv-row"><span class="kv-key">JAX/Flax</span><span class="kv-val">Google's ML framework. JIT compilation, functional style, TPU-native</span></div>
+        </div>
+        <div class="label">Build Deliverable</div>
+        <ul class="blist">
+          <li>CLIP image search engine</li>
+          <li>LLaVA multimodal QA pipeline</li>
+          <li>PDF → OCR + layout → VLM QA</li>
+          <li>Simple JAX model rewrite</li>
+        </ul>
+      </div>
+      <div>
+        <div style="padding:.5rem .7rem;background:rgba(124,77,204,.06);border:1px solid rgba(124,77,204,.2);border-radius:6px;margin-bottom:.6rem">
+          <div style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:800;color:var(--pu)">Track B — Alignment/Safety</div>
+          <div style="font-size:.68rem;color:var(--tx2);margin-top:2px">Target: Anthropic</div>
+        </div>
+        <div class="label">Papers</div>
+        <ul class="blist">
+          <li>Constitutional AI (Bai, 2022) arXiv:2212.08073</li>
+          <li>Sleeper Agents (Hubinger, 2024) arXiv:2401.05566</li>
+          <li>Representation Engineering (Zou, 2023) arXiv:2310.01405</li>
+          <li>Activation Steering (Turner, 2023) arXiv:2308.10248</li>
+          <li>ARENA Chapter 2 — arena-uk.streamlit.app</li>
+        </ul>
+        <div class="label">Key Concepts</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Deceptive align.</span><span class="kv-val">Model appears safe in training but activates harmful behavior on trigger (Sleeper Agents)</span></div>
+          <div class="kv-row"><span class="kv-key">Constitution</span><span class="kv-val">Set of principles used to critique + revise model outputs (no human labels)</span></div>
+          <div class="kv-row"><span class="kv-key">RepE</span><span class="kv-val">Linear reading vectors identify concepts in representation space — more robust than probing</span></div>
+          <div class="kv-row"><span class="kv-key">ActAdd</span><span class="kv-val">Add steering vectors to residual stream to shift model behavior at inference</span></div>
+        </div>
+        <div class="label">Build Deliverable</div>
+        <ul class="blist">
+          <li>CAI critique-revise-prefer pipeline</li>
+          <li>Activation steering experiment</li>
+          <li>Automated red-teaming pipeline</li>
+          <li>Replicate Sleeper Agents result</li>
+        </ul>
+      </div>
+      <div>
+        <div style="padding:.5rem .7rem;background:rgba(82,72,212,.06);border:1px solid rgba(82,72,212,.2);border-radius:6px;margin-bottom:.6rem">
+          <div style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:800;color:var(--ac)">Track C — Reasoning+Code</div>
+          <div style="font-size:.68rem;color:var(--tx2);margin-top:2px">Target: OpenAI</div>
+        </div>
+        <div class="label">Papers</div>
+        <ul class="blist">
+          <li>SWE-bench (Jimenez, 2023) arXiv:2310.06770</li>
+          <li>Let's Verify Step by Step (Lightman, 2023) arXiv:2305.20050</li>
+          <li>Scaling Test-Time Compute (Snell, 2024) arXiv:2408.03314</li>
+          <li>AlphaCode 2 (DeepMind, 2023)</li>
+        </ul>
+        <div class="label">Key Concepts</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">SWE-bench</span><span class="kv-val">246 real GitHub issues. Eval: does model fix the bug and pass existing tests?</span></div>
+          <div class="kv-row"><span class="kv-key">PRM</span><span class="kv-val">Scores each reasoning step — catches "right answer, wrong method"</span></div>
+          <div class="kv-row"><span class="kv-key">Test-time scale</span><span class="kv-val">o1/o3: more inference compute → better reasoning. PRM guides beam search.</span></div>
+          <div class="kv-row"><span class="kv-key">Best-of-N</span><span class="kv-val">Generate N solutions, pick best by PRM score. Simple but effective baseline.</span></div>
+        </div>
+        <div class="label">Build Deliverable</div>
+        <ul class="blist">
+          <li>Code agent on SWE-bench-lite</li>
+          <li>PRM for step-by-step code scoring</li>
+          <li>Best-of-N vs PRM-beam comparison</li>
+          <li>Benchmark on 20 SWE-bench instances</li>
+        </ul>
+      </div>
+    </div>
+    <div class="label">Choosing Your Track</div>
+    <table class="ctable">
+      <tr><th>If you want to...</th><th>Pick</th><th>Why</th></tr>
+      <tr><td>Work on Gemini, Gato, multimodal foundation models</td><td class="good">Track A</td><td>DeepMind's primary research direction. JAX fluency helps significantly.</td></tr>
+      <tr><td>Work on Claude, interpretability, safety research</td><td class="good">Track B</td><td>Anthropic's core. SAE work + CAI pipeline = direct match to their research agenda.</td></tr>
+      <tr><td>Work on o1/o3, Codex, reasoning models</td><td class="good">Track C</td><td>OpenAI's current focus. PRM + test-time scaling = exactly what they're hiring for.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ SHEET 19 — PORTFOLIO + JOB STRATEGY ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 19 · Month 8–9</div>
+      <div class="sh-title">Portfolio + Job Strategy</div>
+      <div class="sh-sub">Hosting · Networking · What labs actually want to see · Salary benchmarks</div>
+    </div>
+    <span class="sh-tag tag-k">M8–M9 · Jobs</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Hosting Your Roadmap (track progress)</div>
+        <table class="ctable">
+          <tr><th>Option</th><th>How</th><th>Best for</th></tr>
+          <tr><td>GitHub Pages</td><td>Push index.html → Settings → Pages</td><td class="good">Recommended. Free, fast, URL stays stable.</td></tr>
+          <tr><td>Netlify Drop</td><td>Drag index.html to drop.netlify.app</td><td>Instant — no account needed.</td></tr>
+          <tr><td>Vercel</td><td>Connect GitHub repo → auto-deploys</td><td>Best if you update the file often.</td></tr>
+        </table>
+        <div class="note">localStorage is device-specific. Use the Export Progress button in the app to get a URL encoding your progress — open that URL on any device to restore.</div>
+        <div class="label">What Research Labs Actually Hire For</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Anthropic</span><span class="kv-val">Interpretability experiments, safety research, strong Python + PyTorch, Constitutional AI understanding</span></div>
+          <div class="kv-row"><span class="kv-key">OpenAI</span><span class="kv-val">RLHF/alignment, code generation, strong DSA (hard LeetCode), research papers published or in progress</span></div>
+          <div class="kv-row"><span class="kv-key">DeepMind</span><span class="kv-val">Multimodal, JAX fluency, strong theoretical ML, research contribution (workshop paper or arXiv)</span></div>
+        </div>
+        <div class="label">4 Capstones — Positioning Statement</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Capstone #1</span><span class="kv-val">Proves: production engineering. For MLOps/Applied scientist roles.</span></div>
+          <div class="kv-row"><span class="kv-key">Capstone #2</span><span class="kv-val">Proves: full training pipeline. For fine-tuning/alignment engineer roles.</span></div>
+          <div class="kv-row"><span class="kv-key">Capstone #3</span><span class="kv-val">Proves: systems thinking. For research engineer / applied AI roles.</span></div>
+          <div class="kv-row"><span class="kv-key">Specialization</span><span class="kv-val">Proves: depth. For research scientist / research engineer roles.</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="label">Cold Outreach Template (3 sentences max)</div>
+        <div class="eq" style="color:var(--tx2);font-size:.7rem;line-height:1.6">Hi [name],<br>I read your paper on [specific paper] and implemented [specific part] — I found [specific observation].<br>I'm preparing for research roles and would love to ask you one question: [specific, answerable question].<br>Here's my implementation: [GitHub link].</div>
+        <div class="eq-note">Never ask for a job in the first message. The goal is a reply. A reply leads to a conversation. A conversation leads to a referral.</div>
+        <div class="label">Salary Benchmarks (levels.fyi — 2024)</div>
+        <table class="ctable">
+          <tr><th>Role</th><th>Company</th><th>Total Comp (USD)</th></tr>
+          <tr><td>Research Engineer L4</td><td>Anthropic</td><td>$250K–$400K</td></tr>
+          <tr><td>Research Scientist</td><td>Anthropic</td><td>$300K–$500K</td></tr>
+          <tr><td>Research Engineer L5</td><td>OpenAI</td><td>$300K–$500K</td></tr>
+          <tr><td>Research Scientist</td><td>OpenAI</td><td>$350K–$600K</td></tr>
+          <tr><td>Research Engineer</td><td>DeepMind</td><td>$200K–$350K</td></tr>
+          <tr><td>Staff Research Eng.</td><td>DeepMind</td><td>$300K–$450K</td></tr>
+        </table>
+        <div class="note">Indian remote roles: typically 30–40% of US comp. Pune-based startups building on LLMs: ₹15–35 LPA for strong LLM engineers with portfolio. International remote: negotiate for 60–80% of US comp.</div>
+        <div class="label">Timeline Checkpoints</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Week 8</span><span class="kv-val">Fine-tuned model on HuggingFace Hub with eval scores</span></div>
+          <div class="kv-row"><span class="kv-key">Week 16</span><span class="kv-val">Working MCP server + research agent demo video live</span></div>
+          <div class="kv-row"><span class="kv-key">Week 24</span><span class="kv-val">ml-interview-prep repo public with 5 from-scratch implementations</span></div>
+          <div class="kv-row"><span class="kv-key">Week 28</span><span class="kv-val">arXiv preprint submitted</span></div>
+          <div class="kv-row"><span class="kv-key">Week 32</span><span class="kv-val">All 4 capstones live + blog + open source contributions</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET 20 — SKILLS YOU GAIN ═══ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 20 · Complete</div>
+      <div class="sh-title">Skills You Gain — Complete Reference</div>
+      <div class="sh-sub">What you can do, explain, build, and derive after each month</div>
+    </div>
+    <span class="sh-tag tag-k">All months · Skills</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">After Month 1 (W0–W4)</div>
+        <ul class="blist">
+          <li>Derive scaled dot-product attention from scratch</li>
+          <li>Explain RoPE vs sinusoidal PE — when each is preferred</li>
+          <li>Implement a full transformer encoder-decoder in PyTorch</li>
+          <li>Explain Kaplan vs Chinchilla disagreement with numbers</li>
+          <li>Build a BPE tokenizer on a custom corpus</li>
+          <li>Explain MoE routing + load balancing</li>
+          <li>Explain the Mamba selective scan mechanism</li>
+          <li>Build and evaluate a hybrid RAG pipeline with RAGAS</li>
+        </ul>
+        <div class="label">After Month 2 (W5–W8)</div>
+        <ul class="blist">
+          <li>Add prompt injection detection to any LLM pipeline</li>
+          <li>Build a production FastAPI service with streaming + CI evals</li>
+          <li>Derive LoRA rank decomposition — explain why r≪d works</li>
+          <li>Implement QLoRA fine-tuning — understand NF4 quantization</li>
+          <li>Derive DPO from the RLHF objective via Bradley-Terry</li>
+          <li>Run SFT → DPO → SimPO training pipeline end-to-end</li>
+          <li>Evaluate alignment with LLM-as-judge (DeepEval)</li>
+        </ul>
+        <div class="label">After Month 3 (W9–W12)</div>
+        <ul class="blist">
+          <li>Build a synthetic data generation pipeline (Self-Instruct style)</li>
+          <li>Explain why Phi-style data beats web scrapes at same token count</li>
+          <li>Serve a fine-tuned model with vLLM — explain PagedAttention</li>
+          <li>Benchmark: tokens/sec, TTFT, p50/p95/p99 latency under load</li>
+          <li>Build a RAFT training dataset with distractor contexts</li>
+          <li>Show measurable RAGAS improvement: base+RAG vs RAFT+RAG</li>
+        </ul>
+        <div class="label">After Month 4 (W13–W16)</div>
+        <ul class="blist">
+          <li>Implement ReAct loop from scratch — no frameworks</li>
+          <li>Build a LangGraph agent with identical behavior</li>
+          <li>Implement Tree of Thoughts for multi-branch reasoning</li>
+          <li>Add Pydantic validation — zero silent agent failures</li>
+          <li>Evaluate agents quantitatively (AgentBench-style)</li>
+          <li>Build + publish a custom MCP server (works in Claude Desktop)</li>
+          <li>Build a STORM-style collaborative multi-agent system</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">After Month 5 (W17–W20)</div>
+        <ul class="blist">
+          <li>Write DeepEval custom metrics as pytest tests</li>
+          <li>Set up GitHub Actions CI that fails PRs on eval score drop</li>
+          <li>Run automated red-teaming on any LLM with Garak</li>
+          <li>Build a 4-layer security pipeline with measurable detection rates</li>
+          <li>Write a publishable LLM security audit report</li>
+          <li>Deploy to Kubernetes with HPA autoscaling</li>
+          <li>Show 100 concurrent users on k6 load test</li>
+        </ul>
+        <div class="label">After Month 6 (W21–W24)</div>
+        <ul class="blist">
+          <li>Explain FlashAttention tiling — why O(N²)→O(N) HBM reads</li>
+          <li>Implement multi-GPU DDP training with gradient profiling</li>
+          <li>Explain ZeRO stages 1/2/3 and when to use each</li>
+          <li>Train a sparse autoencoder — find interpretable features</li>
+          <li>Run activation steering experiments — shift model behavior</li>
+          <li>Build full RLHF + RLAIF pipeline (mirrors Anthropic/OpenAI training)</li>
+          <li>Implement attention + backprop in under 45 minutes from memory</li>
+        </ul>
+        <div class="label">After Month 7 (W25–W28)</div>
+        <ul class="blist">
+          <li>Track A: CLIP image search + LLaVA VQA + JAX model</li>
+          <li>Track B: CAI pipeline + activation steering + safety eval</li>
+          <li>Track C: Code agent on SWE-bench + PRM for reasoning</li>
+          <li>arXiv preprint submitted on specialization project</li>
+          <li>Can discuss your specialization area at researcher level</li>
+        </ul>
+        <div class="label">After Months 8–9 (W29–W36)</div>
+        <ul class="blist">
+          <li>4 capstones with demo videos, eval results, architecture diagrams</li>
+          <li>4 technical blog posts published on Medium/Substack</li>
+          <li>2–3 merged open source contributions (HuggingFace, vLLM, LlamaIndex)</li>
+          <li>Mock interview fluency — explain any paper in 5 minutes</li>
+          <li>Active ML Twitter presence with engaged research community following</li>
+          <li>Cold outreach conversations with researchers at target labs</li>
+        </ul>
+        <div class="note">The one-sentence version: after this roadmap, you can build, train, evaluate, secure, and explain every component of a modern LLM system — and do so at the level expected of a Research Engineer at Anthropic, OpenAI, or DeepMind.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /sheets -->
+</body>
+</html>

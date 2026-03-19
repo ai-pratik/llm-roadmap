@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LLM Research Engineer — Printable Reference Sheets</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ─── SCREEN STYLES ─── */
+:root{
+  --bg:#f8f7fc;
+  --surf:#ffffff;
+  --b1:#e2e0f0;
+  --b2:#ccc8e8;
+  --tx:#1a1830;
+  --tx2:#5a5880;
+  --tx3:#9896b8;
+  --ac:#5248d4;
+  --ac2:#1ab89a;
+  --ac3:#d4a017;
+  --ac4:#d44848;
+  --pu:#7c4dcc;
+  --code-bg:#f0eefa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);font-size:11pt;line-height:1.55}
+
+/* SCREEN NAV */
+.screen-nav{background:var(--tx);color:#fff;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.screen-nav h1{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:-.02em}
+.screen-nav p{font-size:.78rem;opacity:.7;font-family:'JetBrains Mono',monospace}
+.print-btn{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:6px 14px;border-radius:5px;background:var(--ac);color:#fff;border:none;cursor:pointer;letter-spacing:.05em}
+
+/* SHEET CONTAINER */
+.sheets{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.sheet{background:var(--surf);border:1px solid var(--b1);border-radius:10px;margin-bottom:2.5rem;overflow:hidden;page-break-inside:avoid;break-inside:avoid}
+
+/* SHEET HEADER */
+.sh-head{padding:.8rem 1.2rem .6rem;border-bottom:1px solid var(--b1);display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+.sh-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tx3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.1em}
+.sh-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:var(--tx)}
+.sh-sub{font-size:.72rem;color:var(--tx2);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.sh-tag{font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:20px;border:1px solid;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.tag-w{border-color:rgba(82,72,212,.4);color:var(--ac);background:rgba(82,72,212,.07)}
+.tag-g{border-color:rgba(26,184,154,.4);color:var(--ac2);background:rgba(26,184,154,.07)}
+.tag-y{border-color:rgba(212,160,23,.4);color:var(--ac3);background:rgba(212,160,23,.07)}
+.tag-r{border-color:rgba(212,72,72,.4);color:var(--ac4);background:rgba(212,72,72,.07)}
+.tag-p{border-color:rgba(124,77,204,.4);color:var(--pu);background:rgba(124,77,204,.07)}
+
+/* SHEET BODY */
+.sh-body{padding:1rem 1.2rem}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem}
+
+/* SECTION LABEL */
+.label{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3);margin:.9rem 0 .35rem;display:flex;align-items:center;gap:8px}
+.label::after{content:'';flex:1;height:1px;background:var(--b1)}
+.label:first-child{margin-top:0}
+
+/* EQUATION BOX */
+.eq{background:var(--code-bg);border:1px solid var(--b1);border-radius:6px;padding:.6rem .8rem;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ac);line-height:1.7;margin:.3rem 0}
+.eq-label{font-size:.62rem;color:var(--tx3);margin-bottom:3px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em}
+.eq-note{font-size:.7rem;color:var(--tx2);margin-top:.3rem;font-style:italic;line-height:1.4}
+
+/* KEY-VALUE PAIRS */
+.kv{display:flex;flex-direction:column;gap:4px}
+.kv-row{display:flex;gap:6px;font-size:.78rem;line-height:1.4;padding:3px 0;border-bottom:1px dashed var(--b1)}
+.kv-row:last-child{border:none}
+.kv-key{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ac);min-width:90px;flex-shrink:0;font-weight:500}
+.kv-val{color:var(--tx2)}
+
+/* BULLET LIST */
+.blist{list-style:none;display:flex;flex-direction:column;gap:3px}
+.blist li{font-size:.78rem;color:var(--tx2);padding:2px 0;padding-left:12px;position:relative;line-height:1.4}
+.blist li::before{content:'·';position:absolute;left:0;color:var(--ac);font-weight:700}
+
+/* STEP LIST */
+.slist{display:flex;flex-direction:column;gap:5px}
+.slist-item{display:flex;gap:8px;font-size:.78rem;line-height:1.45}
+.slist-num{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--surf);background:var(--ac);border-radius:3px;width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.slist-text{color:var(--tx2)}
+.slist-text strong{color:var(--tx);font-weight:500}
+
+/* COMPARISON TABLE */
+.ctable{width:100%;border-collapse:collapse;font-size:.75rem}
+.ctable th{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;text-align:left;border-bottom:1.5px solid var(--b1);font-weight:500}
+.ctable td{padding:4px 8px;border-bottom:1px dashed var(--b1);vertical-align:top;color:var(--tx2);line-height:1.35}
+.ctable tr:last-child td{border:none}
+.ctable td:first-child{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac);font-weight:500}
+.ctable .good{color:var(--ac2)}
+.ctable .bad{color:var(--ac4)}
+.ctable .mid{color:var(--ac3)}
+
+/* FLOW DIAGRAM */
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:.3rem 0}
+.fbox{background:var(--code-bg);border:1px solid var(--b2);border-radius:5px;padding:4px 8px;font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--ac);white-space:nowrap}
+.farr{font-size:.7rem;color:var(--tx3)}
+.fbox-g{background:rgba(26,184,154,.08);border-color:rgba(26,184,154,.3);color:var(--ac2)}
+.fbox-y{background:rgba(212,160,23,.08);border-color:rgba(212,160,23,.3);color:var(--ac3)}
+.fbox-r{background:rgba(212,72,72,.08);border-color:rgba(212,72,72,.3);color:var(--ac4)}
+.fbox-p{background:rgba(124,77,204,.08);border-color:rgba(124,77,204,.3);color:var(--pu)}
+
+/* PAPER SUMMARY */
+.paper-ref{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tx3);margin-top:.2rem}
+.tldr{font-size:.8rem;color:var(--tx);line-height:1.5;padding:.5rem .7rem;background:rgba(82,72,212,.05);border-left:2px solid var(--ac);border-radius:0 5px 5px 0;margin:.4rem 0}
+
+/* NOTE BOX */
+.note{font-size:.75rem;color:var(--tx2);padding:.45rem .7rem;background:rgba(212,160,23,.07);border:1px solid rgba(212,160,23,.25);border-radius:5px;margin:.4rem 0;line-height:1.4}
+.note::before{content:'⚑ ';color:var(--ac3);font-weight:700}
+
+/* INTERVIEW CARD */
+.iq{background:rgba(82,72,212,.04);border:1px solid rgba(82,72,212,.12);border-radius:6px;padding:.55rem .8rem;margin:.35rem 0}
+.iq-q{font-size:.75rem;font-weight:500;color:var(--tx);margin-bottom:3px}
+.iq-a{font-size:.72rem;color:var(--tx2);line-height:1.4}
+
+/* DIVIDER */
+.div{height:1px;background:var(--b1);margin:.7rem 0}
+
+/* COMPLEXITY BADGE */
+.cx{font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:1px 5px;border-radius:3px}
+.cx-e{background:rgba(26,184,154,.1);color:var(--ac2)}
+.cx-m{background:rgba(212,160,23,.1);color:var(--ac3)}
+.cx-h{background:rgba(212,72,72,.1);color:var(--ac4)}
+
+/* ─── PRINT STYLES ─── */
+@media print{
+  @page{size:A4;margin:15mm 14mm}
+  body{font-size:9.5pt;background:#fff}
+  .screen-nav,.print-btn{display:none}
+  .sheets{padding:0;max-width:100%}
+  .sheet{border:1px solid #ddd;border-radius:0;margin-bottom:0;page-break-after:always;break-after:page;page-break-inside:avoid}
+  .sheet:last-child{page-break-after:auto}
+  .sh-head{padding:.6rem .9rem .5rem}
+  .sh-body{padding:.7rem .9rem}
+  .eq{font-size:.72rem}
+  .two-col,.three-col{gap:.6rem}
+  a{text-decoration:none;color:inherit}
+  .print-hint{display:none}
+}
+@media screen{
+  .sheet{box-shadow:0 2px 12px rgba(82,72,212,.06)}
+}
+</style>
+</head>
+<body>
+
+<div class="screen-nav">
+  <div>
+    <h1>LLM Research Engineer — Printable Reference Sheets</h1>
+    <p>11 sheets · Print all or individual pages · A4 recommended</p>
+  </div>
+  <button class="print-btn" onclick="window.print()">🖨 Print All Sheets</button>
+</div>
+
+<div class="sheets">
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 1 — TRANSFORMER ARCHITECTURE
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 01 · Week 1</div>
+      <div class="sh-title">Transformer Architecture</div>
+      <div class="sh-sub">Attention Is All You Need · Vaswani et al., 2017 · arXiv:1706.03762</div>
+    </div>
+    <span class="sh-tag tag-w">W1 · Core</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Core Equations</div>
+        <div class="eq-label">Scaled Dot-Product Attention</div>
+        <div class="eq">Attention(Q,K,V) = softmax(QKᵀ / √dₖ) · V</div>
+        <div class="eq-note">Q = query, K = key, V = value, dₖ = key dimension. Divide by √dₖ to prevent vanishing gradients in softmax.</div>
+        <div class="eq-label">Multi-Head Attention</div>
+        <div class="eq">MultiHead(Q,K,V) = Concat(head₁,...,headₕ)Wᴼ<br>headᵢ = Attention(QWᵢQ, KWᵢK, VWᵢV)</div>
+        <div class="eq-label">Feed-Forward Block</div>
+        <div class="eq">FFN(x) = max(0, xW₁ + b₁)W₂ + b₂</div>
+        <div class="eq-label">Positional Encoding (Sinusoidal)</div>
+        <div class="eq">PE(pos,2i)   = sin(pos / 10000^(2i/d))<br>PE(pos,2i+1) = cos(pos / 10000^(2i/d))</div>
+        <div class="eq-label">RoPE (Rotary PE — used in LLaMA/Mistral)</div>
+        <div class="eq">Apply rotation matrix R(θ·pos) to Q and K<br>f(x,m) = x · e^(imθ)  [complex notation]</div>
+      </div>
+      <div>
+        <div class="label">Architecture Components</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Input embed</span><span class="kv-val">Token ID → dense vector (d_model dim)</span></div>
+          <div class="kv-row"><span class="kv-key">Pos. encode</span><span class="kv-val">Add position info to embeddings</span></div>
+          <div class="kv-row"><span class="kv-key">Self-attn</span><span class="kv-val">Each token attends to all others</span></div>
+          <div class="kv-row"><span class="kv-key">Cross-attn</span><span class="kv-val">Decoder attends to encoder output</span></div>
+          <div class="kv-row"><span class="kv-key">Layer norm</span><span class="kv-val">Pre-norm: applied before attn/FFN</span></div>
+          <div class="kv-row"><span class="kv-key">Residual</span><span class="kv-val">x = x + sublayer(x) — prevents vanishing grad</span></div>
+          <div class="kv-row"><span class="kv-key">d_model</span><span class="kv-val">512 (base), 768 (BERT), 4096 (LLaMA-7B)</span></div>
+          <div class="kv-row"><span class="kv-key">n_heads</span><span class="kv-val">8 (base) — each head: d_model / n_heads dim</span></div>
+          <div class="kv-row"><span class="kv-key">n_layers</span><span class="kv-val">6 encoder + 6 decoder (base GPT: 12 decoder)</span></div>
+          <div class="kv-row"><span class="kv-key">FFN dim</span><span class="kv-val">4 × d_model (inner dimension)</span></div>
+        </div>
+        <div class="label">Complexity</div>
+        <table class="ctable">
+          <tr><th>Op</th><th>Time</th><th>Space</th></tr>
+          <tr><td>Self-attention</td><td>O(n²·d)</td><td>O(n²)</td></tr>
+          <tr><td>FFN</td><td>O(n·d²)</td><td>O(d²)</td></tr>
+          <tr><td>FlashAttn</td><td>O(n²·d)</td><td class="good">O(n) — tiling</td></tr>
+        </table>
+        <div class="note">Attention is O(n²) — the quadratic bottleneck. FlashAttention reduces memory to O(n) using SRAM tiling without approximation.</div>
+      </div>
+    </div>
+    <div class="label">Architecture Flow</div>
+    <div class="flow">
+      <div class="fbox">Token IDs</div><div class="farr">→</div>
+      <div class="fbox">Embeddings + PE</div><div class="farr">→</div>
+      <div class="fbox">× N Encoder layers</div><div class="farr">→</div>
+      <div class="fbox-g">Self-Attn</div><div class="farr">+</div>
+      <div class="fbox-g">Add&Norm</div><div class="farr">+</div>
+      <div class="fbox-g">FFN</div><div class="farr">+</div>
+      <div class="fbox-g">Add&Norm</div><div class="farr">→</div>
+      <div class="fbox-y">× M Decoder layers</div><div class="farr">→</div>
+      <div class="fbox-p">Linear + Softmax</div><div class="farr">→</div>
+      <div class="fbox">Logits</div>
+    </div>
+    <div class="label">Key Interview Questions</div>
+    <div class="iq"><div class="iq-q">Why divide by √dₖ in attention?</div><div class="iq-a">Without scaling, dot products grow large with dimension, pushing softmax into regions with near-zero gradients. √dₖ keeps variance stable.</div></div>
+    <div class="iq"><div class="iq-q">Why multi-head instead of single-head attention?</div><div class="iq-a">Different heads learn different relationship types (syntactic, semantic, positional) simultaneously. Concatenating gives richer representations than one large attention.</div></div>
+    <div class="iq"><div class="iq-q">What does the masking in decoder self-attention do?</div><div class="iq-a">Causal mask prevents token i from attending to tokens j>i — enforces autoregressive generation (can only use past context).</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 2 — SCALING LAWS + MODERN ARCHITECTURES
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 02 · Week 2–3</div>
+      <div class="sh-title">Scaling Laws + Modern Architectures</div>
+      <div class="sh-sub">Kaplan 2020 · Chinchilla 2022 · MoE · GQA · Mamba SSM</div>
+    </div>
+    <span class="sh-tag tag-w">W2–W3 · Core</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Scaling Laws (Kaplan vs Chinchilla)</div>
+        <div class="eq-label">Kaplan 2020 — key finding</div>
+        <div class="eq">Loss ∝ N^(-0.076) · D^(-0.095) · C^(-0.050)<br>N=params, D=data tokens, C=compute</div>
+        <div class="eq-note">Kaplan: scale params faster than data. Led to GPT-3 (175B params, less data).</div>
+        <div class="eq-label">Chinchilla 2022 — revised finding</div>
+        <div class="eq">Optimal: N ∝ C^0.50, D ∝ C^0.50<br>Rule of thumb: ~20 tokens per parameter</div>
+        <div class="eq-note">Chinchilla: scale params AND data equally. Led to smaller but better-trained models (Llama-2, Mistral).</div>
+        <div class="note">The disagreement: Kaplan used fixed data, Chinchilla optimized jointly. Chinchilla is now the standard — GPT-4 era models are all Chinchilla-optimal.</div>
+
+        <div class="label">GQA: Grouped-Query Attention</div>
+        <table class="ctable">
+          <tr><th>Type</th><th>KV heads</th><th>Memory</th><th>Quality</th></tr>
+          <tr><td>MHA</td><td>= Q heads</td><td class="bad">High</td><td class="good">Best</td></tr>
+          <tr><td>MQA</td><td>1 shared</td><td class="good">Lowest</td><td class="bad">Drops</td></tr>
+          <tr><td>GQA</td><td>G groups</td><td class="mid">Medium</td><td class="mid">Near MHA</td></tr>
+        </table>
+        <div class="eq-note">LLaMA-3 and Mistral use GQA with G=8 — best quality/memory tradeoff. KV cache scales with G, not H.</div>
+      </div>
+      <div>
+        <div class="label">Mixture of Experts (MoE)</div>
+        <div class="eq-label">Routing function</div>
+        <div class="eq">G(x) = softmax(x · Wg)  [router]<br>output = Σ G(x)ᵢ · Expertᵢ(x)  [top-k only]</div>
+        <div class="eq-note">Mixtral uses top-2 routing from 8 experts. Active params per token = 2 experts. Total params = 8 experts but inference cost = 2 experts.</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Top-k</span><span class="kv-val">Typically k=2. Higher k = more compute, better quality</span></div>
+          <div class="kv-row"><span class="kv-key">Load balance</span><span class="kv-val">Auxiliary loss prevents all tokens routing to same expert</span></div>
+          <div class="kv-row"><span class="kv-key">Expert size</span><span class="kv-val">Each expert = standard FFN block</span></div>
+          <div class="kv-row"><span class="kv-key">Mixtral</span><span class="kv-val">8 experts, top-2, 7B active / 47B total</span></div>
+        </div>
+        <div class="label">Mamba / SSM Architecture</div>
+        <div class="eq-label">State Space Model recurrence</div>
+        <div class="eq">h'(t) = A·h(t) + B·x(t)<br>y(t)  = C·h(t)<br>Mamba: A,B,C,Δ are input-dependent (selective)</div>
+        <div class="eq-note">Key difference from S4: Mamba makes B, C, and Δ functions of the input x — "selective" SSM. This is what enables it to filter irrelevant tokens.</div>
+        <table class="ctable">
+          <tr><th></th><th>Transformer</th><th>Mamba</th></tr>
+          <tr><td>Complexity</td><td class="bad">O(n²)</td><td class="good">O(n)</td></tr>
+          <tr><td>Recall</td><td class="good">Perfect (attention)</td><td class="mid">Compressed state</td></tr>
+          <tr><td>Long context</td><td class="bad">Expensive</td><td class="good">Cheap</td></tr>
+          <tr><td>Training</td><td class="good">Parallel</td><td class="good">Parallel scan</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 3 — FINE-TUNING: LoRA, QLoRA, DoRA, DPO
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 03 · Week 7–8</div>
+      <div class="sh-title">Fine-Tuning: LoRA · QLoRA · DoRA · DPO</div>
+      <div class="sh-sub">Hu 2021 · Dettmers 2023 · Liu 2024 · Rafailov 2023</div>
+    </div>
+    <span class="sh-tag tag-g">W7–W8 · Fine-Tuning</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">LoRA — Low-Rank Adaptation</div>
+        <div class="eq-label">Core idea</div>
+        <div class="eq">W' = W + ΔW = W + B·A<br>B ∈ ℝ^(d×r),  A ∈ ℝ^(r×k),  r ≪ min(d,k)</div>
+        <div class="eq-note">W is frozen. Only A and B are trained. At init: A ~ N(0,σ²), B = 0 (so ΔW=0 at start). Scale: α/r where α is a hyperparameter.</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">r (rank)</span><span class="kv-val">4–64 typical. Higher = more capacity, more memory</span></div>
+          <div class="kv-row"><span class="kv-key">alpha (α)</span><span class="kv-val">Usually 2×r. Controls effective learning rate</span></div>
+          <div class="kv-row"><span class="kv-key">target</span><span class="kv-val">q_proj, v_proj at minimum. All attention for best results</span></div>
+          <div class="kv-row"><span class="kv-key">params</span><span class="kv-val">Adds r×(d+k) params per layer. Much less than full fine-tune</span></div>
+        </div>
+        <div class="label">QLoRA — 4-bit LoRA</div>
+        <div class="eq-label">Key components</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">NF4 quant.</span><span class="kv-val">4-bit Normal Float — optimal for normally distributed weights</span></div>
+          <div class="kv-row"><span class="kv-key">Double quant</span><span class="kv-val">Quantize the quantization constants — saves extra memory</span></div>
+          <div class="kv-row"><span class="kv-key">Paged optim.</span><span class="kv-val">GPU→CPU memory offload for optimizer states on OOM spikes</span></div>
+          <div class="kv-row"><span class="kv-key">Memory</span><span class="kv-val">7B model: ~4GB (QLoRA) vs ~14GB (bf16) vs ~28GB (full)</span></div>
+        </div>
+        <div class="label">DoRA — Weight-Decomposed LoRA</div>
+        <div class="eq">W = m · (V / ‖V‖)  [magnitude × direction]<br>DoRA trains m (scalar) and ΔV (via LoRA)</div>
+        <div class="eq-note">Separating magnitude and direction stabilizes training. Empirically outperforms LoRA at same rank. Use: peft.LoraConfig(use_dora=True)</div>
+      </div>
+      <div>
+        <div class="label">DPO — Direct Preference Optimization</div>
+        <div class="eq-label">RLHF objective (what DPO replaces)</div>
+        <div class="eq">max E[r(x,y)] - β·KL[π_θ ‖ π_ref]</div>
+        <div class="eq-label">DPO loss (closed-form solution)</div>
+        <div class="eq">L_DPO = -E[log σ(β·log(π_θ(y_w|x)/π_ref(y_w|x))<br>         - β·log(π_θ(y_l|x)/π_ref(y_l|x)))]</div>
+        <div class="eq-note">y_w = chosen (winner), y_l = rejected (loser). No reward model needed — the policy IS the implicit reward model. β controls KL divergence penalty.</div>
+        <div class="note">Key insight: the optimal RLHF policy can be expressed analytically in terms of log-probability ratios. DPO is exact RLHF, not an approximation.</div>
+        <div class="label">SimPO — Reference-Free DPO</div>
+        <div class="eq">L_SimPO = -E[log σ(γ/|y_w| · log π_θ(y_w|x)<br>            - γ/|y_l| · log π_θ(y_l|x) - γ)]</div>
+        <div class="eq-note">No reference model! Uses length-normalized log-probabilities + margin γ. Simpler, often better than DPO. β=2.0, γ=0.5 are good defaults.</div>
+        <div class="label">When to use which</div>
+        <table class="ctable">
+          <tr><th>Method</th><th>Use when</th></tr>
+          <tr><td>SFT only</td><td>Domain adaptation, format learning, no preference data</td></tr>
+          <tr><td>DPO</td><td>Have preference pairs, want alignment without RL complexity</td></tr>
+          <tr><td>SimPO</td><td>No reference model available, want simpler training</td></tr>
+          <tr><td>PPO</td><td>Online learning, complex reward signals (math, code)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="label">Quick Reference: LoRA Hyperparameter Cheat Sheet (Sebastian Raschka's findings)</div>
+    <div class="three-col">
+      <div class="kv">
+        <div class="kv-row"><span class="kv-key">r=4</span><span class="kv-val">Classification tasks, simple format learning</span></div>
+        <div class="kv-row"><span class="kv-key">r=8</span><span class="kv-val">Good default for most instruction tuning</span></div>
+        <div class="kv-row"><span class="kv-key">r=16+</span><span class="kv-val">Complex domain adaptation, multimodal</span></div>
+      </div>
+      <div class="kv">
+        <div class="kv-row"><span class="kv-key">alpha</span><span class="kv-val">Set to 2×r as default. Tune if training unstable</span></div>
+        <div class="kv-row"><span class="kv-key">dropout</span><span class="kv-val">0.05–0.1. Set 0 for small datasets</span></div>
+        <div class="kv-row"><span class="kv-key">bias</span><span class="kv-val">"none" or "lora_only" — "all" rarely helps</span></div>
+      </div>
+      <div class="kv">
+        <div class="kv-row"><span class="kv-key">lr</span><span class="kv-val">2e-4 for LoRA. 1e-4 for QLoRA (more conservative)</span></div>
+        <div class="kv-row"><span class="kv-key">batch</span><span class="kv-val">Per device 1–4, grad accum to reach 32–128 effective</span></div>
+        <div class="kv-row"><span class="kv-key">epochs</span><span class="kv-val">1–3. Overfit risk high on small datasets</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 4 — RLHF + CONSTITUTIONAL AI + RLAIF
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 04 · Week 23</div>
+      <div class="sh-title">RLHF · Constitutional AI · RLAIF</div>
+      <div class="sh-sub">InstructGPT (Ouyang 2022) · CAI (Bai 2022) · RLAIF (Lee 2023)</div>
+    </div>
+    <span class="sh-tag tag-p">W23 · Alignment</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">RLHF Pipeline (InstructGPT)</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>SFT:</strong> Fine-tune base model on high-quality human demonstrations (13k prompts in InstructGPT)</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Reward Model:</strong> Collect human comparisons (33k pairs). Train RM: base LLM + scalar head. Objective: r(y_w) > r(y_l)</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>PPO:</strong> Optimize SFT model against RM using PPO. KL penalty to prevent reward hacking: r_total = r_RM - β·KL(π_θ ‖ π_SFT)</span></div>
+        </div>
+        <div class="eq-label">Reward Model Loss</div>
+        <div class="eq">L_RM = -E[log(σ(r_θ(x,y_w) - r_θ(x,y_l)))]</div>
+        <div class="eq-label">PPO Clipped Objective</div>
+        <div class="eq">L_CLIP = E[min(r_t·Â_t, clip(r_t, 1-ε, 1+ε)·Â_t)]<br>r_t = π_θ(a|s) / π_old(a|s)</div>
+        <div class="note">InstructGPT found: RLHF model with 1.3B params was preferred over 175B SFT model. Alignment matters more than scale at inference.</div>
+        <div class="label">Process Reward Models (PRMs)</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">ORM</span><span class="kv-val">Outcome RM — scores final answer only</span></div>
+          <div class="kv-row"><span class="kv-key">PRM</span><span class="kv-val">Process RM — scores each reasoning step</span></div>
+          <div class="kv-row"><span class="kv-key">Why PRM</span><span class="kv-val">Correct answer via wrong steps still fails PRM — catches shortcut reasoning</span></div>
+          <div class="kv-row"><span class="kv-key">Used in</span><span class="kv-val">OpenAI o1/o3 — PRM guides beam search at inference</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="label">Constitutional AI (Anthropic)</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Red team:</strong> Model generates harmful responses to adversarial prompts</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Critique:</strong> Model critiques its own response against a principle from the Constitution (e.g. "Is this response harmful?")</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>Revision:</strong> Model revises response based on its own critique</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>SL-CAI:</strong> Fine-tune on revised (preferred) vs original (rejected) pairs — RLAIF using AI feedback</span></div>
+          <div class="slist-item"><span class="slist-num">5</span><span class="slist-text"><strong>RL-CAI:</strong> Train RM on AI-generated preferences, then apply PPO/DPO</span></div>
+        </div>
+        <div class="note">CAI key insight: you can generate preference data at scale without human labelers by using the model itself as an annotator, guided by explicit principles.</div>
+        <div class="label">RLAIF vs RLHF Comparison</div>
+        <table class="ctable">
+          <tr><th></th><th>RLHF</th><th>RLAIF (CAI)</th></tr>
+          <tr><td>Feedback source</td><td>Humans</td><td class="good">AI model</td></tr>
+          <tr><td>Cost</td><td class="bad">Expensive</td><td class="good">Cheap — scalable</td></tr>
+          <tr><td>Consistency</td><td class="bad">Variable</td><td class="good">Consistent</td></tr>
+          <tr><td>Bias</td><td class="mid">Human bias</td><td class="mid">Model bias</td></tr>
+          <tr><td>Quality</td><td class="good">Ground truth</td><td class="mid">Approximate</td></tr>
+          <tr><td>Scale</td><td class="bad">Limited</td><td class="good">Unlimited</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 5 — RAG PIPELINE + EVALUATION
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 05 · Week 4–6</div>
+      <div class="sh-title">RAG Pipeline + Evaluation</div>
+      <div class="sh-sub">Lewis 2020 · RAGAS · HyDE · RAFT · Reranking</div>
+    </div>
+    <span class="sh-tag tag-y">W4–W6 · RAG</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">RAG Pipeline Flow</div>
+        <div class="flow" style="flex-direction:column;align-items:flex-start;gap:6px">
+          <div style="display:flex;align-items:center;gap:4px"><div class="fbox-p">Ingest</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Chunk docs (512 tok, 50 overlap) → Embed → Store in Qdrant</span></div>
+          <div style="display:flex;align-items:center;gap:4px"><div class="fbox">Query</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Embed query → BM25 + Dense retrieval → Reciprocal Rank Fusion</span></div>
+          <div style="display:flex;align-items:center;gap:4px"><div class="fbox-g">Rerank</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Cross-encoder scores top-20 → returns top-5</span></div>
+          <div style="display:flex;align-items:center;gap:4px"><div class="fbox-y">Generate</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">LLM receives [query + context chunks] → streamed response</span></div>
+        </div>
+        <div class="label">HyDE — Hypothetical Document Embedding</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text">LLM generates a <strong>hypothetical answer</strong> to the query</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text">Embed the <strong>hypothetical answer</strong> (not the original query)</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text">Retrieve documents similar to the hypothetical answer</span></div>
+        </div>
+        <div class="eq-note">HyDE works because answers and relevant documents are closer in embedding space than questions and documents. Best for open-domain QA.</div>
+        <div class="label">Retrieval Types — When to Use</div>
+        <table class="ctable">
+          <tr><th>Type</th><th>Best for</th><th>Weakness</th></tr>
+          <tr><td>Dense (vec)</td><td>Semantic similarity</td><td>Misses keywords</td></tr>
+          <tr><td>BM25 (sparse)</td><td>Keyword/entity match</td><td>No semantics</td></tr>
+          <tr><td>Hybrid (RRF)</td><td>General purpose</td><td>Slower</td></tr>
+          <tr><td>+Reranker</td><td>Precision critical</td><td>Adds latency</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="label">RAGAS Evaluation Metrics</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Faithfulness</span><span class="kv-val">Is the answer supported by the retrieved context? (no hallucination)</span></div>
+          <div class="kv-row"><span class="kv-key">Answer relevancy</span><span class="kv-val">Does the answer address the actual question asked?</span></div>
+          <div class="kv-row"><span class="kv-key">Context precision</span><span class="kv-val">What fraction of retrieved chunks were actually useful?</span></div>
+          <div class="kv-row"><span class="kv-key">Context recall</span><span class="kv-val">Were all necessary facts present in the retrieved context?</span></div>
+        </div>
+        <div class="eq-label">Faithfulness Score Formula</div>
+        <div class="eq">Faithfulness = |verified claims| / |total claims in answer|</div>
+        <div class="eq-note">Each claim in the answer is checked against the context. A fully faithful answer only makes claims supported by retrieved docs.</div>
+        <div class="label">RAFT — RAG-Adapted Fine-Tuning</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text">For each document chunk: generate question + gold answer</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text">Include 2–3 <strong>distractor chunks</strong> alongside the gold chunk</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text">Fine-tune model on (question, context+distractors, chain-of-thought answer)</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text">Model learns to <strong>ignore irrelevant context</strong> — critical for production RAG</span></div>
+        </div>
+        <div class="note">Key result: RAFT models score 15–35% higher on RAGAS faithfulness than base models + RAG. The distractors are essential — without them the model just memorizes.</div>
+        <div class="label">Bi-encoder vs Cross-encoder</div>
+        <table class="ctable">
+          <tr><th></th><th>Bi-encoder</th><th>Cross-encoder</th></tr>
+          <tr><td>Architecture</td><td>Separate encodings</td><td>Concat + attention</td></tr>
+          <tr><td>Speed</td><td class="good">Fast (pre-index)</td><td class="bad">Slow (per pair)</td></tr>
+          <tr><td>Quality</td><td class="mid">Good</td><td class="good">Best</td></tr>
+          <tr><td>Use</td><td>First retrieval pass</td><td>Reranking top-k</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 6 — LLM AGENTS + REACT + LANGGRAPH
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 06 · Week 13–16</div>
+      <div class="sh-title">LLM Agents — ReAct · LangGraph · MCP</div>
+      <div class="sh-sub">Yao 2022 · Wei 2022 · Tree of Thoughts 2023 · MCP 2024</div>
+    </div>
+    <span class="sh-tag tag-y">W13–W16 · Agents</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">ReAct Loop</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">T</span><span class="slist-text"><strong>Thought:</strong> "I need to search for the current population of India."</span></div>
+          <div class="slist-item"><span class="slist-num">A</span><span class="slist-text"><strong>Action:</strong> search("current population of India 2024")</span></div>
+          <div class="slist-item"><span class="slist-num">O</span><span class="slist-text"><strong>Observation:</strong> "India's population is approximately 1.44 billion."</span></div>
+          <div class="slist-item"><span class="slist-num">T</span><span class="slist-text"><strong>Thought:</strong> "I now have the answer. I should respond."</span></div>
+          <div class="slist-item"><span class="slist-num">F</span><span class="slist-text"><strong>Final answer:</strong> "India's population is approximately 1.44 billion."</span></div>
+        </div>
+        <div class="note">ReAct interleaves reasoning (Thought) with acting (Action + Observation). This prevents hallucination by grounding each reasoning step in real tool outputs.</div>
+        <div class="label">Tree of Thoughts vs Chain of Thought</div>
+        <table class="ctable">
+          <tr><th></th><th>CoT</th><th>ToT</th></tr>
+          <tr><td>Structure</td><td>Linear chain</td><td>Tree / graph</td></tr>
+          <tr><td>Branching</td><td>None</td><td>k branches per step</td></tr>
+          <tr><td>Backtrack</td><td class="bad">No</td><td class="good">Yes</td></tr>
+          <tr><td>Evaluation</td><td>End only</td><td>At each node</td></tr>
+          <tr><td>Best for</td><td>Simple reasoning</td><td>Planning, puzzles</td></tr>
+          <tr><td>Cost</td><td class="good">Low</td><td class="bad">k× more LLM calls</td></tr>
+        </table>
+        <div class="label">Agent Failure Modes</div>
+        <ul class="blist">
+          <li><strong>Hallucinated tool calls</strong> — LLM invents tool names or args that don't exist → Fix: strict Pydantic schema validation</li>
+          <li><strong>Infinite loops</strong> — same action repeated → Fix: max_steps limit + loop detection (hash last 3 actions)</li>
+          <li><strong>Context overflow</strong> — long observation fills context → Fix: summarize observations > 500 tokens</li>
+          <li><strong>Silent failures</strong> — tool error ignored → Fix: always surface errors to LLM in Observation</li>
+          <li><strong>Reward hacking</strong> — agent games the metric → Fix: multi-dimensional eval with human spot-checks</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">LangGraph Concepts</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">StateGraph</span><span class="kv-val">Graph where each node reads/writes a shared state dict</span></div>
+          <div class="kv-row"><span class="kv-key">Node</span><span class="kv-val">A function: (state) → state_update</span></div>
+          <div class="kv-row"><span class="kv-key">Edge</span><span class="kv-val">Directed connection between nodes (unconditional)</span></div>
+          <div class="kv-row"><span class="kv-key">Cond. edge</span><span class="kv-val">Routes to different nodes based on state value</span></div>
+          <div class="kv-row"><span class="kv-key">Checkpointer</span><span class="kv-val">Persists state for multi-turn conversations</span></div>
+          <div class="kv-row"><span class="kv-key">Interrupt</span><span class="kv-val">Pause graph for human-in-the-loop approval</span></div>
+        </div>
+        <div class="label">Multi-Agent Patterns</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Supervisor</span><span class="kv-val">One orchestrator routes to specialist workers. Best for clear subtask separation.</span></div>
+          <div class="kv-row"><span class="kv-key">Network</span><span class="kv-val">Agents call each other peer-to-peer. More flexible, harder to debug.</span></div>
+          <div class="kv-row"><span class="kv-key">Handoff</span><span class="kv-val">Sequential — agent A completes, passes to agent B. Good for pipelines.</span></div>
+        </div>
+        <div class="label">Model Context Protocol (MCP)</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">What</span><span class="kv-val">Standard protocol for LLM ↔ tool/server connections (Anthropic, 2024)</span></div>
+          <div class="kv-row"><span class="kv-key">Components</span><span class="kv-val">MCP Server (exposes tools) + MCP Client (Claude, Cursor, etc.)</span></div>
+          <div class="kv-row"><span class="kv-key">Transport</span><span class="kv-val">stdio (local) or SSE/HTTP (remote)</span></div>
+          <div class="kv-row"><span class="kv-key">Tool def</span><span class="kv-val">JSON Schema — name, description, input_schema</span></div>
+          <div class="kv-row"><span class="kv-key">Used by</span><span class="kv-val">Claude Desktop, Cursor, Zed, Continue, all major AI IDEs</span></div>
+        </div>
+        <div class="eq-label">Minimal MCP server (Python)</div>
+        <div class="eq">from mcp import Server, Tool<br>server = Server("my-rag-server")<br>@server.tool()<br>def search_docs(query: str) -> str:<br>    return rag_pipeline.query(query)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 7 — FLASHATTENTION + DISTRIBUTED TRAINING
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 07 · Week 21</div>
+      <div class="sh-title">FlashAttention + Distributed Training</div>
+      <div class="sh-sub">FlashAttention-2 (Dao 2023) · Megatron-LM · ZeRO · DDP</div>
+    </div>
+    <span class="sh-tag tag-r">W21 · Theory</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Why Standard Attention is Slow</div>
+        <ul class="blist">
+          <li>Standard attention materializes the full N×N attention matrix in HBM (GPU global memory)</li>
+          <li>HBM bandwidth is ~2TB/s — reading/writing N×N is the bottleneck, not FLOPs</li>
+          <li>For N=4096: attention matrix = 4096²×2 bytes = 32MB per head — bandwidth limited</li>
+        </ul>
+        <div class="label">FlashAttention — IO-Aware Tiling</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Tile Q, K, V</strong> into blocks that fit in SRAM (fast on-chip memory, ~20MB)</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Compute attention</strong> block by block — never write full N×N matrix to HBM</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>Online softmax</strong> (log-sum-exp trick) — accumulate correct softmax across blocks</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>Recomputation</strong> — during backward, recompute attention from Q,K,V instead of storing it</span></div>
+        </div>
+        <div class="eq-label">Memory complexity</div>
+        <div class="eq">Standard: O(N²) HBM reads/writes<br>Flash:    O(N) HBM reads/writes  ← key gain</div>
+        <div class="eq-note">FLOPs are the same. The speedup comes entirely from reducing HBM bandwidth usage. On H100: ~3× faster than standard attention at N=4096.</div>
+        <div class="label">Parallelism Strategies</div>
+        <table class="ctable">
+          <tr><th>Type</th><th>What's split</th><th>Best for</th></tr>
+          <tr><td>Data (DDP)</td><td>Batches across GPUs</td><td>All models — default</td></tr>
+          <tr><td>Tensor (TP)</td><td>Weight matrices across GPUs</td><td>Very large layers</td></tr>
+          <tr><td>Pipeline (PP)</td><td>Layers across GPUs</td><td>Very deep models</td></tr>
+          <tr><td>Sequence (SP)</td><td>Tokens across GPUs</td><td>Very long context</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="label">ZeRO — Memory Optimization Stages</div>
+        <table class="ctable">
+          <tr><th>Stage</th><th>What's sharded</th><th>Memory saving</th></tr>
+          <tr><td>ZeRO-1</td><td>Optimizer states</td><td>~4×</td></tr>
+          <tr><td>ZeRO-2</td><td>+ Gradients</td><td>~8×</td></tr>
+          <tr><td>ZeRO-3</td><td>+ Parameters</td><td class="good">~64× (model size/GPUs)</td></tr>
+          <tr><td>ZeRO-inf</td><td>+ CPU offload</td><td class="good">Near unlimited</td></tr>
+        </table>
+        <div class="eq-note">ZeRO-3: each GPU holds only 1/N of parameters. Communication cost increases but enables training models that don't fit on any single GPU.</div>
+        <div class="label">PyTorch DDP vs FSDP</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">DDP</span><span class="kv-val">Each GPU holds full model. Gradients all-reduced. Simple. For models that fit on 1 GPU.</span></div>
+          <div class="kv-row"><span class="kv-key">FSDP</span><span class="kv-val">Parameters sharded across GPUs (ZeRO-3 equivalent). For models > 1 GPU memory.</span></div>
+          <div class="kv-row"><span class="kv-key">Grad accum</span><span class="kv-val">Accumulate over N steps before optimizer update. Simulates N× larger batch.</span></div>
+          <div class="kv-row"><span class="kv-key">Act. checkpt</span><span class="kv-val">Don't store activations for backward. Recompute them. ~1.4× slower, ~3× less memory.</span></div>
+        </div>
+        <div class="label">Key Interview Questions</div>
+        <div class="iq"><div class="iq-q">Explain why FlashAttention is faster without approximation.</div><div class="iq-a">It reduces HBM bandwidth usage via SRAM tiling. The bottleneck is memory bandwidth, not FLOPs. FlashAttention performs the same FLOPs but reads/writes O(N) instead of O(N²) to slow HBM.</div></div>
+        <div class="iq"><div class="iq-q">What is activation checkpointing and when would you use it?</div><div class="iq-a">Instead of storing all forward activations for backward pass, recompute them on demand. Trades compute for memory. Use when GPU memory is the bottleneck — typically for large models or long sequences.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 8 — MECHANISTIC INTERPRETABILITY
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 08 · Week 22</div>
+      <div class="sh-title">Mechanistic Interpretability</div>
+      <div class="sh-sub">Toy Models of Superposition · SAE · Activation Steering — Anthropic</div>
+    </div>
+    <span class="sh-tag tag-p">W22 · Interpretability</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Superposition Hypothesis</div>
+        <div class="tldr">Neural networks represent more features than they have dimensions by encoding multiple features in superposition — overlapping, non-orthogonal directions. They "sacrifice" linear algebra cleanliness to store more information.</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Monosemantic</span><span class="kv-val">One neuron → one concept (ideal, rarely found)</span></div>
+          <div class="kv-row"><span class="kv-key">Polysemantic</span><span class="kv-val">One neuron → multiple unrelated concepts (common)</span></div>
+          <div class="kv-row"><span class="kv-key">Superposition</span><span class="kv-val">n features stored in d dimensions where n >> d</span></div>
+          <div class="kv-row"><span class="kv-key">Interference</span><span class="kv-val">Cost of superposition: features slightly activate each other</span></div>
+        </div>
+        <div class="eq-label">Superposition model (Toy Models paper)</div>
+        <div class="eq">x̂ = ReLU(W^T W x + b)<br>Loss = Σ importance(i) · (xᵢ - x̂ᵢ)²</div>
+        <div class="eq-note">W ∈ ℝ^(d×n), n > d. The model learns to pack n features into d dimensions. Rare, important features get the most "dedicated" directions.</div>
+        <div class="label">Sparse Autoencoders (SAE)</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text"><strong>Hook</strong> into a layer's activation (residual stream, MLP out)</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text"><strong>Encoder</strong> maps to a larger sparse space: f(x) = ReLU(W_enc · x + b_enc)</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text"><strong>Decoder</strong> reconstructs: x̂ = W_dec · f(x) + b_dec</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text"><strong>Loss:</strong> reconstruction error + λ·L1(f(x)) [L1 enforces sparsity]</span></div>
+          <div class="slist-item"><span class="slist-num">5</span><span class="slist-text"><strong>Interpret</strong> each SAE feature by finding its top activating tokens</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="label">Activation Steering (ActAdd / RepE)</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text">Collect activations at layer L for concept A and concept B</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text">Steering vector: v = mean(act_A) - mean(act_B)</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text">During inference: h_L ← h_L + α·v</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text">Model behavior shifts toward concept A (or away from B)</span></div>
+        </div>
+        <div class="eq-note">Example: steering vector (French - English) added to residual stream causes model to generate French. Works for abstract concepts too: happiness, formality, refusal.</div>
+        <div class="label">Key Interpretability Concepts</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Circuit</span><span class="kv-val">Subgraph of attention heads + MLPs implementing a specific behavior</span></div>
+          <div class="kv-row"><span class="kv-key">Induction head</span><span class="kv-val">Two-head circuit that implements in-context learning via copying</span></div>
+          <div class="kv-row"><span class="kv-key">Residual stream</span><span class="kv-val">The central "working memory" — each layer reads/writes to it</span></div>
+          <div class="kv-row"><span class="kv-key">Logit lens</span><span class="kv-val">Project residual stream at each layer to vocab — track prediction formation</span></div>
+          <div class="kv-row"><span class="kv-key">Probing</span><span class="kv-val">Train linear classifier on activations — test if concept is linearly encoded</span></div>
+        </div>
+        <div class="label">Key Interview Questions</div>
+        <div class="iq"><div class="iq-q">Why do LLMs need superposition? Why not just have more neurons?</div><div class="iq-a">Compute scales with d², but the number of features in the world scales with experience. Superposition is a compression strategy — the model stores more concepts than neurons by accepting small interference costs for rare features.</div></div>
+        <div class="iq"><div class="iq-q">What is the goal of a sparse autoencoder in interpretability?</div><div class="iq-a">To decompose polysemantic neuron activations into monosemantic features. The SAE learns a larger but sparser basis where each direction (feature) corresponds to one interpretable concept.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 9 — LLM SECURITY + RED-TEAMING
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 09 · Week 18</div>
+      <div class="sh-title">LLM Security + Red-Teaming</div>
+      <div class="sh-sub">GCG Attacks · Many-Shot Jailbreaking · Prompt Injection · Defense Layers</div>
+    </div>
+    <span class="sh-tag tag-r">W18 · Security</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Attack Taxonomy</div>
+        <table class="ctable">
+          <tr><th>Attack</th><th>Method</th><th>Defense</th></tr>
+          <tr><td>Prompt injection</td><td>Malicious instruction in user input/docs</td><td>Input classification (Prompt Guard)</td></tr>
+          <tr><td>Jailbreak (manual)</td><td>Role-play, hypothetical framing</td><td>Output safety filter (Llama Guard)</td></tr>
+          <tr><td>GCG (automated)</td><td>Optimized adversarial suffix</td><td>Perplexity filter + Prompt Guard</td></tr>
+          <tr><td>Many-shot</td><td>Long context with harmful examples</td><td>Context length limits + monitoring</td></tr>
+          <tr><td>Data extraction</td><td>Ask model to repeat training data</td><td>Output PII detection + rate limits</td></tr>
+          <tr><td>Indirect injection</td><td>Malicious content in retrieved docs</td><td>Sandboxed tool calls + output validation</td></tr>
+        </table>
+        <div class="label">GCG Attack — How It Works</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text">Start with a jailbreak prompt + random suffix tokens</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text">Compute gradient of "harmful response probability" w.r.t. suffix tokens</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text">Greedily swap tokens in suffix to maximize the harmful response likelihood</span></div>
+          <div class="slist-item"><span class="slist-num">4</span><span class="slist-text">Repeat until suffix causes model to comply</span></div>
+        </div>
+        <div class="eq-note">GCG suffixes look like gibberish to humans (e.g. "! ! ! describing.-- Hope") but are optimized to bypass safety training. Transfers across models.</div>
+      </div>
+      <div>
+        <div class="label">Layered Defense Architecture</div>
+        <div class="flow" style="flex-direction:column;align-items:flex-start;gap:5px">
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-p">User input</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Raw text from user</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-r">Layer 1: Prompt Guard 2</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Block prompt injection attempts</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-r">Layer 2: Llama Guard 3</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Classify input safety category</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-g">LLM generates response</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-r">Layer 3: Llama Guard 3</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Classify output safety</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-r">Layer 4: Guardrails AI</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">PII detection + toxicity filter</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-y">Langfuse logging</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Log all flagged requests for review</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-g">Safe response to user</div></div>
+        </div>
+        <div class="label">Garak Red-Teaming Probe Categories</div>
+        <ul class="blist">
+          <li><strong>jailbreak</strong> — tests resistance to role-play and framing attacks</li>
+          <li><strong>injection</strong> — prompt injection via various delimiters and formats</li>
+          <li><strong>leakage</strong> — system prompt extraction, training data memorization</li>
+          <li><strong>hallucination</strong> — factual accuracy on known-answer questions</li>
+          <li><strong>toxicity</strong> — harmful content generation attempts</li>
+          <li><strong>continuation</strong> — completes harmful sentences from partial prompts</li>
+        </ul>
+        <div class="note">Target false positive rate: less than 2% on legitimate queries. A security layer blocking 5% of real user requests is broken. Measure both attack detection AND clean pass-through rate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 10 — PRODUCTION SERVING + MLOPS
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 10 · Week 10 + 17–20</div>
+      <div class="sh-title">Production Serving + MLOps</div>
+      <div class="sh-sub">vLLM · PagedAttention · Kubernetes · CI Evals · Cost Optimization</div>
+    </div>
+    <span class="sh-tag tag-g">W10–W20 · MLOps</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">vLLM + PagedAttention</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Problem</span><span class="kv-val">KV cache grows dynamically — hard to preallocate, causes fragmentation</span></div>
+          <div class="kv-row"><span class="kv-key">PagedAttn</span><span class="kv-val">Manage KV cache like OS virtual memory — non-contiguous physical blocks</span></div>
+          <div class="kv-row"><span class="kv-key">Block table</span><span class="kv-val">Maps logical KV positions to physical GPU memory blocks</span></div>
+          <div class="kv-row"><span class="kv-key">Benefit</span><span class="kv-val">~3× higher throughput than HuggingFace generate() — near-zero KV waste</span></div>
+          <div class="kv-row"><span class="kv-key">Continuous batching</span><span class="kv-val">New requests join mid-generation — GPU always fully utilised</span></div>
+        </div>
+        <div class="label">Latency Metrics to Track</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">TTFT</span><span class="kv-val">Time to first token. Measures prefill speed. Target: &lt;500ms</span></div>
+          <div class="kv-row"><span class="kv-key">TPOT</span><span class="kv-val">Time per output token. Measures decode speed. Target: &lt;50ms</span></div>
+          <div class="kv-row"><span class="kv-key">p50/p95/p99</span><span class="kv-val">Percentile latencies. p99 shows tail behavior under load</span></div>
+          <div class="kv-row"><span class="kv-key">Throughput</span><span class="kv-val">Total tokens/sec across all requests. vLLM target: 500–2000 tok/s</span></div>
+        </div>
+        <div class="label">Semantic Caching with Redis</div>
+        <div class="slist">
+          <div class="slist-item"><span class="slist-num">1</span><span class="slist-text">On query: embed question → search Redis for cosine-similar past queries</span></div>
+          <div class="slist-item"><span class="slist-num">2</span><span class="slist-text">Cache hit (cosine > 0.95): return stored response in ~50ms</span></div>
+          <div class="slist-item"><span class="slist-num">3</span><span class="slist-text">Cache miss: run full RAG + LLM → store result with TTL=3600s</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="label">CI Eval Pipeline (GitHub Actions)</div>
+        <div class="flow" style="flex-direction:column;align-items:flex-start;gap:5px">
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-p">PR opened</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Triggers GitHub Actions workflow</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox">docker-compose up</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Spin up full stack for testing</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox">pytest tests/evals/</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">Run DeepEval metric tests</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-r">Fail if score drops</div><div class="farr">→</div><span style="font-size:.72rem;color:var(--tx2)">faithfulness &lt;0.8, hallucination &gt;0.1</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div class="fbox-g">Pass → merge allowed</div></div>
+        </div>
+        <div class="label">Cost Optimization Stack</div>
+        <table class="ctable">
+          <tr><th>Tool</th><th>What it does</th><th>Typical saving</th></tr>
+          <tr><td>LiteLLM</td><td>Route easy queries to cheap model</td><td class="good">60–80% cost cut</td></tr>
+          <tr><td>Semantic cache</td><td>Skip LLM on repeated queries</td><td class="good">20–40% hit rate</td></tr>
+          <tr><td>LLMLingua</td><td>Compress long prompts 2–4×</td><td class="good">50–75% token cut</td></tr>
+          <tr><td>Batch API</td><td>Process non-urgent jobs in batch</td><td class="good">50% price cut</td></tr>
+        </table>
+        <div class="label">Kubernetes Quick Reference</div>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Pod</span><span class="kv-val">1+ containers that share network + storage</span></div>
+          <div class="kv-row"><span class="kv-key">Deployment</span><span class="kv-val">Manages desired replica count + rolling updates</span></div>
+          <div class="kv-row"><span class="kv-key">Service</span><span class="kv-val">Stable network endpoint in front of pods</span></div>
+          <div class="kv-row"><span class="kv-key">HPA</span><span class="kv-val">Auto-scales replicas based on CPU/custom metric</span></div>
+          <div class="kv-row"><span class="kv-key">ConfigMap</span><span class="kv-val">Store non-secret config as env vars</span></div>
+          <div class="kv-row"><span class="kv-key">Secret</span><span class="kv-val">Store API keys — mounted as env vars in pods</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SHEET 11 — INTERVIEW QUICK-REFERENCE
+═══════════════════════════════════════════════════ -->
+<div class="sheet">
+  <div class="sh-head">
+    <div>
+      <div class="sh-num">Sheet 11 · Month 6 onwards</div>
+      <div class="sh-title">Interview Quick-Reference</div>
+      <div class="sh-sub">Anthropic · OpenAI · DeepMind — from-scratch implementations + common questions</div>
+    </div>
+    <span class="sh-tag tag-r">M6–M9 · Interviews</span>
+  </div>
+  <div class="sh-body">
+    <div class="two-col">
+      <div>
+        <div class="label">Implement from Scratch — Time Targets</div>
+        <table class="ctable">
+          <tr><th>Task</th><th>Target time</th><th>Difficulty</th></tr>
+          <tr><td>Scaled dot-product attention</td><td>&lt;10 min</td><td><span class="cx cx-e">easy</span></td></tr>
+          <tr><td>Multi-head attention</td><td>&lt;20 min</td><td><span class="cx cx-m">med</span></td></tr>
+          <tr><td>Layer normalization</td><td>&lt;10 min</td><td><span class="cx cx-e">easy</span></td></tr>
+          <tr><td>LoRA weight update (NumPy)</td><td>&lt;15 min</td><td><span class="cx cx-m">med</span></td></tr>
+          <tr><td>BPE tokenizer (merge loop)</td><td>&lt;30 min</td><td><span class="cx cx-m">med</span></td></tr>
+          <tr><td>Beam search</td><td>&lt;25 min</td><td><span class="cx cx-m">med</span></td></tr>
+          <tr><td>Top-k / top-p sampling</td><td>&lt;15 min</td><td><span class="cx cx-e">easy</span></td></tr>
+          <tr><td>Backprop on 2-layer MLP</td><td>&lt;30 min</td><td><span class="cx cx-h">hard</span></td></tr>
+        </table>
+        <div class="label">10 Must-Know Explain-Out-Loud Answers</div>
+        <div class="iq"><div class="iq-q">1. Why does attention use √dₖ scaling?</div><div class="iq-a">Dot products grow with dimension, pushing softmax into low-gradient saturation regions. √dₖ keeps variance ~1 regardless of d.</div></div>
+        <div class="iq"><div class="iq-q">2. Why is DPO equivalent to RLHF?</div><div class="iq-a">The optimal RLHF policy has a closed-form solution expressible in log-probability ratios. DPO directly optimizes this form, bypassing the reward model entirely.</div></div>
+        <div class="iq"><div class="iq-q">3. How does FlashAttention achieve O(N) memory?</div><div class="iq-a">By tiling Q, K, V into SRAM blocks and computing attention block-by-block, it never materializes the full N×N matrix in slow HBM memory.</div></div>
+        <div class="iq"><div class="iq-q">4. What problem does LoRA solve?</div><div class="iq-a">Full fine-tuning requires gradients for all parameters (~14GB for 7B model). LoRA freezes the base model and adds trainable low-rank matrices (~50MB), reducing memory 99%.</div></div>
+        <div class="iq"><div class="iq-q">5. What is superposition in neural networks?</div><div class="iq-a">Storing more features than neurons by representing features as non-orthogonal directions. Trade-off: more capacity, but features interfere with each other (polysemanticity).</div></div>
+      </div>
+      <div>
+        <div class="iq"><div class="iq-q">6. What is the difference between Kaplan and Chinchilla?</div><div class="iq-a">Kaplan (2020) found scale parameters faster than data. Chinchilla (2022) showed this was wrong — optimal is to scale both equally at ~20 tokens/param. GPT-3 was undertrained.</div></div>
+        <div class="iq"><div class="iq-q">7. Why does Constitutional AI not need human labelers?</div><div class="iq-a">The model critiques its own outputs against written principles, generating preference data automatically (RLAIF). This scales to millions of examples at near-zero cost.</div></div>
+        <div class="iq"><div class="iq-q">8. What is PagedAttention and why is it faster?</div><div class="iq-a">Manages KV cache like OS virtual memory — non-contiguous blocks, no fragmentation. With continuous batching, GPU utilization approaches 100% vs ~40% for naive serving.</div></div>
+        <div class="iq"><div class="iq-q">9. What is the difference between a process reward model and outcome reward model?</div><div class="iq-a">ORM scores the final answer only. PRM scores each reasoning step — catches "right answer, wrong reasoning" which ORMs miss. Critical for math and code tasks.</div></div>
+        <div class="iq"><div class="iq-q">10. What makes an MoE model efficient at inference?</div><div class="iq-a">Only top-k experts activate per token. Mixtral has 47B total params but only 12B active per forward pass — you get large model capacity at medium model compute cost.</div></div>
+        <div class="label">Sebastian Raschka's Rule of Thumb</div>
+        <div class="note">When preparing for ML interviews: be able to explain every architecture from first principles in under 5 minutes. If you need notes, you don't know it yet. Practice out loud, not just in your head.</div>
+        <div class="label">Paper Cheat Sheet — 5 Must-Know Full Names</div>
+        <ul class="blist">
+          <li><strong>"Attention Is All You Need"</strong> — Vaswani et al., 2017, Google Brain</li>
+          <li><strong>"Training Language Models to Follow Instructions with Human Feedback"</strong> — Ouyang et al., 2022, OpenAI (InstructGPT)</li>
+          <li><strong>"LoRA: Low-Rank Adaptation of Large Language Models"</strong> — Hu et al., 2021, Microsoft</li>
+          <li><strong>"Direct Preference Optimization: Your Language Model is Secretly a Reward Model"</strong> — Rafailov et al., 2023, Stanford</li>
+          <li><strong>"Toy Models of Superposition"</strong> — Elhage et al., 2022, Anthropic</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /sheets -->
+</body>
+</html>

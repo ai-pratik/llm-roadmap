@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="LLM Research Engineer Roadmap v3 — 10 months, 38 weeks, 820 hours, 55+ papers. A complete self-study curriculum to become an LLM Research Engineer at Anthropic, OpenAI, or Google DeepMind.">
+<meta name="keywords" content="LLM, Large Language Models, AI, Machine Learning, Research Engineer, Anthropic, OpenAI, DeepMind, Roadmap, Transformer, RLHF, RAG">
+<meta name="author" content="LLM Roadmap">
+<meta property="og:title" content="LLM Research Engineer Roadmap v3">
+<meta property="og:description" content="From zero to research lab — your complete 38-week path to becoming an LLM Research Engineer.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LLM Research Engineer Roadmap v3">
+<title>LLM Research Engineer Roadmap v3 — AI/ML Career Path</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070c;--s1:#0d0d15;--s2:#12121c;--s3:#181825;--b1:#1a1a2e;--b2:#242438;--b3:#343455;--tx:#e2e2f0;--tx2:#7070a0;--tx3:#4a4a70;--ac:#6c63f5;--ac2:#3ecfb8;--ac3:#f0c040;--ac4:#f06080;--gn:#4ade80;--rd:#f87070;--bl:#60a5fa;--pu:#c084fc;--pp:#9b8ff8;--vi:#f0c040;--co:#3ecfb8;--bg2:#f06080;--dc:#b09af8;--tl:#4ade80;--nw:#f0c040;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;line-height:1.6}
+
+/* GLOBAL PROGRESS BAR */
+.gpbar-wrap{position:fixed;top:0;left:0;right:0;z-index:100;height:3px;background:var(--b1)}
+.gpbar{height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .4s ease;width:0%}
+
+/* HEADER */
+.hdr{padding:2.2rem 2rem 1.2rem;border-bottom:1px solid var(--b1);position:relative;overflow:hidden;margin-top:3px}
+.hdr::before{content:'';position:absolute;top:-60px;right:-40px;width:320px;height:320px;background:radial-gradient(circle,rgba(108,99,245,.1) 0%,transparent 65%);pointer-events:none}
+.hdr-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;z-index:1}
+.hdr h1{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.hdr h1 em{color:var(--ac);font-style:normal}
+.hdr-meta{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tx2);margin-top:.3rem}
+.tpills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.5rem}
+.tp{font-size:.62rem;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:20px;border:1px solid;letter-spacing:.06em;text-transform:uppercase}
+.tp-a{border-color:rgba(192,132,252,.35);color:var(--pu);background:rgba(192,132,252,.07)}
+.tp-o{border-color:rgba(96,165,250,.35);color:var(--bl);background:rgba(96,165,250,.07)}
+.tp-d{border-color:rgba(62,207,184,.35);color:var(--ac2);background:rgba(62,207,184,.07)}
+.hdr-stats{display:flex;gap:1.2rem;flex-wrap:wrap}
+.stat{text-align:right}
+.sv{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700}
+.sl{font-size:.6rem;color:var(--tx2);text-transform:uppercase;letter-spacing:.1em;font-family:'JetBrains Mono',monospace}
+
+/* PROGRESS SUMMARY BAR */
+.prog-bar-row{display:flex;align-items:center;gap:1rem;padding:.7rem 2rem;background:var(--s1);border-bottom:1px solid var(--b1);flex-wrap:wrap;gap:.6rem}
+.prog-label{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--tx2);white-space:nowrap}
+.prog-track{flex:1;min-width:150px;height:6px;background:var(--b1);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:3px;transition:width .4s ease}
+.prog-pct{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--ac);min-width:32px;text-align:right}
+.prog-reset{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--tx3);background:none;border:1px solid var(--b2);border-radius:4px;padding:2px 8px;cursor:pointer;transition:color .15s,border-color .15s}
+.prog-reset:hover{color:var(--rd);border-color:var(--rd)}
+
+/* LEGEND */
+.legend{display:flex;gap:.7rem;flex-wrap:wrap;padding:.6rem 2rem;border-bottom:1px solid var(--b1);background:var(--s1)}
+.li{display:flex;align-items:center;gap:4px;font-size:.62rem;color:var(--tx2);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+.ld{width:7px;height:7px;border-radius:2px}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 150px)}
+
+/* SIDEBAR */
+.sidebar{border-right:1px solid var(--b1);padding:.8rem 0;position:sticky;top:3px;height:calc(100vh - 153px);overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:3px}.sidebar::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+.sb-sec{margin-bottom:.15rem}
+.mb{width:100%;background:none;border:none;padding:.48rem 1rem;text-align:left;cursor:pointer;display:flex;align-items:center;gap:7px;font-family:'Syne',sans-serif;font-size:.67rem;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.09em;transition:color .15s}
+.mb:hover{color:var(--tx)}.mb.on{color:var(--ac)}
+.mb-dot{width:5px;height:5px;border-radius:50%;background:var(--b2);flex-shrink:0;transition:background .15s}
+.mb.on .mb-dot{background:var(--ac)}
+.mb-prog{font-size:.58rem;font-family:'JetBrains Mono',monospace;color:var(--tx3);margin-left:auto}
+.mb.on .mb-prog{color:var(--ac2)}
+.nb{font-size:.52rem;padding:1px 4px;border-radius:2px;background:rgba(240,192,64,.1);color:var(--nw);border:1px solid rgba(240,192,64,.22);font-family:'JetBrains Mono',monospace}
+.wb{width:100%;background:none;border:none;padding:.32rem .9rem .32rem 2.1rem;text-align:left;cursor:pointer;font-size:.77rem;color:var(--tx2);transition:color .15s,background .15s;display:flex;align-items:center;gap:5px;line-height:1.3}
+.wb:hover{color:var(--tx);background:rgba(108,99,245,.05)}.wb.on{color:var(--ac);background:rgba(108,99,245,.08)}
+.wb-n{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--b3);min-width:22px;flex-shrink:0}
+.wb.on .wb-n{color:rgba(108,99,245,.55)}
+.wb-done{width:10px;height:10px;border-radius:2px;border:1px solid var(--b3);flex-shrink:0;margin-left:auto;display:flex;align-items:center;justify-content:center;font-size:.55rem;transition:all .15s}
+.wb-done.checked{background:var(--gn);border-color:var(--gn);color:#000}
+
+/* MAIN */
+.main{padding:1.6rem 2rem;overflow-y:auto}
+.main::-webkit-scrollbar{width:3px}.main::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+.wv{display:none}.wv.on{display:block;animation:fi .18s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* WEEK HEADER */
+.whead{margin-bottom:1.4rem;padding-bottom:1.2rem;border-bottom:1px solid var(--b1)}
+.wbadge{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ac);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.35rem;display:flex;align-items:center;gap:7px}
+.wbadge::before{content:'';display:inline-block;width:14px;height:1px;background:var(--ac)}
+.wnewbadge{display:inline-flex;align-items:center;gap:3px;font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:3px;background:rgba(240,192,64,.09);color:var(--nw);border:1px solid rgba(240,192,64,.22);margin-bottom:.4rem}
+.wtitle{font-family:'Syne',sans-serif;font-size:clamp(1.2rem,3vw,1.75rem);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:.5rem}
+.wwhy{font-size:.81rem;color:var(--tx2);font-style:italic;line-height:1.55;padding:.7rem .9rem;background:var(--s1);border-left:2px solid var(--ac);border-radius:0 6px 6px 0}
+.wwhy strong{color:var(--ac);font-style:normal;font-size:.6rem;text-transform:uppercase;letter-spacing:.09em;display:block;margin-bottom:2px;font-family:'JetBrains Mono',monospace}
+
+/* SECTION HEADING */
+.sh{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--tx2);text-transform:uppercase;letter-spacing:.14em;margin:1.4rem 0 .6rem;display:flex;align-items:center;gap:9px}
+.sh::after{content:'';flex:1;height:1px;background:var(--b1)}
+
+/* RESOURCES */
+.rg{display:flex;flex-direction:column;gap:6px}
+.rc{display:flex;align-items:flex-start;gap:8px;padding:9px 11px;background:var(--s1);border:1px solid var(--b1);border-radius:8px;text-decoration:none;transition:border-color .15s,background .15s,transform .12s;cursor:pointer}
+.rc:hover{border-color:var(--b2);background:var(--s2);transform:translateX(2px)}
+.rtype{font-family:'JetBrains Mono',monospace;font-size:.57rem;font-weight:500;padding:2px 5px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+.rt-paper{background:rgba(155,143,248,.13);color:var(--pp)}
+.rt-video{background:rgba(240,192,64,.13);color:var(--vi)}
+.rt-course{background:rgba(62,207,184,.13);color:var(--co)}
+.rt-blog{background:rgba(240,96,128,.13);color:var(--bg2)}
+.rt-docs{background:rgba(176,154,248,.13);color:var(--dc)}
+.rt-tool{background:rgba(74,222,128,.13);color:var(--tl)}
+.ri{flex:1;min-width:0}
+.rn{font-size:.83rem;font-weight:500;color:var(--tx);line-height:1.3;margin-bottom:1px}
+.rauth{font-size:.66rem;color:var(--tx2);font-family:'JetBrains Mono',monospace;margin-bottom:1px}
+.rd{font-size:.75rem;color:var(--tx2);line-height:1.4}
+.pstar{display:inline-block;font-size:.54rem;font-family:'JetBrains Mono',monospace;padding:1px 4px;border-radius:2px;background:rgba(240,192,64,.09);color:var(--nw);border:1px solid rgba(240,192,64,.22);margin-left:4px;vertical-align:middle}
+.rnew{display:inline-block;font-size:.54rem;font-family:'JetBrains Mono',monospace;padding:1px 4px;border-radius:2px;background:rgba(108,99,245,.1);color:var(--ac);border:1px solid rgba(108,99,245,.2);margin-left:4px;vertical-align:middle}
+.rarr{font-size:.62rem;color:var(--b3);flex-shrink:0;margin-top:3px;transition:color .15s}
+.rc:hover .rarr{color:var(--ac)}
+
+/* BUILD TASKS */
+.build-list{display:flex;flex-direction:column;gap:8px}
+.build-task{background:var(--s1);border:1px solid var(--b1);border-radius:8px;overflow:hidden}
+.build-task-head{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;cursor:pointer;transition:background .15s}
+.build-task-head:hover{background:var(--s2)}
+.task-check{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--b3);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:.65rem;transition:all .15s;cursor:pointer;background:transparent}
+.task-check.done{background:var(--gn);border-color:var(--gn);color:#000}
+.task-content{flex:1;min-width:0}
+.task-title{font-size:.84rem;font-weight:500;color:var(--tx);line-height:1.35}
+.task-meta{display:flex;gap:.5rem;margin-top:3px;flex-wrap:wrap}
+.task-time{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--ac2);display:flex;align-items:center;gap:3px}
+.task-diff{font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:1px 5px;border-radius:2px}
+.td-easy{background:rgba(74,222,128,.1);color:var(--gn)}
+.td-med{background:rgba(240,192,64,.1);color:var(--vi)}
+.td-hard{background:rgba(248,112,112,.1);color:var(--rd)}
+.task-steps{display:none;padding:0 12px 10px 40px;border-top:1px solid var(--b1)}
+.task-steps.open{display:block}
+.task-step{font-size:.78rem;color:var(--tx2);padding:4px 0;border-bottom:1px dashed var(--b1);line-height:1.45;display:flex;gap:6px}
+.task-step:last-child{border:none}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ac);flex-shrink:0;margin-top:2px}
+.task-output{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--ac2);padding:5px 8px;background:rgba(62,207,184,.06);border-radius:4px;margin-top:6px;border-left:2px solid var(--ac2)}
+.task-output::before{content:'output: ';opacity:.6}
+.task-cmd{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ac3);background:rgba(240,192,64,.06);padding:3px 6px;border-radius:3px;margin-top:4px;display:block;border-left:2px solid rgba(240,192,64,.3)}
+
+/* DELIVERABLE */
+.dv{padding:11px 13px;background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.14);border-radius:8px;font-size:.82rem;color:#86efac;line-height:1.5;margin-top:.3rem}
+.dv-lbl{font-size:.58rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--gn);opacity:.7;display:block;margin-bottom:3px}
+.week-done-btn{display:flex;align-items:center;gap:8px;margin-top:.8rem;padding:8px 12px;background:transparent;border:1px solid var(--b2);border-radius:6px;cursor:pointer;font-size:.78rem;color:var(--tx2);transition:all .15s;width:100%}
+.week-done-btn:hover{border-color:var(--gn);color:var(--gn)}
+.week-done-btn.marked{background:rgba(74,222,128,.07);border-color:var(--gn);color:var(--gn)}
+.wdb-icon{width:14px;height:14px;border-radius:3px;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
+
+/* HOME PAGE SPECIFIC */
+.print-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin-top:.5rem}
+.pc{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--s1);border:1px solid rgba(240,192,64,.18);border-radius:8px;transition:border-color .15s,background .15s}
+.pc:hover{border-color:rgba(240,192,64,.4);background:var(--s2)}
+.pc-icon{width:32px;height:32px;border-radius:6px;background:rgba(240,192,64,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.pc-info{flex:1;min-width:0}
+.pc-name{font-size:.82rem;font-weight:500;color:var(--tx);line-height:1.2}
+.pc-auth{font-size:.67rem;color:var(--tx2);font-family:'JetBrains Mono',monospace;margin-top:1px}
+.pc-week{font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--ac);margin-top:1px}
+.pc-links{display:flex;gap:.4rem;flex-shrink:0}
+.pc-link{font-size:.62rem;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:3px;text-decoration:none;transition:all .15s;border:1px solid}
+.pc-link.pdf{border-color:rgba(240,192,64,.3);color:var(--nw);background:rgba(240,192,64,.07)}
+.pc-link.pdf:hover{background:rgba(240,192,64,.15)}
+.pc-link.html{border-color:rgba(108,99,245,.3);color:var(--ac);background:rgba(108,99,245,.07)}
+.pc-link.html:hover{background:rgba(108,99,245,.15)}
+
+/* OVERVIEW STATS GRID */
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:.5rem}
+.ov-item{padding:10px;background:var(--s1);border:1px solid var(--b1);border-radius:8px;text-align:center}
+.ov-v{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--tx)}
+.ov-l{font-size:.6rem;color:var(--tx2);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+/* MONTH PROGRESS */
+.month-prog{display:flex;flex-direction:column;gap:6px;margin-top:.5rem}
+.mp-row{display:flex;align-items:center;gap:8px}
+.mp-label{font-size:.73rem;color:var(--tx2);min-width:100px;font-family:'JetBrains Mono',monospace}
+.mp-track{flex:1;height:5px;background:var(--b1);border-radius:3px;overflow:hidden}
+.mp-fill{height:100%;background:var(--ac);border-radius:3px;transition:width .4s}
+.mp-pct{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--tx2);min-width:28px;text-align:right}
+
+/* FLAGS */
+.flags{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.5rem}
+.fc{padding:1rem;background:var(--s1);border:1px solid var(--b1);border-radius:10px}
+.ft{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;display:flex;align-items:center;gap:5px}
+.ft.g{color:var(--gn)}.ft.r{color:var(--rd)}
+.fi{font-size:.78rem;color:var(--tx2);padding:4px 0;border-bottom:1px solid var(--b1);line-height:1.4}
+.fi:last-child{border:none}
+.fw{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ac);margin-right:4px}
+
+/* IMP BOX */
+.imp{padding:.85rem 1rem;background:rgba(108,99,245,.06);border:1px solid rgba(108,99,245,.16);border-radius:8px;margin-bottom:1.2rem}
+.imp-t{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ac);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.45rem}
+.imp-i{font-size:.79rem;color:var(--tx2);padding:2px 0;line-height:1.45}
+.imp-i::before{content:'+ ';color:var(--ac);font-weight:600}
+
+/* SKILLS GRID */
+.skills-cats{display:flex;flex-direction:column;gap:.9rem;margin-top:.5rem}
+.skill-cat{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:.9rem 1rem}
+.skill-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:.6rem}
+.skill-cat-icon{font-size:1rem;width:28px;text-align:center;flex-shrink:0}
+.skill-cat-name{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--tx)}
+.skill-cat-sub{font-size:.72rem;color:var(--tx2);margin-left:auto;font-family:'JetBrains Mono',monospace}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.stag{font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 8px;border-radius:4px;border:1px solid;white-space:nowrap}
+.stag-blue{background:rgba(96,165,250,.08);color:var(--bl);border-color:rgba(96,165,250,.2)}
+.stag-pur{background:rgba(192,132,252,.08);color:var(--pu);border-color:rgba(192,132,252,.2)}
+.stag-teal{background:rgba(62,207,184,.08);color:var(--ac2);border-color:rgba(62,207,184,.2)}
+.stag-grn{background:rgba(74,222,128,.08);color:var(--gn);border-color:rgba(74,222,128,.2)}
+.stag-yel{background:rgba(240,192,64,.08);color:var(--vi);border-color:rgba(240,192,64,.2)}
+.stag-rd{background:rgba(248,112,112,.08);color:var(--rd);border-color:rgba(248,112,112,.2)}
+.stag-ac{background:rgba(108,99,245,.08);color:var(--ac);border-color:rgba(108,99,245,.2)}
+.stag-pk{background:rgba(240,96,128,.08);color:var(--bg2);border-color:rgba(240,96,128,.2)}
+
+/* HOSTING SECTION */
+.host-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin-top:.5rem}
+.host-card{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:1rem;transition:border-color .15s}
+.host-card:hover{border-color:var(--b2)}
+.host-card-head{display:flex;align-items:center;gap:8px;margin-bottom:.5rem}
+.host-badge{font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:3px;font-weight:500}
+.hb-free{background:rgba(74,222,128,.12);color:var(--gn);border:1px solid rgba(74,222,128,.25)}
+.hb-rec{background:rgba(108,99,245,.12);color:var(--ac);border:1px solid rgba(108,99,245,.25)}
+.host-name{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--tx)}
+.host-desc{font-size:.77rem;color:var(--tx2);line-height:1.45;margin-bottom:.6rem}
+.host-steps{display:flex;flex-direction:column;gap:3px}
+.host-step{font-size:.72rem;color:var(--tx2);display:flex;gap:5px;line-height:1.4}
+.host-step-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ac2);flex-shrink:0}
+.host-note{font-size:.7rem;color:var(--tx3);font-family:'JetBrains Mono',monospace;margin-top:.5rem;padding:.4rem .6rem;background:var(--s2);border-radius:4px;line-height:1.4}
+.host-link{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ac);margin-top:.5rem;text-decoration:none}
+.host-link:hover{text-decoration:underline}
+
+/* RASCHKA SECTION */
+.raschka-box{background:var(--s1);border:1px solid rgba(240,192,64,.2);border-radius:10px;padding:1rem;margin-top:.5rem}
+.raschka-head{display:flex;align-items:center;gap:10px;margin-bottom:.8rem}
+.raschka-avatar{width:36px;height:36px;border-radius:8px;background:rgba(240,192,64,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.raschka-name{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--tx)}
+.raschka-title{font-size:.7rem;color:var(--tx2);font-family:'JetBrains Mono',monospace}
+.raschka-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+.raschka-link{font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 9px;border-radius:4px;text-decoration:none;transition:all .15s;border:1px solid var(--b2);color:var(--tx2)}
+.raschka-link:hover{border-color:var(--nw);color:var(--nw)}
+.raschka-resources{display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem}
+.raschka-item{display:flex;align-items:flex-start;gap:8px;padding:7px 9px;background:var(--s2);border-radius:6px;text-decoration:none;transition:background .15s}
+.raschka-item:hover{background:var(--s3)}
+.raschka-week{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ac);flex-shrink:0;margin-top:2px;min-width:26px}
+.raschka-item-name{font-size:.79rem;color:var(--tx);line-height:1.3}
+.raschka-item-desc{font-size:.7rem;color:var(--tx2)}
+
+/* SKILLS GRID */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-top:.5rem}
+.skill-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:10px 12px}
+.skill-cat{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.06em}
+.skill-items{display:flex;flex-direction:column;gap:3px}
+.skill-item{font-size:.75rem;color:var(--tx2);display:flex;align-items:flex-start;gap:6px;line-height:1.35}
+.skill-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:4px}
+/* HOSTING CARDS */
+.host-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin-top:.4rem}
+.host-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:10px 12px}
+.host-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.6rem}
+.host-name{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--tx)}
+.host-tag{font-size:.65rem;font-family:'JetBrains Mono',monospace;margin-top:2px}
+.host-steps{display:flex;flex-direction:column;gap:3px;margin-bottom:.6rem}
+.host-step{font-size:.75rem;color:var(--tx2);display:flex;gap:6px;line-height:1.35}
+.host-note{font-size:.72rem;color:var(--tx2);padding:5px 8px;background:rgba(248,112,112,.05);border-left:2px solid rgba(248,112,112,.3);border-radius:0 4px 4px 0;line-height:1.4}
+/* ═══════════════════════════════════════════════ */
+/* NEW: HERO ANIMATED GRADIENT */
+/* ═══════════════════════════════════════════════ */
+.hdr{position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 180deg at 50% 50%,rgba(108,99,245,.08) 0deg,rgba(62,207,184,.06) 120deg,rgba(240,192,64,.06) 240deg,rgba(108,99,245,.08) 360deg);animation:hdr-rotate 20s linear infinite;pointer-events:none}
+@keyframes hdr-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.hdr-inner{position:relative;z-index:2}
+.hdr-tagline{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ac2);margin-top:.6rem;opacity:0;animation:tagline-in .8s ease .3s forwards;display:flex;align-items:center;gap:6px}
+.hdr-tagline::before{content:'';display:inline-block;width:18px;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:2px}
+@keyframes tagline-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.hdr-typing{overflow:hidden;border-right:2px solid var(--ac);white-space:nowrap;animation:typing 2.8s steps(42,end),blink .75s step-end infinite}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink{from,to{border-color:transparent}50%{border-color:var(--ac)}}
+
+/* Floating orbs */
+.hdr-orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;animation:orb-float 8s ease-in-out infinite}
+.hdr-orb-1{width:200px;height:200px;background:rgba(108,99,245,.12);top:-40px;right:10%;animation-delay:0s}
+.hdr-orb-2{width:150px;height:150px;background:rgba(62,207,184,.1);bottom:-30px;left:15%;animation-delay:-3s}
+.hdr-orb-3{width:120px;height:120px;background:rgba(240,192,64,.08);top:20px;left:50%;animation-delay:-5s}
+@keyframes orb-float{0%,100%{transform:translate(0,0)}25%{transform:translate(15px,-15px)}50%{transform:translate(-10px,10px)}75%{transform:translate(10px,15px)}}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: DARK/LIGHT MODE TOGGLE */
+/* ═══════════════════════════════════════════════ */
+.theme-toggle{position:relative;z-index:3;background:var(--s2);border:1px solid var(--b2);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--tx2);transition:all .25s;display:flex;align-items:center;gap:5px}
+.theme-toggle:hover{border-color:var(--ac);color:var(--ac)}
+.theme-toggle .icon{font-size:.85rem;transition:transform .3s}
+.theme-toggle:hover .icon{transform:rotate(30deg)}
+
+[data-theme="light"]{--bg:#f5f5f8;--s1:#eaeaf0;--s2:#e0e0e8;--s3:#d5d5e0;--b1:#c8c8d5;--b2:#b0b0c0;--b3:#9090a5;--tx:#1a1a2e;--tx2:#505070;--tx3:#707090;--ac:#5b52e0;--ac2:#2db8a2;--ac3:#d4a520;--ac4:#e04060}
+[data-theme="light"] .hdr::after{opacity:.4}
+[data-theme="light"] .hdr-orb{opacity:.3}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: SIDEBAR SEARCH */
+/* ═══════════════════════════════════════════════ */
+.sb-search{padding:.5rem .8rem;margin-bottom:.3rem}
+.sb-search-input{width:100%;background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:5px 10px 5px 28px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--tx);outline:none;transition:border-color .2s}
+.sb-search-input::placeholder{color:var(--tx3)}
+.sb-search-input:focus{border-color:var(--ac)}
+.sb-search-wrap{position:relative}
+.sb-search-icon{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--tx3);pointer-events:none}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: ANIMATED STATS COUNTER */
+/* ═══════════════════════════════════════════════ */
+.sv[data-counter]{transition:all .3s}
+@keyframes count-pop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.sv.counted{animation:count-pop .4s ease}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: HORIZONTAL TIMELINE */
+/* ═══════════════════════════════════════════════ */
+.timeline-wrap{padding:1.2rem 0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:.5rem 0}
+.timeline-wrap::-webkit-scrollbar{display:none}
+.timeline{display:flex;align-items:flex-start;gap:0;min-width:max-content;padding:0 1rem;position:relative}
+.tl-node{display:flex;flex-direction:column;align-items:center;min-width:90px;cursor:pointer;position:relative;transition:transform .2s}
+.tl-node:hover{transform:translateY(-3px)}
+.tl-dot{width:16px;height:16px;border-radius:50%;border:2.5px solid var(--b3);background:var(--bg);z-index:2;transition:all .25s;position:relative}
+.tl-node:hover .tl-dot{border-color:var(--ac);box-shadow:0 0 12px rgba(108,99,245,.35)}
+.tl-dot.active{background:var(--ac);border-color:var(--ac);box-shadow:0 0 12px rgba(108,99,245,.4)}
+.tl-dot::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:var(--ac);top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;transition:opacity .25s}
+.tl-dot.active::after{opacity:1;animation:tl-pulse 2s infinite}
+@keyframes tl-pulse{0%,100%{box-shadow:0 0 0 0 rgba(108,99,245,.4)}50%{box-shadow:0 0 0 8px rgba(108,99,245,0)}}
+.tl-line{width:60px;height:2px;background:var(--b2);margin-top:7px;flex-shrink:0;position:relative;overflow:hidden}
+.tl-line::after{content:'';position:absolute;top:0;left:0;height:100%;width:0%;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .6s ease}
+.tl-line.filled::after{width:100%}
+.tl-label{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;color:var(--tx3);margin-top:6px;text-align:center;text-transform:uppercase;letter-spacing:.06em;transition:color .2s;max-width:85px;line-height:1.25}
+.tl-node:hover .tl-label{color:var(--tx)}
+.tl-sub{font-family:'JetBrains Mono',monospace;font-size:.5rem;color:var(--tx3);margin-top:2px;text-align:center;max-width:85px;line-height:1.3}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: GLASSMORPHISM COMPANY TARGET CARDS */
+/* ═══════════════════════════════════════════════ */
+.target-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:.5rem}
+.target-card{position:relative;padding:1.2rem;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:transform .25s,box-shadow .25s;cursor:default}
+.target-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.target-card::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.02);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:0}
+.target-card>*{position:relative;z-index:1}
+.tc-glow{position:absolute;width:120px;height:120px;border-radius:50%;filter:blur(50px);opacity:.35;top:-20px;right:-20px;z-index:0}
+.tc-anthropic .tc-glow{background:var(--ac4)}
+.tc-anthropic{border-color:rgba(240,96,128,.15)}
+.tc-openai .tc-glow{background:var(--gn)}
+.tc-openai{border-color:rgba(74,222,128,.15)}
+.tc-deepmind .tc-glow{background:var(--bl)}
+.tc-deepmind{border-color:rgba(96,165,250,.15)}
+.tc-logo{font-size:1.5rem;margin-bottom:.5rem}
+.tc-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--tx);margin-bottom:.2rem}
+.tc-focus{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--tx2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.7rem}
+.tc-skills{display:flex;flex-direction:column;gap:4px}
+.tc-skill{font-size:.74rem;color:var(--tx2);display:flex;align-items:center;gap:6px;line-height:1.35}
+.tc-skill::before{content:'→';color:var(--ac);font-size:.6rem}
+.tc-weeks{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--tx3);margin-top:.65rem;padding-top:.55rem;border-top:1px solid rgba(255,255,255,.05)}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: AI/ML CAREER PATHS */
+/* ═══════════════════════════════════════════════ */
+.career-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:.5rem}
+.career-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:1.1rem;transition:border-color .2s,transform .2s}
+.career-card:hover{border-color:var(--b2);transform:translateY(-2px)}
+.career-icon{font-size:1.4rem;margin-bottom:.5rem}
+.career-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:.2rem}
+.career-salary{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gn);margin-bottom:.5rem;display:flex;align-items:center;gap:4px}
+.career-desc{font-size:.76rem;color:var(--tx2);line-height:1.5;margin-bottom:.6rem}
+.career-skills{display:flex;flex-wrap:wrap;gap:.3rem}
+.career-stag{font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:3px;background:rgba(108,99,245,.08);color:var(--ac);border:1px solid rgba(108,99,245,.15)}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: AI/ML INDUSTRY LANDSCAPE */
+/* ═══════════════════════════════════════════════ */
+.landscape-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:.5rem}
+.landscape-card{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:1rem;transition:all .2s}
+.landscape-card:hover{border-color:var(--b2);transform:translateY(-2px)}
+.ls-head{display:flex;align-items:center;gap:8px;margin-bottom:.6rem}
+.ls-icon{font-size:1.1rem;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ls-title{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--tx)}
+.ls-hot{font-size:.55rem;font-family:'JetBrains Mono',monospace;padding:1px 5px;border-radius:3px;background:rgba(248,112,112,.1);color:var(--rd);border:1px solid rgba(248,112,112,.2);margin-left:auto}
+.ls-items{display:flex;flex-direction:column;gap:3px}
+.ls-item{font-size:.74rem;color:var(--tx2);line-height:1.4;display:flex;gap:5px}
+.ls-item::before{content:'•';color:var(--ac);flex-shrink:0}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: COMPLETION DATE CALCULATOR */
+/* ═══════════════════════════════════════════════ */
+.calc-wrap{display:flex;align-items:center;gap:.8rem;margin-top:.5rem;padding:.7rem 1rem;background:var(--s1);border:1px solid var(--b1);border-radius:8px;flex-wrap:wrap}
+.calc-label{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--tx2);white-space:nowrap}
+.calc-input{width:55px;background:var(--s2);border:1px solid var(--b2);border-radius:4px;padding:3px 6px;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ac);text-align:center;outline:none}
+.calc-input:focus{border-color:var(--ac)}
+.calc-result{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--ac2);margin-left:auto}
+.calc-date{color:var(--gn);font-weight:500}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: SCROLL REVEAL ANIMATION */
+/* ═══════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(15px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: AI/ML KEY CONCEPTS SECTION */
+/* ═══════════════════════════════════════════════ */
+.concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:.5rem}
+.concept-card{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:1rem;position:relative;overflow:hidden;transition:all .25s}
+.concept-card:hover{border-color:var(--b2);transform:translateY(-2px)}
+.concept-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac2));opacity:0;transition:opacity .25s}
+.concept-card:hover::before{opacity:1}
+.concept-emoji{font-size:1.2rem;margin-bottom:.5rem}
+.concept-name{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--tx);margin-bottom:.3rem}
+.concept-desc{font-size:.72rem;color:var(--tx2);line-height:1.5}
+.concept-papers{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--tx3);margin-top:.45rem;display:flex;align-items:center;gap:4px}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: RESEARCH BREAKTHROUGHS TIMELINE */
+/* ═══════════════════════════════════════════════ */
+.bt-list{display:flex;flex-direction:column;gap:0;margin-top:.5rem;position:relative;padding-left:20px}
+.bt-list::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--ac),var(--ac2),var(--ac3))}
+.bt-item{display:flex;gap:14px;padding:.55rem 0;position:relative}
+.bt-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--ac);background:var(--bg);flex-shrink:0;margin-top:3px;position:absolute;left:-20px;z-index:1}
+.bt-content{flex:1;padding-left:2px}
+.bt-year{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ac);margin-bottom:2px}
+.bt-title{font-size:.78rem;font-weight:500;color:var(--tx);line-height:1.3}
+.bt-desc{font-size:.7rem;color:var(--tx2);line-height:1.4;margin-top:2px}
+
+/* ═══════════════════════════════════════════════ */
+/* NEW: FOOTER */
+/* ═══════════════════════════════════════════════ */
+.site-footer{background:var(--s1);border-top:1px solid var(--b1);padding:1.5rem 2rem;display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:flex-start}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--tx);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.footer-col a{display:block;font-size:.72rem;color:var(--tx2);text-decoration:none;padding:2px 0;transition:color .15s;font-family:'JetBrains Mono',monospace}
+.footer-col a:hover{color:var(--ac)}
+.footer-copy{width:100%;text-align:center;font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--tx3);padding-top:1rem;border-top:1px solid var(--b1);margin-top:.5rem}
+.footer-share-btn{font-size:.65rem;font-family:'JetBrains Mono',monospace;padding:4px 10px;border-radius:5px;border:1px solid var(--b2);background:rgba(108,99,245,.08);color:var(--ac);cursor:pointer;transition:all .15s}
+.footer-share-btn:hover{background:rgba(108,99,245,.15);border-color:var(--ac)}
+
+/* ═══════════════════════════════════════════════ */
+/* IMPROVED: RESPONSIVE */
+/* ═══════════════════════════════════════════════ */
+@media(max-width:640px){.skills-grid,.host-grid,.target-grid,.career-grid,.landscape-grid,.concepts-grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--b1);display:flex;flex-wrap:wrap;padding:.6rem}.mb,.wb{width:auto;padding:3px 7px}.wb-n,.mb-prog,.wb-done{display:none}.flags,.print-grid{grid-template-columns:1fr}.timeline-wrap{padding:.8rem 0}.calc-wrap{flex-direction:column;align-items:flex-start}.calc-result{margin-left:0}.site-footer{flex-direction:column;gap:1rem}.hdr-orb{display:none}}</style>
+</head>
+<body>
+<div class="gpbar-wrap"><div class="gpbar" id="gpbar"></div></div>
+
+<div class="hdr">
+  <div class="hdr-orb hdr-orb-1"></div>
+  <div class="hdr-orb hdr-orb-2"></div>
+  <div class="hdr-orb hdr-orb-3"></div>
+  <div class="hdr-inner">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div>
+      <h1>LLM Research<br><em>Engineer Roadmap</em> v3</h1>
+      <div class="hdr-meta">// 10 months · 38 weeks · ~820 hrs · research lab edition</div>
+      <div class="hdr-tagline"><span class="hdr-typing">From zero to research lab — your complete AI/ML path</span></div>
+      <div class="tpills">
+        <span class="tp tp-a">Anthropic</span>
+        <span class="tp tp-o">OpenAI</span>
+        <span class="tp tp-d">DeepMind</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.6rem">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode"><span class="icon">🌙</span><span id="theme-label">dark</span></button>
+      <div class="hdr-stats">
+        <div class="stat"><div class="sv" id="h-done" data-counter="0" data-target="0">0</div><div class="sl">Weeks done</div></div>
+        <div class="stat"><div class="sv" data-counter="38" data-target="38">0</div><div class="sl">Total weeks</div></div>
+        <div class="stat"><div class="sv" data-counter="55" data-target="55">0</div><div class="sl">Papers</div></div>
+        <div class="stat"><div class="sv" data-counter="12" data-target="12">0</div><div class="sl">Print-worthy</div></div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="prog-bar-row">
+  <span class="prog-label">Overall progress</span>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  <span class="prog-pct" id="prog-pct">0%</span>
+  <button class="prog-reset" onclick="resetProgress()">reset</button>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="ld" style="background:var(--pp)"></div>Paper</div>
+  <div class="li"><div class="ld" style="background:var(--vi)"></div>Video</div>
+  <div class="li"><div class="ld" style="background:var(--co)"></div>Course</div>
+  <div class="li"><div class="ld" style="background:var(--bg2)"></div>Blog</div>
+  <div class="li"><div class="ld" style="background:var(--dc)"></div>Docs</div>
+  <div class="li"><div class="ld" style="background:var(--tl)"></div>Tool</div>
+  <div class="li"><div class="ld" style="background:var(--nw)"></div>★ New in v3</div>
+  <div class="li"><div class="ld" style="background:rgba(240,192,64,.4)"></div>✦ Print</div>
+</div>
+
+<div class="layout">
+<nav class="sidebar" id="sb"></nav>
+<main class="main" id="mn"></main>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="site-footer">
+  <div class="footer-col">
+    <h4>🤝 Communities</h4>
+    <a href="https://huggingface.co/" target="_blank">🤗 HuggingFace Hub</a>
+    <a href="https://www.reddit.com/r/MachineLearning/" target="_blank">📱 r/MachineLearning</a>
+    <a href="https://discord.gg/hugging-face-879548962464493619" target="_blank">💬 HuggingFace Discord</a>
+    <a href="https://twitter.com/i/communities/1781292055863566781" target="_blank">𝕏 ML Twitter/X</a>
+  </div>
+  <div class="footer-col">
+    <h4>📚 Top Resources</h4>
+    <a href="https://github.com/rasbt/LLMs-from-scratch" target="_blank">LLMs from Scratch (Book)</a>
+    <a href="https://www.youtube.com/@andaborhakarpathy" target="_blank">Andrej Karpathy (YouTube)</a>
+    <a href="https://magazine.sebastianraschka.com/" target="_blank">Ahead of AI Newsletter</a>
+    <a href="https://arxiv.org/list/cs.CL/recent" target="_blank">arXiv cs.CL (Latest Papers)</a>
+  </div>
+  <div class="footer-col">
+    <h4>🔗 Share This Roadmap</h4>
+    <button class="footer-share-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(location.href);this.textContent='✓ Copied!';setTimeout(()=>this.textContent='📋 Copy link',2000)">📋 Copy link</button>
+    <div style="margin-top:.5rem;font-size:.62rem;color:var(--tx3);font-family:'JetBrains Mono',monospace">Share with fellow ML engineers<br>Progress syncs via exported URL</div>
+  </div>
+  <div class="footer-copy">
+    LLM Research Engineer Roadmap v3 · 2024–2025 · Open Source · Built for the AI/ML community
+  </div>
+</footer>
+
+<script>
+// ─── THEME TOGGLE ───
+function toggleTheme(){
+  const html=document.documentElement;
+  const cur=html.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  localStorage.setItem('llm_roadmap_theme',next);
+  const label=document.getElementById('theme-label');
+  const icon=document.querySelector('.theme-toggle .icon');
+  if(label)label.textContent=next;
+  if(icon)icon.textContent=next==='dark'?'🌙':'☀️';
+}
+(function initTheme(){
+  const saved=localStorage.getItem('llm_roadmap_theme');
+  if(saved){
+    document.documentElement.setAttribute('data-theme',saved);
+    const label=document.getElementById('theme-label');
+    const icon=document.querySelector('.theme-toggle .icon');
+    if(label)label.textContent=saved;
+    if(icon)icon.textContent=saved==='dark'?'🌙':'☀️';
+  }
+})();
+
+// ─── ANIMATED STATS COUNTER ───
+function animateCounters(){
+  document.querySelectorAll('.sv[data-counter]').forEach(el=>{
+    const target=parseInt(el.getAttribute('data-target'))||0;
+    if(target===0){el.textContent='0';return}
+    let start=0;
+    const duration=1200;
+    const startTime=performance.now();
+    function step(now){
+      const elapsed=now-startTime;
+      const progress=Math.min(elapsed/duration,1);
+      const eased=1-Math.pow(1-progress,4);
+      const current=Math.round(eased*target);
+      el.textContent=current+(target===55?'+':'');
+      if(progress<1)requestAnimationFrame(step);
+      else{el.classList.add('counted')}
+    }
+    requestAnimationFrame(step);
+  });
+}
+setTimeout(animateCounters,300);
+
+// ─── SCROLL REVEAL ───
+function initScrollReveal(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  setTimeout(()=>{document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))},200);
+}
+
+// ─── COMPLETION CALCULATOR ───
+function calcCompletion(){
+  const input=document.getElementById('calc-hours');
+  if(!input)return;
+  const hrs=parseInt(input.value)||20;
+  const totalHrs=820;
+  const weeksNeeded=Math.ceil(totalHrs/hrs);
+  const endDate=new Date();
+  endDate.setDate(endDate.getDate()+weeksNeeded*7);
+  const options={year:'numeric',month:'short',day:'numeric'};
+  const result=document.getElementById('calc-date-result');
+  if(result)result.innerHTML=`≈ <span class="calc-date">${endDate.toLocaleDateString('en-US',options)}</span> · ${weeksNeeded} weeks`;
+}
+
+// ─── PROGRESS STORAGE ───
+const STORE_KEY='llm_roadmap_v3_progress';
+function loadProgress(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch{return{}}}
+function saveProgress(p){try{localStorage.setItem(STORE_KEY,JSON.stringify(p))}catch{}}
+let PROGRESS=loadProgress();
+function resetProgress(){if(confirm('Reset all progress?')){PROGRESS={};saveProgress(PROGRESS);renderProgress();location.reload()}}
+
+// ─── PRINT-WORTHY PAPERS ───
+const PRINT_PAPERS=[
+  {n:"Attention Is All You Need",auth:"Vaswani et al., 2017",week:"W1",pdf:"https://arxiv.org/pdf/1706.03762",html:"https://arxiv.org/abs/1706.03762"},
+  {n:"BERT",auth:"Devlin et al., 2018",week:"W2",pdf:"https://arxiv.org/pdf/1810.04805",html:"https://arxiv.org/abs/1810.04805"},
+  {n:"Scaling Laws for Neural Language Models",auth:"Kaplan et al., 2020",week:"W2",pdf:"https://arxiv.org/pdf/2001.08361",html:"https://arxiv.org/abs/2001.08361"},
+  {n:"LoRA: Low-Rank Adaptation",auth:"Hu et al., 2021",week:"W7",pdf:"https://arxiv.org/pdf/2106.09685",html:"https://arxiv.org/abs/2106.09685"},
+  {n:"QLoRA: Efficient Finetuning",auth:"Dettmers et al., 2023",week:"W7",pdf:"https://arxiv.org/pdf/2305.14314",html:"https://arxiv.org/abs/2305.14314"},
+  {n:"Direct Preference Optimization (DPO)",auth:"Rafailov et al., 2023",week:"W8",pdf:"https://arxiv.org/pdf/2305.18290",html:"https://arxiv.org/abs/2305.18290"},
+  {n:"ReAct: Reasoning + Acting",auth:"Yao et al., 2022",week:"W13",pdf:"https://arxiv.org/pdf/2210.03629",html:"https://arxiv.org/abs/2210.03629"},
+  {n:"Chain-of-Thought Prompting",auth:"Wei et al., 2022",week:"W13",pdf:"https://arxiv.org/pdf/2201.11903",html:"https://arxiv.org/abs/2201.11903"},
+  {n:"FlashAttention-2",auth:"Dao, 2023",week:"W21",pdf:"https://arxiv.org/pdf/2307.08691",html:"https://arxiv.org/abs/2307.08691"},
+  {n:"Toy Models of Superposition",auth:"Elhage et al., 2022 (Anthropic)",week:"W22",pdf:null,html:"https://transformer-circuits.pub/2022/toy_model/index.html"},
+  {n:"InstructGPT",auth:"Ouyang et al., 2022",week:"W23",pdf:"https://arxiv.org/pdf/2203.02155",html:"https://arxiv.org/abs/2203.02155"},
+  {n:"Constitutional AI",auth:"Bai et al., 2022 (Anthropic)",week:"W23",pdf:"https://arxiv.org/pdf/2212.08073",html:"https://arxiv.org/abs/2212.08073"},
+];
+
+const FLAGS={
+  g:[
+    {w:"W0",t:"Derive softmax gradient by hand + implement backprop without autograd"},
+    {w:"W4",t:"Explain attention, RoPE, MoE, and BERT architecture without notes"},
+    {w:"W8",t:"Fine-tuned model with SFT→DPO→SimPO scores on HuggingFace Hub"},
+    {w:"W12",t:"End-to-end fine-tuning pipeline with synthetic data + RAFT"},
+    {w:"W16",t:"Multi-agent system + custom MCP server + full LangSmith traces"},
+    {w:"W20",t:"Production API: security layer + 100-user load test + CI evals"},
+    {w:"W24",t:"Implement attention + backprop from scratch in under 45 min"},
+    {w:"W28",t:"Specialization project submitted to arXiv as preprint"},
+    {w:"W32",t:"4 capstones + blog + open-source + ML Twitter presence"},
+  ],
+  r:[
+    {w:"—",t:"Watching tutorials without coding along — stop, build instead"},
+    {w:"—",t:"Skipping evals — no eval = no proof anything works"},
+    {w:"—",t:"Starting new projects before finishing current ones"},
+    {w:"—",t:"Not writing publicly — your work is invisible without a public trail"},
+    {w:"—",t:"Skipping Week 0 — weak math causes silent confusion in every theory week"},
+    {w:"—",t:"Applying only to product companies — aim for research roles from day 1"},
+  ]
+};
+
+// ─── DATA ───
+// build task format: {title, time, diff:"easy"|"med"|"hard", steps:[], output?, cmd?}
+const DATA=[
+ {month:"W0 — Prerequisites",short:"W0",tag:true,weeks:[
+  {id:"w0",label:"W0",title:"Math Foundations Check",isnew:true,
+  why:"Weak linear algebra means you can't derive attention. Weak probability means RLHF reward models feel like magic. This is a pass/fail week — no project, just a self-check.",
+  resources:[
+   {tp:"course",n:"3Blue1Brown — Essence of Linear Algebra",a:"youtube.com · 15 episodes · ~5hrs",d:"Vectors, matrices, eigenvalues — visual intuition before attention. Watch at 1.25×.",u:"https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"},
+   {tp:"course",n:"3Blue1Brown — Essence of Calculus",a:"youtube.com · 12 episodes · ~3hrs",d:"Derivatives, chain rule, gradient descent intuition.",u:"https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr"},
+   {tp:"course",n:"Stanford CS229 — Probability Review Notes",a:"cs229.stanford.edu · PDF",d:"Bayes, distributions, MLE, KL divergence — all appear in LLM papers.",u:"https://cs229.stanford.edu/section/cs229-prob.pdf"},
+   {tp:"blog",n:"The Matrix Calculus You Need for Deep Learning",a:"Parr & Howard · explained.ai",d:"★ Jacobians, matrix op gradients — the exact math behind backprop.",u:"https://explained.ai/matrix-calculus/",isnew:true},
+   {tp:"course",n:"fast.ai — Practical Deep Learning Part 1",a:"fast.ai · Free · 7 lessons",d:"If rusty on neural net fundamentals, do this before Week 1.",u:"https://course.fast.ai/"},
+   {tp:"video",n:"MIT 6.S191 — Intro to Deep Learning",a:"YouTube · MIT · ~2hrs",d:"★ Clean 2024 edition. Good condensed neural net overview before diving into transformers.",u:"https://www.youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI",isnew:true},
+   {tp:"blog",n:"The Illustrated Word2Vec",a:"Jay Alammar",d:"Embeddings intuition — mental model needed before BERT.",u:"https://jalammar.github.io/illustrated-word2vec/"},
+  ],
+  build:[
+   {title:"Softmax gradient derivation",time:"1hr",diff:"med",steps:["Write out softmax: σᵢ = exp(zᵢ)/Σexp(zⱼ)","Derive ∂σᵢ/∂zⱼ for both i=j and i≠j cases","Express result as σᵢ(δᵢⱼ − σⱼ) — verify both cases","If stuck: watch 3b1b calculus ep 4 then retry"],output:"Handwritten derivation — if you cannot do this, spend 2 more days on calculus"},
+   {title:"Backprop from scratch on 2-layer MLP",time:"3hrs",diff:"hard",steps:["Build forward pass: X → W1 → ReLU → W2 → softmax","Implement cross-entropy loss manually","Derive and implement backward pass for each layer","Verify gradients using numerical gradient check (perturb each weight ±ε)","Compare with PyTorch autograd — outputs should match to 1e-5"],cmd:"python mlp_scratch.py --verify-grads",output:"mlp_from_scratch.py with numerical gradient verification passing"},
+  ],
+  del:"Pass/fail: derive softmax gradient + implement backprop without autograd. Yes → Week 1."}
+ ]},
+ {month:"M1 — Transformer Foundations",short:"M1",weeks:[
+  {id:"w1",label:"W1",title:"Transformer Architecture Deep Dive",print:true,
+  why:"Research labs ask you to derive attention — not just explain it. RoPE is in every modern LLM. ALiBi is the length extrapolation baseline. Annotate the original paper carefully.",
+  resources:[
+   {tp:"paper",n:"Attention Is All You Need",a:"Vaswani et al., 2017 · arXiv:1706.03762",d:"✦ PRINT. Annotate every equation. Foundation of all LLMs.",u:"https://arxiv.org/abs/1706.03762",print:true},
+   {tp:"video",n:"Let's Build GPT from Scratch",a:"Andrej Karpathy · YouTube · 2hrs",d:"Code along entirely. Most important single video in this roadmap.",u:"https://www.youtube.com/watch?v=kCc8FmEb1nY"},
+   {tp:"video",n:"Umar Jamil — Coding Transformers from Scratch",a:"YouTube · 3.5hrs",d:"★ Step-by-step implementation with detailed commentary. Better than most paid courses.",u:"https://www.youtube.com/watch?v=ISNdQcPhsts",isnew:true},
+   {tp:"blog",n:"The Illustrated Transformer",a:"Jay Alammar",d:"Best visual explanation of multi-head attention.",u:"https://jalammar.github.io/illustrated-transformer/"},
+   {tp:"blog",n:"The Annotated Transformer",a:"Harvard NLP",d:"Line-by-line PyTorch + commentary. Use alongside the paper.",u:"https://nlp.seas.harvard.edu/2018/04/03/attention.html"},
+   {tp:"paper",n:"RoPE: Rotary Position Embedding",a:"Su et al., 2021 · arXiv:2104.09864",d:"★ Used in LLaMA/Mistral/Gemma. Modern PE — asked in interviews.",u:"https://arxiv.org/abs/2104.09864",isnew:true},
+   {tp:"video",n:"Yannic Kilcher — Attention Is All You Need Walkthrough",a:"YouTube · 1.5hrs",d:"★ Deep paper walkthrough with Q&A. Great for solidifying understanding.",u:"https://www.youtube.com/watch?v=iDulhoQ2pro",isnew:true},
+   {tp:"blog",n:"Sebastian Raschka — Understanding Self-Attention from Scratch",a:"sebastianraschka.com",d:"★ Step-by-step self-attention in PyTorch with clear math. One of the best blog posts on the topic.",u:"https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html",isnew:true},
+   {tp:"blog",n:"Sebastian Raschka — Build a Large Language Model (From Scratch)",a:"github.com/rasbt/LLMs-from-scratch · Book + Code",d:"★ Full book with companion code — covers tokenization, attention, pre-training, fine-tuning. Use alongside Karpathy.",u:"https://github.com/rasbt/LLMs-from-scratch",isnew:true},
+  ],
+  build:[
+   {title:"Implement minimal transformer encoder-decoder in PyTorch",time:"8hrs",diff:"hard",steps:["Start with token + positional embeddings (sinusoidal first)","Implement scaled dot-product attention: softmax(QKᵀ/√d_k)V","Wrap into multi-head attention with correct head splitting and concatenation","Add layer norm (pre-norm style), feed-forward block (2 linear layers + GELU)","Stack N encoder layers, then N decoder layers with cross-attention","Add final linear + softmax projection. Test on a toy sequence copy task"],cmd:"python transformer.py --task copy --seq-len 20 --verify",output:"transformer.py — encoder-decoder passes copy task with >95% accuracy"},
+   {title:"Implement RoPE positional encoding",time:"2hrs",diff:"med",steps:["Understand: RoPE applies rotation matrix to Q,K based on position","Implement rotation using complex number trick: pair dimensions 2i, 2i+1","Replace sinusoidal PE with RoPE in your transformer","Verify: attention scores should show relative position sensitivity"],output:"rope.py — RoPE implemented and integrated into transformer"},
+   {title:"Multi-head attention weight visualization",time:"1.5hrs",diff:"easy",steps:["After training on copy task, extract attention weights from each head","Use matplotlib imshow to visualize attention matrices","Run on 3–5 examples. Do different heads attend to different positions?","Save as attention_viz.png — include in GitHub README"],output:"attention_viz.png showing distinct patterns across heads"},
+  ],
+  del:"GitHub: transformer-from-scratch — README with math derivations, RoPE, attention visualizations"},
+
+  {id:"w2",label:"W2",title:"Tokenization + BERT + Scaling Laws",print:true,
+  why:"Chinchilla revised Kaplan and is now the field standard. Every research conversation references both. Know the disagreement and why it changed how labs train models.",
+  resources:[
+   {tp:"paper",n:"BERT",a:"Devlin et al., 2018 · arXiv:1810.04805",d:"✦ PRINT. Focus on MLM + NSP pre-training and fine-tuning paradigm.",u:"https://arxiv.org/abs/1810.04805",print:true},
+   {tp:"paper",n:"Scaling Laws for Neural Language Models",a:"Kaplan et al., 2020 · arXiv:2001.08361",d:"✦ PRINT. Key compute/data/parameter scaling graphs.",u:"https://arxiv.org/abs/2001.08361",print:true},
+   {tp:"paper",n:"Chinchilla: Training Compute-Optimal LLMs",a:"Hoffmann et al., 2022 · arXiv:2203.15556",d:"★ Revises Kaplan. Chinchilla-optimal is now the field standard.",u:"https://arxiv.org/abs/2203.15556",isnew:true},
+   {tp:"video",n:"Umar Jamil — Coding BERT from Scratch",a:"YouTube · 3hrs",d:"★ Full BERT implementation with pre-training + fine-tuning.",u:"https://www.youtube.com/watch?v=DL2hed2bXdk",isnew:true},
+   {tp:"course",n:"HuggingFace NLP Course — Ch 1–3",a:"huggingface.co · Free · ~4hrs",d:"Best practical HF ecosystem intro. Do the exercises.",u:"https://huggingface.co/learn/nlp-course/chapter1/1"},
+   {tp:"video",n:"Stanford CS224N — Lecture 1: Intro and Word Vectors",a:"YouTube · Stanford · 2024",d:"★ Full NLP with DL course. Lectures 1–5 cover foundations through BERT.",u:"https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVx76",isnew:true},
+   {tp:"tool",n:"Weights & Biases",a:"wandb.ai",d:"Set up experiment tracking — use for everything from here onwards.",u:"https://wandb.ai/site"},
+   {tp:"blog",n:"Sebastian Raschka — Understanding Large Language Models",a:"magazine.sebastianraschka.com",d:"★ Comprehensive overview of LLMs, pre-training, and scaling. Best single-article orientation for the whole roadmap.",u:"https://magazine.sebastianraschka.com/p/understanding-large-language-models",isnew:true},
+  ],
+  build:[
+   {title:"Train BPE tokenizer from scratch on custom corpus",time:"2hrs",diff:"easy",steps:["Choose a corpus (e.g. Wikipedia dump subset, 50MB minimum)","Use HuggingFace tokenizers library: ByteLevelBPETokenizer","Train with vocab_size=10000, min_frequency=2","Compare: how does your tokenizer split words vs GPT-2 tokenizer?","Visualize: which rare words get split into many tokens?"],cmd:"python train_tokenizer.py --corpus data/wiki_subset.txt --vocab-size 10000",output:"tokenizer/ directory with vocab.json + merges.txt"},
+   {title:"Fine-tune BERT on text classification with W&B",time:"4hrs",diff:"med",steps:["Load bert-base-uncased from HuggingFace","Use SST-2 or a domain dataset (e.g. telecom ticket classification for your TechMahindra context)","Set up W&B run: track loss, accuracy, lr schedule per step","Train 3 epochs — log gradient norms to catch instability","Export best checkpoint to HuggingFace Hub with model card"],cmd:"python finetune_bert.py --dataset sst2 --epochs 3 --wandb",output:"Pushed model on HuggingFace Hub with W&B experiment link in model card"},
+   {title:"Reproduce Kaplan vs Chinchilla scaling curves",time:"3hrs",diff:"hard",steps:["Train 5 models of different sizes (1M–50M params) on same data budget","Log: loss vs compute (FLOPs) for each","Plot: find the compute-optimal frontier","At 1e18 FLOPs: what does Kaplan predict? What does Chinchilla predict?","Write blog post explaining the disagreement and its practical implications"],output:"scaling_curves.png + blog post on Medium/Substack"},
+  ],
+  del:"Fine-tuned BERT on HF Hub + W&B dashboard + Kaplan vs Chinchilla blog post"},
+
+  {id:"w3",label:"W3",title:"Modern Architectures: MoE + SSMs + GQA",isnew:true,
+  why:"★ NEW. Every 2025 model uses one of these. Not knowing MoE or GQA is a visible gap in research interviews.",
+  resources:[
+   {tp:"paper",n:"Switch Transformer",a:"Fedus et al., 2021 · arXiv:2101.03961",d:"★ Foundational MoE. Read before Mixtral.",u:"https://arxiv.org/abs/2101.03961",isnew:true},
+   {tp:"paper",n:"Mixtral of Experts",a:"Mistral AI, 2024 · arXiv:2401.04088",d:"★ Sparse MoE in practice — router, top-k, load balancing.",u:"https://arxiv.org/abs/2401.04088",isnew:true},
+   {tp:"paper",n:"Mamba: Linear-Time Sequence Modeling",a:"Gu & Dao, 2023 · arXiv:2312.00752",d:"★ SSM alternative to attention.",u:"https://arxiv.org/abs/2312.00752",isnew:true},
+   {tp:"blog",n:"A Visual Guide to Mamba and State Space Models",a:"Maarten Grootendorst",d:"★ Best visual SSM explanation — read before the Mamba paper.",u:"https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-mamba-and-state",isnew:true},
+   {tp:"paper",n:"GQA: Grouped-Query Attention",a:"Ainslie et al., 2023 · arXiv:2305.13245",d:"★ Used in LLaMA-3, Mistral. MQA/GQA/MHA tradeoffs.",u:"https://arxiv.org/abs/2305.13245",isnew:true},
+   {tp:"video",n:"Yannic Kilcher — Mamba Paper Explained",a:"YouTube · 1.5hrs",d:"★ Deep walkthrough of the SSM architecture and selective scan.",u:"https://www.youtube.com/watch?v=9dSkvxS2EB0",isnew:true},
+   {tp:"video",n:"Umar Jamil — Mamba from Scratch",a:"YouTube · 2hrs",d:"★ Full PyTorch implementation of Mamba step-by-step.",u:"https://www.youtube.com/watch?v=8Q_tqwpTpVU",isnew:true},
+  ],
+  build:[
+   {title:"Implement MoE layer in PyTorch",time:"4hrs",diff:"hard",steps:["Define N expert FFN networks (each: linear → GELU → linear)","Implement router: linear projection → softmax → top-k selection","Route each token to its top-2 experts, weighted by router score","Add auxiliary load balancing loss to prevent expert collapse","Integrate into a 2-layer transformer — verify forward pass"],output:"moe_layer.py — passes forward with 8 experts, top-2 routing"},
+   {title:"Implement minimal SSM (Mamba-style)",time:"4hrs",diff:"hard",steps:["Implement S4 recurrence: h_t = A·h_{t-1} + B·x_t, y_t = C·h_t","Add Mamba's selectivity: make B, C, Δ input-dependent (projection of x)","Implement parallel scan for efficient training","Compare speed vs attention on sequence length 512, 1024, 2048"],output:"ssm_layer.py — correct outputs, faster than attention at len>1024"},
+   {title:"Benchmark transformer vs MoE vs SSM",time:"2hrs",diff:"med",steps:["Train all 3 architectures on a small language modeling task (same #params)","Track: perplexity, training speed, inference speed, GPU memory","Plot comparisons — which architecture wins where?"],output:"architecture_comparison.png + README table"},
+  ],
+  del:"GitHub: modern-architectures — MoE + SSM + GQA with comparison benchmark notebook"},
+
+  {id:"w4",label:"W4",title:"RAG: Evaluation + Hybrid Search",
+  why:"RAG is table stakes. Research labs care that you evaluate rigorously — RAGAS scores or it didn't happen.",
+  resources:[
+   {tp:"paper",n:"Retrieval-Augmented Generation",a:"Lewis et al., 2020 · arXiv:2005.11401",d:"Original RAG. Dense retrieval + generation pipeline.",u:"https://arxiv.org/abs/2005.11401"},
+   {tp:"paper",n:"RAGAS: Automated RAG Evaluation",a:"Es et al., 2023 · arXiv:2309.15217",d:"Faithfulness, answer relevancy, context precision.",u:"https://arxiv.org/abs/2309.15217"},
+   {tp:"video",n:"James Briggs — RAG from Scratch (Full Series)",a:"YouTube · ~4hrs total",d:"★ Best practical RAG implementation series. Covers dense, hybrid, reranking.",u:"https://www.youtube.com/playlist?list=PLs8w1cTqXi-UHSS1k4F-xeXiYNFIqPHt9",isnew:true},
+   {tp:"paper",n:"BEIR Benchmark",a:"Thakur et al., 2021 · arXiv:2104.08663",d:"Evaluation methodology across diverse retrieval tasks.",u:"https://arxiv.org/abs/2104.08663"},
+   {tp:"tool",n:"rank_bm25",a:"github/dorianbrown",d:"BM25 sparse retrieval for hybrid search.",u:"https://github.com/dorianbrown/rank_bm25"},
+   {tp:"tool",n:"Langfuse",a:"langfuse.com",d:"Open-source LLM observability — trace every call.",u:"https://langfuse.com/"},
+   {tp:"docs",n:"RAGAS Documentation",a:"docs.ragas.io",d:"Full metric definitions and implementation.",u:"https://docs.ragas.io/"},
+  ],
+  build:[
+   {title:"Build baseline dense RAG pipeline",time:"3hrs",diff:"med",steps:["Chunk documents (512 tokens, 50 token overlap)","Embed with text-embedding-3-small or bge-large-en-v1.5","Store in Qdrant with metadata (source, chunk_id, page)","Implement retrieval: embed query → cosine similarity → top-k chunks","Generate answer with context using Claude/GPT-4"],output:"rag_pipeline.py — end-to-end working RAG"},
+   {title:"Add RAGAS evaluation dashboard",time:"3hrs",diff:"med",steps:["Create 50-question evaluation set from your documents","Run RAGAS: measure faithfulness, answer_relevancy, context_precision","Log all metrics to W&B — set up automated eval script","Establish baseline scores — you'll compare everything against these"],cmd:"python eval_rag.py --questions eval_set.json --log-wandb",output:"W&B dashboard with 3 RAGAS scores + per-question breakdown"},
+   {title:"Implement BM25 + dense hybrid search",time:"2hrs",diff:"med",steps:["Index same documents with rank_bm25","For each query: get BM25 scores + dense scores separately","Combine with reciprocal rank fusion (RRF) — no hyperparameter tuning needed","Compare hybrid vs dense-only on your RAGAS eval set"],output:"Hybrid search showing +3–8% improvement on context_precision"},
+  ],
+  del:"RAG eval dashboard with RAGAS scores committed to rag-tutorials repo"},
+
+  {id:"w4b",label:"W4.5",title:"GraphRAG + Knowledge Graphs",isnew:true,
+  why:"★ NEW. Microsoft's GraphRAG showed that knowledge graphs dramatically improve multi-hop reasoning in RAG. Neo4j + LLM-extracted entities = next-level retrieval that flat vector search can't match.",
+  resources:[
+   {tp:"paper",n:"GraphRAG: From Local to Global Text Understanding",a:"Edge et al., 2024 · Microsoft Research",d:"★ Community detection + graph summarization for RAG. Massive improvement on multi-hop questions.",u:"https://arxiv.org/abs/2404.16130",isnew:true},
+   {tp:"paper",n:"Knowledge Graphs for RAG",a:"Pan et al., 2024 · arXiv:2402.11541",d:"★ Survey of KG-enhanced RAG methods — entity extraction, relation linking, graph retrieval.",u:"https://arxiv.org/abs/2402.11541",isnew:true},
+   {tp:"tool",n:"Neo4j + LangChain Integration",a:"neo4j.com",d:"Graph database for knowledge graph storage with native LangChain support.",u:"https://neo4j.com/developer/langchain/",isnew:true},
+   {tp:"tool",n:"LightRAG",a:"github/HKUDS",d:"★ Lightweight GraphRAG implementation — easier to start than Microsoft's full GraphRAG.",u:"https://github.com/HKUDS/LightRAG",isnew:true},
+   {tp:"video",n:"Neo4j — Building Knowledge Graphs with LLMs",a:"YouTube · Neo4j · 1hr",d:"★ Practical tutorial on extracting entities and relations using LLMs + storing in Neo4j.",u:"https://www.youtube.com/watch?v=kG4dGWMIFxM",isnew:true},
+   {tp:"blog",n:"Microsoft GraphRAG — How It Works",a:"microsoft.com/research",d:"Official blog explaining community detection + map-reduce summarization approach.",u:"https://www.microsoft.com/en-us/research/blog/graphrag-unlocking-llm-discovery-on-narrative-private-data/",isnew:true},
+  ],
+  build:[
+   {title:"Extract knowledge graph from documents",time:"3hrs",diff:"med",steps:["Choose a corpus (e.g. 20 Wikipedia articles on a topic like 'AI history')","Use GPT-4o to extract (subject, relation, object) triples from each chunk","Clean triples: normalize entity names, remove duplicates, validate relations","Load into Neo4j: CREATE (s:Entity) -[r:RELATION]-> (o:Entity)","Visualize the graph in Neo4j Browser — screenshot for README"],output:"Neo4j knowledge graph with 200+ entities and 500+ relations"},
+   {title:"Build GraphRAG pipeline with community detection",time:"4hrs",diff:"hard",steps:["Implement community detection on your KG using Louvain algorithm","For each community: generate a summary using LLM (the 'map' step)","On query: find relevant communities via entity matching + embedding similarity","Retrieve community summaries + original chunks (the 'reduce' step)","Compare: GraphRAG vs flat vector RAG on 20 multi-hop questions using RAGAS"],output:"GraphRAG showing +15-25% improvement on multi-hop questions vs flat RAG"},
+   {title:"Hybrid graph + vector retrieval system",time:"2hrs",diff:"med",steps:["For each query: run both graph traversal AND vector similarity","Graph: find query entities → traverse 2-hop neighborhood → get chunks","Vector: standard cosine similarity top-k retrieval","Combine with reciprocal rank fusion — evaluate contribution of each source"],output:"hybrid_graph_rag.py — combined retrieval with source attribution"},
+  ],
+  del:"GraphRAG pipeline with Neo4j + comparison vs flat vector RAG on multi-hop questions"},
+
+  {id:"w4c",label:"W4.7",title:"Embedding Models + Retrieval Training",isnew:true,
+  why:"★ NEW. Every RAG system depends on embedding quality. Training your own domain embeddings with contrastive learning is a critical skill — and understanding MTEB tells you which off-the-shelf model to pick.",
+  resources:[
+   {tp:"paper",n:"Sentence-BERT: Sentence Embeddings using Siamese Networks",a:"Reimers & Gurevych, 2019 · arXiv:1908.10084",d:"Foundation of all sentence embedding models. Siamese BERT with contrastive loss.",u:"https://arxiv.org/abs/1908.10084",isnew:true},
+   {tp:"paper",n:"E5: Text Embeddings by Contrastive Pre-training",a:"Wang et al., 2022 · arXiv:2212.03533",d:"★ How modern text embeddings are trained. Instruction-tuned embeddings.",u:"https://arxiv.org/abs/2212.03533",isnew:true},
+   {tp:"paper",n:"Matryoshka Representation Learning",a:"Kusupati et al., 2022 · arXiv:2205.13147",d:"★ Train embeddings at multiple dimensions — 256d for speed, 1024d for quality. Used by OpenAI.",u:"https://arxiv.org/abs/2205.13147",isnew:true},
+   {tp:"tool",n:"MTEB Leaderboard",a:"huggingface.co/spaces/mteb",d:"★ Massive Text Embedding Benchmark — pick the right embedding model for your use case.",u:"https://huggingface.co/spaces/mteb/leaderboard",isnew:true},
+   {tp:"docs",n:"Sentence Transformers — Training Guide",a:"sbert.net",d:"Official guide to fine-tuning embedding models with contrastive and triplet losses.",u:"https://www.sbert.net/docs/training/overview.html",isnew:true},
+   {tp:"video",n:"Nils Reimers — Training Text Embeddings",a:"YouTube · 1hr",d:"★ Creator of sentence-transformers explaining training strategies and loss functions.",u:"https://www.youtube.com/watch?v=QdDoFfkVkcw",isnew:true},
+  ],
+  build:[
+   {title:"Benchmark 5 embedding models on your domain",time:"2hrs",diff:"easy",steps:["Pick 5 models: text-embedding-3-small, bge-large, e5-large, gte-large, jina-v2","Run all on your RAG eval set — measure retrieval precision@5 and recall@10","Compare: which model gives best RAGAS context_precision on YOUR domain?","Document: is the MTEB leaderboard ranking reliable for your use case?"],output:"embedding_benchmark.md — model comparison table with domain-specific results"},
+   {title:"Fine-tune domain-specific embedding model",time:"4hrs",diff:"hard",steps:["Generate training pairs: use GPT-4o to create (query, relevant_passage) pairs","Add hard negatives: passages topically similar but don't answer the question","Configure sentence-transformers: MultipleNegativesRankingLoss","Fine-tune bge-base-en-v1.5 on domain data — 3 epochs, cosine annealing LR","Evaluate: does fine-tuned model beat base on your eval set?"],cmd:"python train_embeddings.py --base bge-base-en-v1.5 --data pairs.jsonl --epochs 3",output:"Fine-tuned embedding model on HuggingFace Hub with MTEB-style eval"},
+   {title:"Implement Matryoshka embeddings",time:"2hrs",diff:"med",steps:["Train with Matryoshka loss: enforce quality at dimensions 64, 128, 256, 512, 1024","After training: compare retrieval quality at each dimension truncation","Plot: quality vs latency tradeoff — at what dimension does quality plateau?","Use case: 256d for real-time, 1024d for batch reranking"],output:"matryoshka_embeddings.py — multi-resolution embeddings with tradeoff curve"},
+  ],
+  del:"Fine-tuned domain embedding model on HF Hub + Matryoshka implementation + MTEB benchmark"},
+ ]},
+
+ {month:"M2 — Advanced RAG + Fine-Tuning",short:"M2",weeks:[
+  {id:"w5",label:"W5",title:"RAG: Reranking + HyDE + LLM Security",isnew:true,
+  why:"★ EXPANDED with LLM security. Prompt injection is active research at all three labs. You're already building Prompt Guard 2 pipelines — this week formalizes that into a publishable benchmark.",
+  resources:[
+   {tp:"docs",n:"Bi-encoders vs Cross-encoders",a:"Sentence Transformers",d:"Why cross-encoders beat bi-encoders for reranking.",u:"https://www.sbert.net/examples/applications/cross-encoder/README.html"},
+   {tp:"paper",n:"HyDE: Zero-Shot Dense Retrieval",a:"Gao et al., 2022 · arXiv:2212.10496",d:"Generate hypothetical answer → use its embedding for retrieval.",u:"https://arxiv.org/abs/2212.10496"},
+   {tp:"paper",n:"Self-RAG",a:"Asai et al., 2023 · arXiv:2310.11511",d:"Retrieval decision mechanism — when to retrieve, when not to.",u:"https://arxiv.org/abs/2310.11511"},
+   {tp:"paper",n:"Prompt Injection Attacks on LLMs",a:"Perez & Ribeiro, 2022 · arXiv:2302.12173",d:"★ Foundational prompt injection paper.",u:"https://arxiv.org/abs/2302.12173",isnew:true},
+   {tp:"tool",n:"Meta Prompt Guard 2",a:"HuggingFace / Meta",d:"★ Read model card + underlying approach. You're already using this.",u:"https://huggingface.co/meta-llama/Prompt-Guard-2",isnew:true},
+   {tp:"tool",n:"bge-reranker-v2-m3",a:"BAAI / HuggingFace",d:"Strong reranker for your pipeline.",u:"https://huggingface.co/BAAI/bge-reranker-v2-m3"},
+   {tp:"video",n:"AI Makerspace — Advanced RAG Techniques",a:"YouTube · ~2hrs",d:"★ Covers reranking, HyDE, query expansion with code walkthroughs.",u:"https://www.youtube.com/watch?v=TRjq7t2Ms5I",isnew:true},
+  ],
+  build:[
+   {title:"Add cross-encoder reranker to RAG pipeline",time:"2hrs",diff:"easy",steps:["Load bge-reranker-v2-m3 from HuggingFace","After initial retrieval (top-20), rerank with cross-encoder → take top-5","Measure: RAGAS scores with and without reranker","Measure: latency increase (expect +100–200ms per query)"],output:"Reranker showing +5–12% faithfulness improvement on eval set"},
+   {title:"Implement HyDE query rewriting",time:"2hrs",diff:"med",steps:["For each query, generate a hypothetical answer using GPT-4o-mini","Embed the hypothetical answer (not the query) for retrieval","Optional: average query embedding + hypothetical answer embedding","A/B test: HyDE vs direct query on your 50-question eval set"],output:"HyDE showing improvement on open-domain questions (weaker on factual recall)"},
+   {title:"Prompt injection detection pipeline",time:"3hrs",diff:"med",steps:["Collect 50 prompt injection examples (from datasets/papers) + 50 clean queries","Load Prompt Guard 2 — run inference on all 100 examples","Measure: precision, recall, F1 on injection detection","Test GCG adversarial suffixes — does Prompt Guard detect them?","Add detection as a pre-processing step in your RAG pipeline"],output:"injection_benchmark.md — detection rates by attack category"},
+  ],
+  del:"Blog benchmarking 3 RAG variants + write-up on prompt injection detection rates"},
+
+  {id:"w6",label:"W6",title:"Production RAG API",
+  why:"Research engineers ship. A Dockerized, observable, CI-tested system proves production quality.",
+  resources:[
+   {tp:"blog",n:"Building LLM Applications for Production",a:"Chip Huyen",d:"Latency, cost, reliability in production LLM systems.",u:"https://huyenchip.com/2023/04/11/llm-engineering.html"},
+   {tp:"docs",n:"FastAPI Documentation",a:"fastapi.tiangolo.com",d:"Async patterns, streaming responses, background tasks.",u:"https://fastapi.tiangolo.com/"},
+   {tp:"video",n:"ArjanCodes — FastAPI Best Practices",a:"YouTube · 1hr",d:"★ Clean async FastAPI patterns, dependency injection, error handling.",u:"https://www.youtube.com/watch?v=MnudSdKKucE",isnew:true},
+   {tp:"docs",n:"Qdrant Documentation",a:"qdrant.tech",d:"Multi-tenancy: named collections, payloads, filtering.",u:"https://qdrant.tech/documentation/"},
+   {tp:"tool",n:"Redis",a:"redis.io",d:"Semantic caching — reduce latency + API cost.",u:"https://redis.io/"},
+   {tp:"tool",n:"Docker Compose",a:"docs.docker.com",d:"Containerize full stack.",u:"https://docs.docker.com/compose/"},
+   {tp:"tool",n:"GitHub Actions",a:"docs.github.com",d:"CI running RAGAS evals on every PR.",u:"https://docs.github.com/en/actions"},
+  ],
+  build:[
+   {title:"Build production FastAPI RAG service",time:"6hrs",diff:"hard",steps:["POST /ingest: async background task for document ingestion","POST /query: streaming SSE response with sources","GET /health: liveness + readiness checks","Add request ID middleware for trace correlation","Rate limiting with slowapi — 10 req/min per IP","Error handling: catch embedding failures, LLM timeouts, gracefully degrade"],cmd:"uvicorn main:app --reload --workers 4",output:"FastAPI service with streaming, async ingestion, health checks"},
+   {title:"Add semantic caching with Redis",time:"2hrs",diff:"med",steps:["On each query: embed query → search Redis for similar past queries (cosine >0.95)","Cache hit: return stored response in <50ms","Cache miss: run full RAG pipeline → store result with TTL=3600s","Measure cache hit rate on your eval set (expect 20–40%)"],output:"Redis caching reducing avg latency from ~2s to ~200ms on cache hits"},
+   {title:"Dockerize full stack + CI eval pipeline",time:"3hrs",diff:"med",steps:["Write docker-compose.yml: app + qdrant + redis + langfuse services","Add .env.example with all required env vars documented","Write GitHub Actions workflow: on PR → spin up services → run RAGAS eval → fail if drop >5%","Add pytest tests for at least 3 endpoints"],cmd:"docker-compose up -d && pytest tests/",output:"docker-compose.yml + .github/workflows/eval.yml — CI runs on every PR"},
+  ],
+  del:"Dockerized RAG API with streaming + caching + CI eval pipeline"},
+
+  {id:"w7",label:"W7",title:"Fine-Tuning: LoRA + QLoRA + DoRA",print:true,
+  why:"Print LoRA and QLoRA. Interviewers ask you to derive rank decomposition. DoRA is current SOTA PEFT — know the LoRA → QLoRA → DoRA evolution.",
+  resources:[
+   {tp:"paper",n:"LoRA: Low-Rank Adaptation",a:"Hu et al., 2021 · arXiv:2106.09685",d:"✦ PRINT. Implement BA matrices by hand — understand rank decomposition math.",u:"https://arxiv.org/abs/2106.09685",print:true},
+   {tp:"paper",n:"QLoRA: Efficient Finetuning",a:"Dettmers et al., 2023 · arXiv:2305.14314",d:"✦ PRINT. 4-bit NF4 quantization + LoRA — the NF4 math matters.",u:"https://arxiv.org/abs/2305.14314",print:true},
+   {tp:"paper",n:"DoRA: Weight-Decomposed Low-Rank Adaptation",a:"Liu et al., 2024 · arXiv:2402.09353",d:"★ Decomposes weight into magnitude + direction. Often beats LoRA.",u:"https://arxiv.org/abs/2402.09353",isnew:true},
+   {tp:"video",n:"Umar Jamil — LoRA from Scratch",a:"YouTube · 2hrs",d:"★ Full LoRA implementation with clear mathematical explanation.",u:"https://www.youtube.com/watch?v=PXWYUTMt-AU",isnew:true},
+   {tp:"video",n:"Tim Dettmers — QLoRA Explained",a:"YouTube · 45min",d:"★ Author of QLoRA explains NF4 quantization and the memory savings.",u:"https://www.youtube.com/watch?v=y9PHWGOa8HA",isnew:true},
+   {tp:"docs",n:"HuggingFace PEFT",a:"huggingface.co/docs/peft",d:"Official LoRA/QLoRA/DoRA library.",u:"https://huggingface.co/docs/peft/index"},
+   {tp:"docs",n:"TRL SFT Trainer",a:"huggingface.co/docs/trl",d:"Supervised fine-tuning trainer.",u:"https://huggingface.co/docs/trl/sft_trainer"},
+   {tp:"blog",n:"Sebastian Raschka — Practical Tips for Finetuning LLMs with LoRA/QLoRA",a:"magazine.sebastianraschka.com",d:"★ Best practical LoRA guide — hyperparameter choices, common mistakes, what actually matters in fine-tuning.",u:"https://magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms",isnew:true},
+  ],
+  build:[
+   {title:"Implement LoRA by hand in NumPy",time:"3hrs",diff:"hard",steps:["For a pre-trained weight matrix W (d×d), define low-rank update: ΔW = BA","Initialize: B ~ N(0,σ²), A = zeros (no update at step 0)","Forward pass: h = (W + αΔW/r) · x — α is scaling factor, r is rank","Implement gradient computation for only A and B (W frozen)","Verify: does a 2-layer MLP with LoRA converge on MNIST with r=4?"],cmd:"python lora_numpy.py --rank 4 --verify-mnist",output:"lora_numpy.py — LoRA training loop with gradient verification"},
+   {title:"QLoRA fine-tune Mistral-7B or LLaMA-3-8B",time:"6hrs",diff:"hard",steps:["Set up 4-bit quantization: load_in_4bit=True, bnb_4bit_quant_type='nf4'","Choose dataset: Alpaca, or domain-specific (telecom QA for your context)","Configure LoRA: r=16, alpha=32, target_modules=['q_proj','v_proj']","Train 1–3 epochs with gradient checkpointing enabled — monitor GPU memory","Save LoRA adapter separately — verify it loads and merges correctly","Inference: generate 10 examples, compare before/after qualitatively"],cmd:"python finetune_qlora.py --model mistralai/Mistral-7B-v0.1 --epochs 2",output:"LoRA adapter pushed to HuggingFace Hub with training loss curve"},
+   {title:"Compare LoRA vs DoRA on same task",time:"2hrs",diff:"med",steps:["Run DoRA (peft.LoraConfig with use_dora=True) with same r, alpha, data","Train both to same number of steps","Evaluate: same 100-example test set — which has lower perplexity?","Document: does DoRA converge faster? Does it improve quality on your specific task?"],output:"comparison_table.md — LoRA vs DoRA metrics side by side"},
+  ],
+  del:"Colab notebook for QLoRA fine-tuning + LoRA adapter on HuggingFace Hub"},
+
+  {id:"w8",label:"W8",title:"Fine-Tuning: DPO + SimPO + Evaluation",print:true,
+  why:"Print DPO. The Bradley-Terry derivation is asked in research interviews. SimPO removes the reference model overhead — know why that matters.",
+  resources:[
+   {tp:"paper",n:"Direct Preference Optimization (DPO)",a:"Rafailov et al., 2023 · arXiv:2305.18290",d:"✦ PRINT. Derive why DPO = RLHF via Bradley-Terry model.",u:"https://arxiv.org/abs/2305.18290",print:true},
+   {tp:"paper",n:"LIMA: Less Is More for Alignment",a:"Zhou et al., 2023 · arXiv:2305.11206",d:"1000 curated examples beats massive datasets.",u:"https://arxiv.org/abs/2305.11206"},
+   {tp:"paper",n:"SimPO: Simple Preference Optimization",a:"Meng et al., 2024 · arXiv:2405.14734",d:"★ Reference-free DPO — simpler and often better.",u:"https://arxiv.org/abs/2405.14734",isnew:true},
+   {tp:"video",n:"Yannic Kilcher — DPO Paper Explained",a:"YouTube · 1hr",d:"★ Deep walkthrough of the DPO derivation and intuition.",u:"https://www.youtube.com/watch?v=hvGa5Mba4c8",isnew:true},
+   {tp:"video",n:"Maxime Labonne — Fine-tuning LLMs Full Course",a:"YouTube · 2hrs",d:"★ SFT → DPO pipeline with Unsloth and TRL. Most up-to-date practical guide.",u:"https://www.youtube.com/watch?v=bx5rJvgxpB8",isnew:true},
+   {tp:"docs",n:"TRL DPO Trainer",a:"huggingface.co/docs/trl",d:"Run DPO + SimPO with preference pairs.",u:"https://huggingface.co/docs/trl/dpo_trainer"},
+   {tp:"tool",n:"DeepEval",a:"docs.confident-ai.com",d:"LLM evaluation with custom metrics + LLM-as-judge.",u:"https://docs.confident-ai.com/"},
+   {tp:"blog",n:"Sebastian Raschka — LLM Training: RLHF and Its Alternatives (DPO, PPO)",a:"magazine.sebastianraschka.com",d:"★ Best single article comparing RLHF, PPO, DPO — clear derivations and practical tradeoffs. Read before starting DPO training.",u:"https://magazine.sebastianraschka.com/p/llm-training-rlhf-and-its-alternatives",isnew:true},
+  ],
+  build:[
+   {title:"Create preference dataset (50–100 pairs)",time:"3hrs",diff:"med",steps:["Choose a domain: 50 prompts from your fine-tuning domain","For each prompt: generate 2 responses (vary temperature/model)","Use GPT-4o as judge: which response is better and why? Get a score 1–5","Store in DPO format: {prompt, chosen, rejected}","Verify quality: manually review 10% of pairs — is GPT-4o judging correctly?"],output:"preference_data.jsonl — 50-100 pairs in DPO format"},
+   {title:"Train SFT → DPO → SimPO pipeline",time:"6hrs",diff:"hard",steps:["Step 1: SFT — fine-tune base model on chosen responses only (TRL SFTTrainer)","Step 2: DPO — train on preference pairs using SFT model as reference","Step 3: SimPO — train without reference model (set beta=2.0, gamma=0.5)","Track: reward margin (chosen - rejected) increasing during DPO training","Save all 3 checkpoints: sft/, dpo/, simpo/"],cmd:"python train_dpo.py --sft-ckpt ./sft --data preference_data.jsonl",output:"3 model checkpoints + W&B training curves showing reward margin increasing"},
+   {title:"LLM-as-judge evaluation of all checkpoints",time:"2hrs",diff:"med",steps:["Create 30-prompt test set (different from training)","Run all 4 models (base, SFT, DPO, SimPO) on all 30 prompts","Use DeepEval with GPT-4o judge: score each on helpfulness, accuracy, safety","Build comparison table: which alignment method wins on your domain?"],output:"eval_results.json + comparison table showing base→SFT→DPO→SimPO progression"},
+  ],
+  del:"Comparison: base → SFT → DPO → SimPO with quantitative LLM-as-judge scores"},
+ ]},
+
+ {month:"M3 — Scale + Serving",short:"M3",weeks:[
+  {id:"w9",label:"W9",title:"Data Curation + Synthetic Data Generation",isnew:true,
+  why:"★ EXPANDED. Phi-1 proved synthetic data beats web scrapes. Self-Instruct is how Alpaca was built. Distilabel makes synthetic pipelines production-ready.",
+  resources:[
+   {tp:"paper",n:"Flan: Scaling Instruction-Finetuned LMs",a:"Chung et al., 2022 · arXiv:2210.11416",d:"Dataset diversity matters more than size.",u:"https://arxiv.org/abs/2210.11416"},
+   {tp:"paper",n:"Self-Instruct",a:"Wang et al., 2022 · arXiv:2212.10560",d:"★ Generate instruction data using GPT — technique behind Alpaca.",u:"https://arxiv.org/abs/2212.10560",isnew:true},
+   {tp:"paper",n:"Phi-1: Textbooks Are All You Need",a:"Gunasekar et al., 2023 · arXiv:2306.11644",d:"★ Synthetic textbook-quality data beats massive web scrapes.",u:"https://arxiv.org/abs/2306.11644",isnew:true},
+   {tp:"video",n:"Maxime Labonne — LLM Dataset Creation",a:"YouTube · 1hr",d:"★ Full walkthrough of synthetic dataset creation with quality filtering.",u:"https://www.youtube.com/watch?v=OPNv8maS99I",isnew:true},
+   {tp:"docs",n:"Axolotl Documentation",a:"github/axolotl-ai-cloud",d:"Config-driven fine-tuning. Production-realistic.",u:"https://github.com/axolotl-ai-cloud/axolotl"},
+   {tp:"blog",n:"MinHash Near-Deduplication",a:"HuggingFace Blog",d:"Near-dedup for large training corpora.",u:"https://huggingface.co/blog/dedup"},
+   {tp:"tool",n:"Distilabel",a:"distilabel.argilla.io",d:"★ Synthetic data generation framework — LLM-as-annotator pipelines.",u:"https://distilabel.argilla.io/",isnew:true},
+  ],
+  build:[
+   {title:"Build data cleaning pipeline",time:"3hrs",diff:"med",steps:["Collect raw data: scrape domain-specific content (or use Common Crawl subset)","Dedup with MinHash LSH: find near-duplicates (Jaccard >0.8) and remove","Quality filter: remove short (<50 words), non-English, HTML-heavy docs","Format to ChatML: {role: 'user', content: ...}, {role: 'assistant', content: ...}","Log statistics: how many examples survive each filter?"],cmd:"python clean_pipeline.py --input raw/ --output cleaned/ --stats",output:"cleaned/ directory with stats.json showing filter survival rates"},
+   {title:"Generate synthetic instruction dataset",time:"4hrs",diff:"med",steps:["Choose 20 seed examples in your domain (manually written, high quality)","Use Self-Instruct loop: prompt GPT-4o to generate 5 new diverse instructions from seeds","Filter generated instructions: remove duplicates, low-quality, off-domain","Generate responses for each instruction using GPT-4o","Total target: 500–1000 synthetic examples. Log cost."],cmd:"python synthetic_gen.py --seeds seeds.json --target 1000 --model gpt-4o",output:"synthetic_data.jsonl — 500-1000 domain-specific instruction pairs"},
+   {title:"Fine-tune + compare synthetic vs real data",time:"4hrs",diff:"med",steps:["Fine-tune model A on real curated data (same dataset from W7)","Fine-tune model B on synthetic data (same # of examples)","Fine-tune model C on 50% real + 50% synthetic mixture","Evaluate all 3 on 50 held-out examples using GPT-4o judge","Which wins? Document surprising results."],output:"data_comparison_table.md — win rates across 3 data strategies"},
+  ],
+  del:"Data pipeline script + Axolotl config + blog on synthetic vs real data quality"},
+
+  {id:"w10",label:"W10",title:"Model Serving with vLLM",
+  why:"PagedAttention is an interview question — not just what vLLM does but why tiling the KV cache like virtual memory enables higher throughput.",
+  resources:[
+   {tp:"paper",n:"vLLM: Efficient LLM Serving with PagedAttention",a:"Kwon et al., 2023 · arXiv:2309.06180",d:"PagedAttention architecture. Read before using vLLM.",u:"https://arxiv.org/abs/2309.06180"},
+   {tp:"paper",n:"Orca: Continuous Batching for LLM Serving",a:"Yu et al., 2022 · OSDI",d:"★ Continuous batching — foundation of vLLM's throughput advantage.",u:"https://www.usenix.org/conference/osdi22/presentation/yu",isnew:true},
+   {tp:"video",n:"Anyscale — vLLM: Easy, Fast, Cheap LLM Serving",a:"YouTube · 45min",d:"★ Talk by vLLM authors explaining PagedAttention visually.",u:"https://www.youtube.com/watch?v=80bIUggRJf4",isnew:true},
+   {tp:"docs",n:"vLLM Documentation",a:"docs.vllm.ai",d:"OpenAI-compatible API, batching, quantization, LoRA loading.",u:"https://docs.vllm.ai/"},
+   {tp:"paper",n:"Medusa: Speculative Decoding",a:"Cai et al., 2024 · arXiv:2401.10774",d:"Multi-head drafting for faster inference.",u:"https://arxiv.org/abs/2401.10774"},
+   {tp:"tool",n:"k6 Load Testing",a:"k6.io",d:"HTTP load testing — benchmark tokens/sec under concurrency.",u:"https://k6.io/"},
+  ],
+  build:[
+   {title:"Serve fine-tuned model with vLLM",time:"3hrs",diff:"med",steps:["Install vLLM: pip install vllm","Load your QLoRA fine-tuned model + LoRA adapter","Start OpenAI-compatible server: vllm serve --model ./merged --port 8000","Test with curl: verify streaming works, LoRA adapter loads correctly","Compare: merged weights vs dynamic LoRA loading — any quality difference?"],cmd:"vllm serve ./merged_model --port 8000 --enable-lora",output:"vLLM server running with LoRA adapter, responding to OpenAI-format requests"},
+   {title:"Benchmark throughput under load",time:"3hrs",diff:"med",steps:["Write k6 load test: 10 concurrent users, 100 total requests","Metrics to collect: tokens/sec, TTFT (time-to-first-token), p50/p95/p99 latency","Ramp up: 1 → 5 → 10 → 20 concurrent users — find the saturation point","Compare vLLM vs HuggingFace generate() at same concurrency level","Document: at what concurrency does vLLM's advantage become largest?"],cmd:"k6 run --vus 10 --iterations 100 benchmark.js",output:"benchmark_results.md — throughput comparison table with latency percentiles"},
+  ],
+  del:"Benchmarking report comparing vLLM vs HuggingFace generate() at multiple concurrency levels"},
+
+  {id:"w11",label:"W11",title:"RAG + Fine-Tuning: RAFT",
+  why:"RAFT synthesizes your RAG and fine-tuning skills. Research labs want to see you combine techniques.",
+  resources:[
+   {tp:"paper",n:"RAFT: Domain-Specific RAG Adaptation",a:"Zhang et al., 2024 · arXiv:2403.10131",d:"Fine-tune models to use retrieved context effectively.",u:"https://arxiv.org/abs/2403.10131"},
+   {tp:"docs",n:"Anthropic Prompt Engineering Guide",a:"docs.anthropic.com",d:"Best practices for RAFT dataset generation prompting.",u:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"},
+   {tp:"video",n:"Weights & Biases — RAFT Paper Walkthrough",a:"YouTube · 40min",d:"★ Clear explanation of RAFT training with implementation details.",u:"https://www.youtube.com/watch?v=vnMsxlLFDGk",isnew:true},
+   {tp:"docs",n:"RAGAS Documentation",a:"docs.ragas.io",d:"Consistent metrics for base+RAG vs RAFT+RAG comparison.",u:"https://docs.ragas.io/"},
+  ],
+  build:[
+   {title:"Build RAFT training dataset",time:"4hrs",diff:"hard",steps:["For each document chunk in your corpus:","  1. Generate 3 questions whose answer requires reading this chunk","  2. Identify 2–3 distractor chunks (related but don't answer the question)","  3. Generate the gold answer with chain-of-thought reasoning","Format: {question, gold_context, distractor_contexts, answer_with_cot}","Target: 500–1000 (question, context, answer, distractor) tuples"],output:"raft_dataset.jsonl — 500+ RAFT training examples"},
+   {title:"Fine-tune and evaluate RAFT model",time:"4hrs",diff:"hard",steps:["Fine-tune Mistral-7B on RAFT dataset using Axolotl config","Important: include distractor chunks during training (model learns to ignore them)","Test 1: base model + RAG → RAGAS score","Test 2: RAFT model + RAG → RAGAS score on same 50 questions","Document: which RAGAS metric improves most? (Usually faithfulness)"],output:"RAGAS comparison table — base+RAG vs RAFT+RAG side by side"},
+  ],
+  del:"RAFT experiment notebook + RAGAS comparison table — strong portfolio project"},
+
+  {id:"w12",label:"W12",title:"Capstone #2: Production Fine-Tuning Pipeline",
+  why:"Consolidation week. No new concepts — integrate everything into one clean end-to-end system.",
+  resources:[
+   {tp:"tool",n:"Loom",a:"loom.com",d:"5-min demo video of full pipeline.",u:"https://www.loom.com/"},
+   {tp:"tool",n:"Excalidraw",a:"excalidraw.com",d:"Architecture diagram for README.",u:"https://excalidraw.com/"},
+   {tp:"tool",n:"Langfuse",a:"langfuse.com",d:"End-to-end observability on full pipeline.",u:"https://langfuse.com/"},
+  ],
+  build:[
+   {title:"Build end-to-end pipeline with documentation",time:"10hrs",diff:"hard",steps:["Stage 1: Data — raw corpus → clean → synthetic augmentation → ChatML format","Stage 2: Training — QLoRA fine-tune → DPO/SimPO alignment (Axolotl configs)","Stage 3: Serving — vLLM with LoRA adapter + OpenAI-compatible endpoint","Stage 4: Eval — RAGAS eval suite + W&B experiment tracking","Stage 5: Observability — Langfuse tracing on all inference calls","Write Makefile: make data / make train / make serve / make eval — one command each","Draw architecture diagram in Excalidraw — export as PNG for README","Record 5-min Loom demo showing all 5 stages running"],output:"Capstone #2 repo with all stages, Makefile, architecture diagram, Loom demo link"},
+  ],
+  del:"Capstone #2: Fine-Tuned LLM — full GitHub docs + Loom demo + architecture diagram"},
+ ]},
+
+ {month:"M3.5 — Advanced AI/ML Techniques",short:"M3.5",tag:true,weeks:[
+  {id:"w12b",label:"W12.5",title:"Knowledge Distillation + Model Merging + Quantization",isnew:true,
+  why:"★ NEW. Distilling GPT-4 into a 7B model is how production LLMs are actually built. Model merging (mergekit) creates better models without training. Quantization (GPTQ/AWQ/GGUF) makes deployment affordable.",
+  resources:[
+   {tp:"paper",n:"DistilBERT: Distilled Version of BERT",a:"Sanh et al., 2019 · arXiv:1910.01108",d:"Foundational knowledge distillation paper — 60% smaller, 97% performance.",u:"https://arxiv.org/abs/1910.01108",isnew:true},
+   {tp:"paper",n:"Orca 2: Teaching Small Models How to Reason",a:"Mitra et al., 2023 · Microsoft · arXiv:2311.11045",d:"★ Systematic distillation of reasoning abilities from large to small models.",u:"https://arxiv.org/abs/2311.11045",isnew:true},
+   {tp:"paper",n:"DARE: Language Model Merging by Drop and Rescale",a:"Yu et al., 2024 · arXiv:2311.03099",d:"★ State-of-the-art model merging method — combine models without retraining.",u:"https://arxiv.org/abs/2311.03099",isnew:true},
+   {tp:"tool",n:"mergekit",a:"github/arcee-ai",d:"★ Most popular model merging toolkit. Supports SLERP, TIES, DARE, linear, Task Arithmetic.",u:"https://github.com/arcee-ai/mergekit",isnew:true},
+   {tp:"paper",n:"GPTQ: Post-Training Quantization for GPT Models",a:"Frantar et al., 2022 · arXiv:2210.17323",d:"★ 4-bit quantization with minimal quality loss. Foundation of all modern quantization.",u:"https://arxiv.org/abs/2210.17323",isnew:true},
+   {tp:"tool",n:"llama.cpp + GGUF Format",a:"github/ggerganov",d:"CPU inference via GGUF quantization. Powers Ollama, LM Studio, and local LLM deployment.",u:"https://github.com/ggerganov/llama.cpp",isnew:true},
+   {tp:"video",n:"Maxime Labonne — Model Merging Deep Dive",a:"YouTube · 1hr",d:"★ Best practical guide to merging models with mergekit — recipes, evaluation, DARE vs TIES.",u:"https://www.youtube.com/watch?v=xNLExzNkLvc",isnew:true},
+  ],
+  build:[
+   {title:"Distill GPT-4o into a 7B model",time:"4hrs",diff:"hard",steps:["Generate 1000 instruction-response pairs using GPT-4o (teacher model)","Include chain-of-thought reasoning in teacher responses","Fine-tune Mistral-7B (student) on teacher outputs using QLoRA","Evaluate: student vs teacher on 50 held-out questions","Document: what % of teacher quality does the student retain?"],cmd:"python distill.py --teacher gpt-4o --student mistral-7b --samples 1000",output:"distilled_model/ — 7B model retaining 80%+ of GPT-4o quality on domain"},
+   {title:"Merge 2 fine-tuned models with mergekit",time:"2hrs",diff:"med",steps:["Take 2 LoRA fine-tuned models (e.g. from W7–W8) trained on different data","Use mergekit with DARE method: merge at 50/50 ratio","Also try SLERP and TIES-Merging — compare all 3 merge methods","Evaluate merged model vs individual models on combined eval set","Which merge method preserves both domains best?"],cmd:"mergekit-yaml config.yml --output merged_model/",output:"merged_model/ outperforming either individual model + comparison table"},
+   {title:"Quantize model to GGUF for local deployment",time:"2hrs",diff:"easy",steps:["Take your fine-tuned or merged model","Convert to GGUF format using llama.cpp's convert.py","Quantize to Q4_K_M (best quality/size tradeoff)","Run with Ollama locally — measure tokens/sec on CPU vs GPU","Compare: full precision vs Q8 vs Q4 on your eval set — quality loss analysis"],cmd:"python convert.py --outtype q4_k_m --outfile model-q4.gguf",output:"GGUF model running locally via Ollama with quality comparison table"},
+  ],
+  del:"Distilled 7B model + merged model via mergekit + GGUF quantized model on Ollama"},
+
+  {id:"w12c",label:"W12.7",title:"Prompt Engineering Mastery",isnew:true,
+  why:"★ NEW. Prompt engineering is not just 'write a good prompt' — it's a systematic discipline. Few-shot learning, structured output prompting, system prompt design, and automatic prompt optimization (DSPy) are production skills.",
+  resources:[
+   {tp:"paper",n:"Few-Shot Learners: GPT-3 In-Context Learning",a:"Brown et al., 2020 · arXiv:2005.14165",d:"The original paper showing few-shot prompting works. Foundation of prompt engineering.",u:"https://arxiv.org/abs/2005.14165",isnew:true},
+   {tp:"docs",n:"Anthropic Prompt Engineering Guide",a:"docs.anthropic.com",d:"★ Best practical prompt engineering guide — from Anthropic's own documentation. Covers XML tags, thinking, examples.",u:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",isnew:true},
+   {tp:"docs",n:"OpenAI Prompt Engineering Guide",a:"platform.openai.com",d:"OpenAI's systematic approach to prompting — covers JSON mode, function calling, system messages.",u:"https://platform.openai.com/docs/guides/prompt-engineering",isnew:true},
+   {tp:"paper",n:"DSPy: Compiling Declarative Language Model Calls",a:"Khattab et al., 2023 · arXiv:2310.03714",d:"★ Automatic prompt optimization — programmatic approach replacing manual prompt tuning.",u:"https://arxiv.org/abs/2310.03714",isnew:true},
+   {tp:"paper",n:"Meta-Prompting: Enhancing Language Models with Task-Agnostic Scaffolding",a:"Suzgun & Kalai, 2024 · arXiv:2401.12954",d:"★ LLM generates its own optimal prompt — meta-level prompt engineering.",u:"https://arxiv.org/abs/2401.12954",isnew:true},
+   {tp:"video",n:"Harrison Chase — DSPy Full Course",a:"YouTube · 2hrs",d:"★ LangChain creator teaching DSPy for automatic prompt optimization.",u:"https://www.youtube.com/watch?v=41EfOY0Ldkc",isnew:true},
+   {tp:"blog",n:"Lilian Weng — Prompt Engineering",a:"lilianweng.github.io",d:"★ Best single blog post covering ALL prompt engineering techniques with citations.",u:"https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",isnew:true},
+  ],
+  build:[
+   {title:"Build a prompt engineering benchmark",time:"3hrs",diff:"med",steps:["Create 30 diverse tasks: QA, summarization, code, math, creative writing, classification","For each task: write 5 prompt variants (zero-shot, few-shot, CoT, structured, system+user)","Run all 150 prompt-task combinations through GPT-4o and Claude — log quality scores","Analyze: which prompting strategy works best for which task type?","Create a decision tree: given task type → recommended prompt structure"],output:"prompt_benchmark.json — 150 evaluated prompts with strategy recommendations"},
+   {title:"Implement DSPy automatic prompt optimization",time:"3hrs",diff:"hard",steps:["Install DSPy: pip install dspy-ai","Define a task as a DSPy Signature: input fields → output fields","Implement a DSPy Module with ChainOfThought","Use BootstrapFewShot optimizer — let DSPy find optimal few-shot examples automatically","Compare: DSPy-optimized prompt vs your best manual prompt on 50 test cases"],cmd:"python dspy_optimize.py --task qa --optimizer bootstrap --metric f1",output:"DSPy-optimized pipeline outperforming manual prompts by 5-15%"},
+   {title:"Build a reusable prompt template library",time:"2hrs",diff:"easy",steps:["Create 10 production prompt templates: extraction, classification, summarization, code review, translation, SQL generation, data analysis, creative writing, evaluation, conversation","Each template: system prompt + user template + few-shot examples + output schema","Test each on 5 examples — verify consistent structured output","Package as a Python module with pydantic output models","Document: include usage examples and expected outputs for each"],output:"prompt_library/ — 10 battle-tested prompt templates with Pydantic schemas"},
+  ],
+  del:"Prompt engineering benchmark + DSPy optimization pipeline + reusable prompt template library"},
+ ]},
+
+ {month:"M4 — LLM Agents",short:"M4",weeks:[
+  {id:"w13",label:"W13",title:"Agent Foundations: ReAct + CoT + Tree of Thoughts",print:true,isnew:true,
+  why:"★ EXPANDED with Tree of Thoughts. Print both ReAct and CoT — they are the building blocks of every agent system. ToT is the SOTA for hard multi-step reasoning tasks.",
+  resources:[
+   {tp:"paper",n:"ReAct: Reasoning + Acting in LLMs",a:"Yao et al., 2022 · arXiv:2210.03629",d:"✦ PRINT. Foundational agent paper — interleaving reasoning + actions.",u:"https://arxiv.org/abs/2210.03629",print:true},
+   {tp:"paper",n:"Chain-of-Thought Prompting",a:"Wei et al., 2022 · arXiv:2201.11903",d:"✦ PRINT. CoT as reasoning backbone of all agent systems.",u:"https://arxiv.org/abs/2201.11903",print:true},
+   {tp:"paper",n:"Tree of Thoughts",a:"Yao et al., 2023 · arXiv:2305.10601",d:"★ Deliberate multi-branch reasoning beyond linear CoT.",u:"https://arxiv.org/abs/2305.10601",isnew:true},
+   {tp:"video",n:"Harrison Chase — LangGraph Full Course",a:"YouTube · 3hrs",d:"★ LangGraph creator building real agents from scratch. Best LangGraph tutorial.",u:"https://www.youtube.com/watch?v=5h-JBkySK34",isnew:true},
+   {tp:"course",n:"AI Agents in LangGraph — DeepLearning.AI",a:"deeplearning.ai · ~3hrs",d:"Best structured LangGraph introduction.",u:"https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/"},
+   {tp:"video",n:"David Ondrej — Build AI Agents from Scratch",a:"YouTube · 2hrs",d:"★ ReAct loop from scratch with no frameworks — pure prompt engineering.",u:"https://www.youtube.com/watch?v=bMbLRwpVIDs",isnew:true},
+   {tp:"tool",n:"Tavily Search API",a:"tavily.com",d:"Web search tool for ReAct agent.",u:"https://tavily.com/"},
+   {tp:"tool",n:"E2B Code Interpreter",a:"e2b.dev",d:"Sandboxed Python execution.",u:"https://e2b.dev/"},
+  ],
+  build:[
+   {title:"ReAct agent from scratch — no frameworks",time:"4hrs",diff:"hard",steps:["Implement the ReAct loop: Thought → Action → Observation → repeat","Define 3 tools: web_search (Tavily), code_exec (E2B), file_read","Parse LLM output to extract tool name + arguments (regex or structured)","Add max_steps=10 limit + detect loops (same action repeated 3×)","Test on 5 benchmark tasks: QA, math, code generation, research, debugging"],output:"react_agent.py — fully working ReAct loop with 3 tools + loop detection"},
+   {title:"Rebuild same agent in LangGraph",time:"3hrs",diff:"med",steps:["Convert your ReAct loop to a LangGraph StateGraph","Nodes: call_model, execute_tool, check_done","Edges: conditional routing based on tool call presence","Add persistence: checkpointer=MemorySaver() for multi-turn conversations","Run same 5 benchmark tasks — output should be identical"],output:"langgraph_agent.py — same behavior as scratch agent but with LangGraph"},
+   {title:"Add Tree of Thoughts for complex task",time:"3hrs",diff:"hard",steps:["Pick one hard task: e.g. 'write a business plan for X'","Implement ToT: generate 3 candidate thoughts at each step","Evaluate each thought with LLM evaluator (score 1–5)","Keep top-k=2 thoughts, expand them, repeat for 3 levels","Compare output quality: ToT vs flat ReAct on same task — which is better?"],output:"tot_comparison.md — ToT vs ReAct quality comparison with examples"},
+  ],
+  del:"Side-by-side repo: bare ReAct vs LangGraph vs ToT agent on same benchmark tasks"},
+
+  {id:"w14",label:"W14",title:"Structured Outputs + Reliability + Agent Evals",isnew:true,
+  why:"★ EXPANDED with native Anthropic tool use + AgentBench. Research labs want quantitative agent evaluation — not just a working demo.",
+  resources:[
+   {tp:"docs",n:"Instructor Library",a:"python.useinstructor.com",d:"Structured Pydantic output extraction — essential for reliability.",u:"https://python.useinstructor.com/"},
+   {tp:"docs",n:"Anthropic Tool Use API",a:"docs.anthropic.com",d:"★ Native function calling in Claude — use this for Anthropic models.",u:"https://docs.anthropic.com/en/docs/build-with-claude/tool-use",isnew:true},
+   {tp:"paper",n:"AgentBench: Evaluating LLM Agents",a:"Liu et al., 2023 · arXiv:2308.03688",d:"★ 8-environment agent benchmark. Use as eval framework template.",u:"https://arxiv.org/abs/2308.03688",isnew:true},
+   {tp:"tool",n:"LangSmith",a:"langchain.com/langsmith",d:"Full tracing on every agent step — non-negotiable.",u:"https://www.langchain.com/langsmith"},
+   {tp:"video",n:"Anthropic — Building Effective Agents",a:"anthropic.com · Video talk",d:"★ Anthropic's own guidance on agent architecture and reliability.",u:"https://www.anthropic.com/research/building-effective-agents",isnew:true},
+  ],
+  build:[
+   {title:"Add structured output validation to all tools",time:"3hrs",diff:"med",steps:["Define Pydantic models for each tool's input and output","Use Instructor to enforce structured outputs from the LLM","Add validation: if output fails schema, retry with error feedback (max 3 attempts)","Test: inject malformed responses — does validation catch them?"],output:"All agent tools use Pydantic schemas — zero silent failures"},
+   {title:"Implement retry + fallback + LangSmith tracing",time:"2hrs",diff:"med",steps:["Wrap each LLM call with tenacity: retry 3× with exponential backoff on timeout","Fallback chain: GPT-4o → GPT-4o-mini → error response (never silent fail)","Add LangSmith tracing: every node, every tool call, every LLM invocation","Test: simulate API timeout — does fallback activate correctly?"],output:"agent with LangSmith traces visible at smith.langchain.com"},
+   {title:"AgentBench-style quantitative evaluation",time:"3hrs",diff:"hard",steps:["Choose 3 task categories: WebArena-style QA, code generation, reasoning","Create 20 test cases per category (60 total)","Run your agent on all 60 — log: task_success (0/1), steps_taken, cost","Compare: your agent vs baseline (direct LLM with no tools)","Calculate: success rate, avg steps, avg cost per successful task"],output:"agent_benchmark.json — 60 test results with success rates by category"},
+  ],
+  del:"Refactored agent: Pydantic validation + retry/fallback + LangSmith traces + quantitative eval"},
+
+  {id:"w15",label:"W15",title:"Multi-Agent Systems + STORM",isnew:true,
+  why:"★ EXPANDED. Added STORM — a concrete multi-agent paper you can replicate. Research labs want to see you build from papers, not just framework tutorials.",
+  resources:[
+   {tp:"paper",n:"AutoGen: Multi-Agent Conversation",a:"Wu et al., 2023 · arXiv:2308.08155",d:"Microsoft's multi-agent framework. Architecture patterns.",u:"https://arxiv.org/abs/2308.08155"},
+   {tp:"paper",n:"Cognitive Architectures for Language Agents",a:"Sumers et al., 2023 · arXiv:2309.02427",d:"Survey of agent architectures — design space breadth.",u:"https://arxiv.org/abs/2309.02427"},
+   {tp:"paper",n:"STORM: Synthesizing Long-Form Wikipedia Articles",a:"Shao et al., 2024 · arXiv:2402.14207",d:"★ Multi-agent collaborative synthesis. Replicate this.",u:"https://arxiv.org/abs/2402.14207",isnew:true},
+   {tp:"video",n:"AI Jason — Multi-Agent Systems with LangGraph",a:"YouTube · 1.5hrs",d:"★ Supervisor + worker pattern with real examples and code.",u:"https://www.youtube.com/watch?v=hvAPnpSfSGo",isnew:true},
+   {tp:"docs",n:"LangGraph Multi-Agent Patterns",a:"langchain-ai.github.io",d:"Supervisor, network, handoff patterns with code.",u:"https://langchain-ai.github.io/langgraph/concepts/multi_agent/"},
+  ],
+  build:[
+   {title:"Build supervisor + worker multi-agent system",time:"5hrs",diff:"hard",steps:["Supervisor agent: receives task → breaks into subtasks → routes to specialists","Worker 1 (Researcher): web search + paper reading → structured findings","Worker 2 (Writer): receives findings → writes draft → requests revision","Worker 3 (Coder): receives spec → writes code → runs tests via E2B","Supervisor: receives outputs → decides if done or needs more work","Test: 'Write a report on X with Python analysis' — supervisor should orchestrate all 3"],output:"multi_agent.py — supervisor coordinating 3 specialist workers"},
+   {title:"Replicate STORM-style article synthesis",time:"4hrs",diff:"hard",steps:["Stage 1 (Perspective finding): generate 3–5 expert perspectives on the topic","Stage 2 (Conversation): each perspective agent conducts a research interview with Wikipedia agent","Stage 3 (Outline): synthesize interviews into a structured article outline","Stage 4 (Writing): write each section with citations from research","Evaluate: compare your output quality with Wikipedia article on same topic"],output:"storm_agent.py — 4-stage multi-agent synthesis system"},
+  ],
+  del:"Multi-agent system + STORM-style demo + benchmark vs single-agent baseline"},
+
+  {id:"w16",label:"W16",title:"Agentic RAG + Custom MCP Server + Capstone",isnew:true,
+  why:"★ EXPANDED. Build your own MCP server — this is Anthropic's standard for tool connections used in Claude, Cursor, and all AI IDEs. Direct signal to Anthropic interviewers.",
+  resources:[
+   {tp:"blog",n:"Memory Architecture in Agents",a:"LangChain Blog",d:"Short-term, long-term, episodic memory patterns.",u:"https://blog.langchain.dev/memory-for-agents/"},
+   {tp:"docs",n:"Model Context Protocol (MCP)",a:"modelcontextprotocol.io",d:"★ Anthropic's standard for tool/server connections.",u:"https://modelcontextprotocol.io/introduction"},
+   {tp:"docs",n:"MCP Python SDK",a:"github/modelcontextprotocol",d:"★ Build your own MCP server in Python.",u:"https://github.com/modelcontextprotocol/python-sdk",isnew:true},
+   {tp:"video",n:"Anthropic — MCP Deep Dive Tutorial",a:"YouTube · Anthropic",d:"★ Official tutorial on building MCP servers from Anthropic's team.",u:"https://www.youtube.com/watch?v=kQmXtrmQ5Zg",isnew:true},
+   {tp:"tool",n:"arXiv API",a:"arxiv.org",d:"Primary data source for research agent.",u:"https://arxiv.org/help/api/index"},
+  ],
+  build:[
+   {title:"Build Research Agent with persistent memory",time:"5hrs",diff:"hard",steps:["Tools: arxiv_search, pdf_reader, web_search, note_saver","Flow: receive research question → search arXiv → read top 3 papers → synthesize → save notes","Persistent memory: store past research summaries in Qdrant with timestamps","Memory retrieval: on new question, first check if similar research was done before","Output: structured research report with citations, key findings, open questions"],output:"research_agent.py — synthesizes 3-paper literature review in <2 minutes"},
+   {title:"Build and publish a custom MCP server",time:"4hrs",diff:"hard",steps:["Use MCP Python SDK to create a server exposing your RAG system","Define 3 tools: search_docs(query), ingest_document(url), get_stats()","Add tool descriptions that Claude can understand and use","Test: connect to Claude Desktop as an MCP server — can Claude use your RAG?","Publish to GitHub with README explaining how to configure in Claude Desktop"],cmd:"python mcp_server.py --port 8080 --docs-dir ./knowledge_base",output:"mcp_server.py on GitHub — works as Claude Desktop extension"},
+  ],
+  del:"Capstone #3: Research Agent + custom MCP server — demo video + GitHub README"},
+ ]},
+
+ {month:"M5 — MLOps + Security",short:"M5",weeks:[
+  {id:"w17",label:"W17",title:"Evals as a First-Class Concern",
+  why:"Every research lab uses evals as their primary feedback signal. CI evals prove you operate like a researcher, not a hobbyist.",
+  resources:[
+   {tp:"paper",n:"G-Eval: NLG Evaluation with GPT-4",a:"Liu et al., 2023 · arXiv:2303.16634",d:"Chain-of-thought based LLM evaluation.",u:"https://arxiv.org/abs/2303.16634"},
+   {tp:"paper",n:"Judging LLM-as-a-Judge",a:"Zheng et al., 2023 · arXiv:2306.05685",d:"When LLM judges work and fail — understand their biases.",u:"https://arxiv.org/abs/2306.05685"},
+   {tp:"video",n:"Hamel Husain — LLM Evaluation Deep Dive",a:"YouTube · 1.5hrs",d:"★ Practical guide to LLM evals from a practitioner — covers all failure modes.",u:"https://www.youtube.com/watch?v=h_mRzWHlFqQ",isnew:true},
+   {tp:"docs",n:"DeepEval Documentation",a:"docs.confident-ai.com",d:"Custom metrics, pytest integration, CI evals.",u:"https://docs.confident-ai.com/"},
+   {tp:"paper",n:"HELM: Holistic Evaluation of LMs",a:"Liang et al., 2022 · arXiv:2211.09110",d:"Skim for evaluation methodology.",u:"https://arxiv.org/abs/2211.09110"},
+   {tp:"tool",n:"GitHub Actions",a:"docs.github.com",d:"CI: fail PR if eval scores drop below threshold.",u:"https://docs.github.com/en/actions"},
+  ],
+  build:[
+   {title:"Build CI eval pipeline with DeepEval",time:"4hrs",diff:"med",steps:["Install DeepEval — define 3 custom metrics: faithfulness, hallucination, answer_relevancy","Write pytest tests: each test runs a set of RAG queries and checks metric scores","Set thresholds: faithfulness>0.8, hallucination<0.1 (red if violated)","Write GitHub Actions workflow: on PR → checkout → install → run pytest","Add badge to README showing current eval scores"],cmd:"pytest tests/evals/ -v --html=eval_report.html",output:".github/workflows/evals.yml + passing pytest eval suite"},
+   {title:"Add LLM-as-judge for open-ended evals",time:"2hrs",diff:"med",steps:["For subjective quality evals, build GPT-4o-based judge","Criteria: helpfulness (1–5), accuracy (1–5), conciseness (1–5)","Run on your 50-question eval set — log all judgments to W&B","Track: does score drift across model versions? Set alert if avg drops >0.3"],output:"judge_eval.py — automated quality scoring with W&B logging"},
+  ],
+  del:"CI eval pipeline with pytest + GitHub Actions — documents this as portfolio differentiator"},
+
+  {id:"w18",label:"W18",title:"LLM Security + Red-Teaming",isnew:true,
+  why:"★ NEW WEEK. Prompt injection, jailbreaks, red-teaming are active research at all three labs. This is a real portfolio differentiator — most candidates ignore it.",
+  resources:[
+   {tp:"paper",n:"Universal Adversarial Attacks on LLMs (GCG)",a:"Zou et al., 2023 · arXiv:2307.15043",d:"★ Automated suffix optimization for jailbreaks — foundational attack paper.",u:"https://arxiv.org/abs/2307.15043",isnew:true},
+   {tp:"paper",n:"Many-Shot Jailbreaking",a:"Anthropic, 2024",d:"★ Jailbreaking via long context — Anthropic's own published research.",u:"https://www.anthropic.com/research/many-shot-jailbreaking",isnew:true},
+   {tp:"paper",n:"Llama Guard 3",a:"Meta AI, 2024 · arXiv:2312.06674",d:"Input/output safety classification for production LLMs.",u:"https://arxiv.org/abs/2312.06674"},
+   {tp:"video",n:"Yannic Kilcher — Adversarial Attacks on LLMs",a:"YouTube · 1hr",d:"★ GCG attack explained with intuition and implications.",u:"https://www.youtube.com/watch?v=8N-3pMkP4g4",isnew:true},
+   {tp:"tool",n:"Garak: LLM Vulnerability Scanner",a:"github/NVIDIA/garak",d:"★ Automated red-teaming framework for LLMs.",u:"https://github.com/NVIDIA/garak",isnew:true},
+   {tp:"tool",n:"Guardrails AI",a:"guardrailsai.com",d:"PII detection + toxicity filtering.",u:"https://www.guardrailsai.com/"},
+  ],
+  build:[
+   {title:"Automated red-teaming with Garak",time:"3hrs",diff:"med",steps:["Install Garak: pip install garak","Run against your fine-tuned model served via vLLM: garak --model_type openai --model_name local","Test probes: jailbreak, prompt injection, data leakage, hallucination","Generate vulnerability report — which probe categories fail?","Prioritize: fix the 2–3 highest severity vulnerabilities"],cmd:"garak --model_type openai --model_name http://localhost:8000/v1 --probes all",output:"garak_report.json — vulnerability scan results by category"},
+   {title:"Build layered defense system",time:"4hrs",diff:"hard",steps:["Layer 1 (Input): Prompt Guard 2 — block injection attempts","Layer 2 (Content): Llama Guard 3 — classify harmful input categories","Layer 3 (Output): Guardrails AI — PII detection + toxicity filter","Layer 4 (Monitoring): Langfuse — log flagged requests with reasons","Test: send 20 adversarial prompts — how many does each layer catch?","Measure: false positive rate on 50 legitimate queries (must be <2%)"],output:"security_pipeline.py — 4-layer defense with <2% false positive rate"},
+   {title:"Write and publish security audit report",time:"2hrs",diff:"easy",steps:["Document: attack surface (what attack types were tested)","Document: detection rates per layer per attack category","Document: mitigations implemented and their effectiveness","Document: residual risks and known bypasses","Publish as blog post or GitHub README — this is publishable content"],output:"security_audit.md — publishable LLM security assessment"},
+  ],
+  del:"LLM security audit report: attack surface + detection rates + mitigations — publishable write-up"},
+
+  {id:"w19",label:"W19",title:"Kubernetes + Scalable Deployment",
+  why:"Research engineers deploy experiments. k8s + monitoring is baseline expectation.",
+  resources:[
+   {tp:"course",n:"Kubernetes Basics",a:"kubernetes.io · Interactive · ~1 day",d:"Pods, deployments, services, HPA. Official interactive tutorial.",u:"https://kubernetes.io/docs/tutorials/kubernetes-basics/"},
+   {tp:"video",n:"TechWorld with Nana — Kubernetes Full Course",a:"YouTube · 4hrs",d:"★ Best k8s tutorial on YouTube — covers everything from pods to HPA.",u:"https://www.youtube.com/watch?v=X48VuDVv0do",isnew:true},
+   {tp:"docs",n:"Modal — Serverless GPU",a:"modal.com",d:"Easier than k8s for solo GPU experiments.",u:"https://modal.com/docs"},
+   {tp:"tool",n:"Prometheus + Grafana",a:"prometheus.io",d:"Latency, error rates, token throughput dashboards.",u:"https://prometheus.io/"},
+  ],
+  build:[
+   {title:"Deploy RAG API to Kubernetes with autoscaling",time:"6hrs",diff:"hard",steps:["Write Deployment manifest: 2 replicas, resource limits (0.5 CPU, 512Mi)","Write Service manifest: ClusterIP for internal, LoadBalancer for external","Write HPA: scale on CPU >70% or custom metric (queue depth)","Deploy to minikube locally — verify autoscaling triggers correctly","Add Prometheus scraping annotations — verify metrics appear in Grafana","Run k6 load test: ramp from 1 to 50 users — watch HPA add replicas"],cmd:"kubectl apply -f k8s/ && k6 run --vus 50 benchmark.js",output:"k8s/ directory + Grafana dashboard showing scaling behavior"},
+  ],
+  del:"Deployed RAG API with HPA + Grafana dashboard — screenshot for portfolio"},
+
+  {id:"w20",label:"W20",title:"Capstone #1: Production LLM API",
+  why:"Consolidation. Goal: a system you'd show a research engineer at Anthropic or OpenAI.",
+  resources:[
+   {tp:"tool",n:"k6",a:"k6.io",d:"Load test proving 100 concurrent users.",u:"https://k6.io/"},
+   {tp:"tool",n:"Excalidraw",a:"excalidraw.com",d:"Architecture diagram for post-mortem README.",u:"https://excalidraw.com/"},
+  ],
+  build:[
+   {title:"Integrate all M5 components + load test",time:"8hrs",diff:"hard",steps:["Final stack: LiteLLM routing + Langfuse + Redis caching + security pipeline + Prometheus + k8s + CI evals","Write LiteLLM config: route <100 word queries to GPT-4o-mini, long/complex to GPT-4o","k6 load test: 100 concurrent users, 500 total requests — p95 latency <3s target","Write post-mortem README: architecture decisions, tradeoffs, failure modes handled, what you'd do differently","Record Loom demo: show each component working, show load test graph"],output:"Capstone #1 repo — fully production-hardened with all components"},
+  ],
+  del:"Capstone #1: Production RAG API — fully hardened with security layer, load tested, documented"},
+ ]},
+
+ {month:"M6 — Deep Theory",short:"M6",weeks:[
+  {id:"w21",label:"W21",title:"Distributed Training + FlashAttention",print:true,
+  why:"FlashAttention is asked in Anthropic/OpenAI interviews — explain why SRAM tiling makes it IO-efficient. Print FA2. ZeRO is how large models are actually trained.",
+  resources:[
+   {tp:"paper",n:"Megatron-LM: Tensor + Pipeline Parallelism",a:"Shoeybi et al., 2019 · arXiv:1909.08053",d:"Data, tensor, pipeline parallelism — foundation of large model training.",u:"https://arxiv.org/abs/1909.08053"},
+   {tp:"paper",n:"FlashAttention-2",a:"Dao, 2023 · arXiv:2307.08691",d:"✦ PRINT. IO-aware attention — tiling + recomputation. Deep interview topic.",u:"https://arxiv.org/abs/2307.08691",print:true},
+   {tp:"paper",n:"ZeRO: Memory Optimization",a:"Rajbhandari et al., 2019 · arXiv:1910.02054",d:"★ DeepSpeed ZeRO stages — how 100B+ models are trained.",u:"https://arxiv.org/abs/1910.02054",isnew:true},
+   {tp:"video",n:"Andrej Karpathy — Building makemore (full series)",a:"YouTube · ~5hrs total",d:"Backprop mechanics. Watch all parts.",u:"https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"},
+   {tp:"video",n:"Tri Dao — FlashAttention Explained",a:"YouTube · 40min",d:"★ Author of FlashAttention explaining the algorithm — best source.",u:"https://www.youtube.com/watch?v=gMOAud7hZg4",isnew:true},
+   {tp:"video",n:"Aleksa Gordić — Megatron-LM Explained",a:"YouTube · 1hr",d:"★ Clear explanation of tensor and pipeline parallelism with code.",u:"https://www.youtube.com/watch?v=7VzXWHDX7IA",isnew:true},
+   {tp:"blog",n:"Sebastian Raschka — Training and Finetuning LLMs: Practical Guide",a:"magazine.sebastianraschka.com",d:"★ Covers mixed precision, gradient accumulation, checkpointing — very practical with real benchmark numbers.",u:"https://magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms-using",isnew:true},
+  ],
+  build:[
+   {title:"Multi-GPU DDP training with profiling",time:"4hrs",diff:"hard",steps:["Implement PyTorch DDP training for your toy transformer","Use torch.profiler to measure: GPU utilization, memory usage per layer","Enable gradient checkpointing — measure memory savings vs speed tradeoff","Implement gradient accumulation — simulate large batch sizes","Document: at what batch size do you see memory OOM? How does checkpointing help?"],output:"ddp_train.py + profiling_report/ with memory trace visualizations"},
+   {title:"Explain FlashAttention tiling in writing",time:"2hrs",diff:"med",steps:["Draw the SRAM tiling diagram from scratch without looking at the paper","Explain: why does standard attention require O(N²) HBM reads?","Explain: how does tiling reduce this to O(N) HBM reads?","Explain: what is recomputation in the backward pass and why is it needed?","Publish as a blog post — if you can explain it clearly, you understand it"],output:"flash_attention_explained.md — publishable technical blog post"},
+  ],
+  del:"DDP training notebook with profiling + FlashAttention explanation blog post"},
+
+  {id:"w22",label:"W22",title:"Mechanistic Interpretability",print:true,
+  why:"Anthropic's core research direction. Print Toy Models of Superposition — annotate every figure. The SAE experiment is among the highest-signal portfolio items for Anthropic applications.",
+  resources:[
+   {tp:"paper",n:"Toy Models of Superposition",a:"Elhage et al., 2022 (Anthropic)",d:"✦ PRINT. Foundational interpretability. Annotate every figure.",u:"https://transformer-circuits.pub/2022/toy_model/index.html",print:true},
+   {tp:"paper",n:"Towards Monosemanticity",a:"Bricken et al., 2023 (Anthropic)",d:"★ SAE on MLP neurons. Middle paper in the series.",u:"https://transformer-circuits.pub/2023/monosemantic-features/index.html",isnew:true},
+   {tp:"paper",n:"Scaling Monosemanticity",a:"Templeton et al., 2024 (Anthropic)",d:"SAE at scale. Read after Toy Models + Towards Monosemanticity.",u:"https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html"},
+   {tp:"course",n:"ARENA Chapters 1 & 2",a:"arena-uk.streamlit.app",d:"Best structured interpretability curriculum — do both chapters.",u:"https://arena-uk.streamlit.app/"},
+   {tp:"video",n:"Neel Nanda — Mechanistic Interpretability Walkthrough",a:"YouTube · 2hrs",d:"★ Best introduction to mech interp from one of its leading researchers.",u:"https://www.youtube.com/watch?v=KV5gbOmHbjU",isnew:true},
+   {tp:"video",n:"Chris Olah — Circuits Thread Explained",a:"YouTube · 1hr",d:"★ Anthropic researcher explaining the circuits interpretability approach.",u:"https://www.youtube.com/watch?v=9Dn7n0NlgNE",isnew:true},
+  ],
+  build:[
+   {title:"Implement and train Sparse Autoencoder (SAE)",time:"6hrs",diff:"hard",steps:["Load GPT-2-small — hook into residual stream at layer 8","Build SAE: encoder (hidden→sparse) + decoder (sparse→hidden)","Train with L1 sparsity penalty — tune coefficient until avg active features ≈ 20","After training: run 1000 text examples — collect feature activations","For each feature: find top-10 activating tokens — is there a pattern?"],output:"sae_experiment.py — trained SAE with feature activation analysis"},
+   {title:"Find and document interpretable features",time:"3hrs",diff:"hard",steps:["Pick 5 features with highest activation magnitudes","For each: collect top-50 activating token contexts","Assign human-readable label: e.g. 'appears after French words', 'code variable names'","Visualize: attention patterns when feature fires vs doesn't fire","Write GitHub notebook explaining what you found — publish it"],output:"interpretability_notebook.ipynb — 5 documented interpretable features"},
+  ],
+  del:"SAE experiment notebook on GitHub — very high signal for Anthropic applications"},
+
+  {id:"w23",label:"W23",title:"RLHF + Constitutional AI + Process Reward Models",print:true,isnew:true,
+  why:"★ EXPANDED with Constitutional AI and RLAIF. Print both InstructGPT and CAI. If targeting Anthropic, CAI is mandatory. RLAIF is the practical scaling solution used at both Anthropic and Google.",
+  resources:[
+   {tp:"paper",n:"InstructGPT",a:"Ouyang et al., 2022 · arXiv:2203.02155",d:"✦ PRINT. Full RLHF pipeline — reward model architecture + PPO setup.",u:"https://arxiv.org/abs/2203.02155",print:true},
+   {tp:"paper",n:"Constitutional AI",a:"Bai et al., 2022 · arXiv:2212.08073",d:"✦ PRINT (Anthropic track). RLAIF using a constitution — Anthropic's approach.",u:"https://arxiv.org/abs/2212.08073",print:true},
+   {tp:"paper",n:"Let's Verify Step by Step",a:"Lightman et al., 2023 · arXiv:2305.20050",d:"Process reward models for reasoning — OpenAI's PRM approach.",u:"https://arxiv.org/abs/2305.20050"},
+   {tp:"paper",n:"RLAIF: Scaling RLHF with AI Feedback",a:"Lee et al., 2023 · arXiv:2309.00267",d:"★ AI-generated preference labels instead of human labels.",u:"https://arxiv.org/abs/2309.00267",isnew:true},
+   {tp:"video",n:"Umar Jamil — RLHF from Scratch",a:"YouTube · 2hrs",d:"★ Full RLHF implementation: reward model + PPO training loop.",u:"https://www.youtube.com/watch?v=2MBJOuVq380",isnew:true},
+   {tp:"docs",n:"TRL PPO + RLAIF Trainers",a:"huggingface.co/docs/trl",d:"Full RLHF + RLAIF loop implementation.",u:"https://huggingface.co/docs/trl/ppo_trainer"},
+   {tp:"blog",n:"Sebastian Raschka — LLM Training: RLHF and Its Alternatives",a:"magazine.sebastianraschka.com",d:"★ Side-by-side comparison of PPO, DPO, RLAIF with derivations. Best single-source for understanding the RLHF landscape.",u:"https://magazine.sebastianraschka.com/p/llm-training-rlhf-and-its-alternatives",isnew:true},
+  ],
+  build:[
+   {title:"Train reward model on preference pairs",time:"4hrs",diff:"hard",steps:["Take your SFT model from W8 — add a scalar regression head (linear layer)","Training objective: reward(chosen) > reward(rejected) (Bradley-Terry loss)","Train on your 50-100 preference pairs — monitor: avg reward gap widening","Evaluate: does the reward model correctly rank your test examples?","Test: generate 20 new response pairs — does RM ranking match human intuition?"],output:"reward_model.py — trained RM that correctly ranks 80%+ of held-out pairs"},
+   {title:"Build RLAIF pipeline (Constitutional AI-style)",time:"4hrs",diff:"hard",steps:["Step 1 (Critique): prompt model to critique its own response against a principle","  Example principle: 'Be helpful but avoid harmful content'","Step 2 (Revision): prompt model to revise response based on critique","Step 3 (Preference): use original vs revised as chosen/rejected pair","Run 100 examples through this pipeline — collect AI-generated preference data","Fine-tune with DPO on these AI-generated preferences","Compare: RLAIF model vs human-preference DPO model on eval set"],output:"rlaif_pipeline.py — full CAI-style critique-revise-prefer loop"},
+  ],
+  del:"RLHF + RLAIF pipeline notebook — directly mirrors Anthropic and OpenAI training approaches"},
+
+  {id:"w24",label:"W24",title:"LeetCode + ML Interview Prep",
+  why:"Research labs do hard LeetCode. Anthropic and OpenAI give medium-hard algorithmic problems alongside ML questions. Do not underestimate DSA.",
+  resources:[
+   {tp:"tool",n:"LeetCode",a:"leetcode.com",d:"3 problems/day: Arrays, Trees, DP, Graphs. Track streak.",u:"https://leetcode.com/"},
+   {tp:"tool",n:"interviewing.io",a:"interviewing.io",d:"Mock interviews with engineers at Anthropic/OpenAI/DeepMind.",u:"https://interviewing.io/"},
+   {tp:"tool",n:"Pramp",a:"pramp.com",d:"Free peer mocks — 1/day during active phase.",u:"https://www.pramp.com/"},
+   {tp:"video",n:"NeetCode — Blind 75 Full Course",a:"YouTube · ~20hrs total",d:"★ Best LeetCode prep. Covers every pattern you'll see in FAANG interviews.",u:"https://www.youtube.com/playlist?list=PLot-Xpze53ldVwtstag2TL4HQhAnC8ATf",isnew:true},
+   {tp:"blog",n:"ML System Design Primer",a:"Chip Huyen",d:"ML system design interview framework and examples.",u:"https://huyenchip.com/machine-learning-systems-design/toc.html"},
+  ],
+  build:[
+   {title:"ML scratch implementations repo",time:"6hrs",diff:"hard",steps:["Implement attention mechanism from scratch — derive scaled dot-product","Implement layer normalization — derive the normalization formula","Implement beam search — explain time/space complexity","Implement top-k and top-p (nucleus) sampling","Implement BPE tokenizer from scratch (merge rules)","Time yourself: can you implement each in under 30 min?"],output:"ml_from_scratch/ — 5 implementations with tests, all passing"},
+   {title:"10 ML system design write-ups",time:"8hrs",diff:"med",steps:["Write 1-page answers for: LLM serving at 1M RPM, recommendation system, search ranking, fraud detection, real-time translation, code completion, content moderation, ad click prediction, news feed ranking, A/B testing platform","Each write-up: problem statement, data pipeline, model choice, serving infra, eval metrics, tradeoffs","Practice: explain each design out loud in under 5 minutes"],output:"system_design/ — 10 1-page write-ups + verbal practice recordings"},
+  ],
+  del:"ml-interview-prep GitHub repo with 5 scratch implementations + 10 system design write-ups"},
+ ]},
+
+ {month:"M7 — Specialization",short:"M7",weeks:[
+  {id:"w25a",label:"Track A",title:"Multimodal — Google DeepMind",
+  why:"DeepMind's flagship (Gemini) is fully multimodal. CLIP is the foundation of all vision-language work. Build something real with LLaVA or InternVL2.",
+  resources:[
+   {tp:"paper",n:"CLIP",a:"Radford et al., 2021 · arXiv:2103.00020",d:"Foundation of vision-language alignment. Build image search on this.",u:"https://arxiv.org/abs/2103.00020"},
+   {tp:"paper",n:"LLaVA: Visual Instruction Tuning",a:"Liu et al., 2023 · arXiv:2304.08485",d:"Vision-language pipeline for multimodal QA.",u:"https://arxiv.org/abs/2304.08485"},
+   {tp:"paper",n:"Gemini 1.5 Technical Report",a:"Google DeepMind, 2024",d:"Long-context multimodal architecture.",u:"https://arxiv.org/abs/2403.05530"},
+   {tp:"paper",n:"InternVL2: Closing the Gap to GPT-4V",a:"Chen et al., 2024 · arXiv:2404.16821",d:"★ State-of-the-art open-source VLM.",u:"https://arxiv.org/abs/2404.16821",isnew:true},
+   {tp:"video",n:"Umar Jamil — LLaVA from Scratch",a:"YouTube · 2hrs",d:"★ Full LLaVA implementation with detailed code walkthrough.",u:"https://www.youtube.com/watch?v=vAmKB7iPkWw",isnew:true},
+   {tp:"docs",n:"JAX + Flax",a:"flax.readthedocs.io",d:"Google's ML framework — learn for DeepMind interviews.",u:"https://flax.readthedocs.io/"},
+  ],
+  build:[
+   {title:"CLIP image search engine",time:"4hrs",diff:"med",steps:["Load openai/clip-vit-base-patch32","Embed 1000+ images: store CLIP image embeddings in Qdrant","For text query: embed with CLIP text encoder → cosine search over image embeddings","Build simple Gradio UI: type query → see top-5 matching images","Add reverse: upload image → find similar images"],output:"clip_search/ — working image search with Gradio demo"},
+   {title:"Vision-language QA with LLaVA",time:"4hrs",diff:"med",steps:["Load LLaVA-1.5-7B or InternVL2-8B","Document Q&A: upload PDF → extract images → ask questions about images","Build evaluation: 20 image QA pairs — measure accuracy vs GPT-4V","Use case: invoice parsing, chart understanding, diagram QA"],output:"vlm_qa.py — document intelligence pipeline with eval results"},
+   {title:"Document intelligence system",time:"4hrs",diff:"hard",steps:["Input: PDF document (annual report, research paper)","OCR + layout: extract text blocks with bounding boxes","Route: text blocks → text embedding, image blocks → CLIP embedding","Multimodal RAG: search across both text and visual content","Evaluate on 10 documents — can it answer questions about charts?"],output:"doc_intelligence.py — multimodal RAG over PDFs with visual content"},
+  ],
+  del:"One publishable multimodal project — arXiv preprint or detailed technical blog"},
+
+  {id:"w25b",label:"Track B",title:"Alignment/Safety — Anthropic",
+  why:"Anthropic's primary research direction. Sleeper Agents + Constitutional AI are papers you must discuss in depth. Activation steering is the practical interpretability tool you should demonstrate.",
+  resources:[
+   {tp:"course",n:"ARENA Chapter 2",a:"arena-uk.streamlit.app",d:"Full interpretability curriculum — circuits, probing, SAEs.",u:"https://arena-uk.streamlit.app/"},
+   {tp:"paper",n:"Constitutional AI",a:"Bai et al., 2022 · arXiv:2212.08073",d:"Anthropic's RLAIF approach.",u:"https://arxiv.org/abs/2212.08073"},
+   {tp:"paper",n:"Sleeper Agents: Deceptive Alignment",a:"Hubinger et al., 2024 · arXiv:2401.05566",d:"★ CRITICAL for Anthropic. Deceptive alignment persisting through safety training.",u:"https://arxiv.org/abs/2401.05566"},
+   {tp:"paper",n:"Representation Engineering",a:"Zou et al., 2023 · arXiv:2310.01405",d:"★ Control LLM behavior via representation space.",u:"https://arxiv.org/abs/2310.01405",isnew:true},
+   {tp:"video",n:"Neel Nanda — Activation Steering Tutorial",a:"YouTube · 1hr",d:"★ How to steer model behavior by adding activation vectors — with code.",u:"https://www.youtube.com/watch?v=kDn56m4Mxhg",isnew:true},
+  ],
+  build:[
+   {title:"Build Constitutional AI RLAIF pipeline",time:"5hrs",diff:"hard",steps:["Define a 5-principle constitution (helpfulness, harmlessness, honesty, conciseness, accuracy)","Stage 1 (Critique): for each model response, prompt to critique against each principle","Stage 2 (Revision): prompt to revise based on critique","Stage 3 (Preference): original vs revised = rejected vs chosen","Fine-tune with DPO on 200 AI-generated preference pairs","Eval: does the CAI model score higher on constitutional principles?"],output:"constitutional_ai.py — full critique-revise-prefer pipeline"},
+   {title:"Activation steering experiment",time:"4hrs",diff:"hard",steps:["Choose a concept pair: e.g. (happy/sad), (formal/informal), (French/English)","Collect activations at layer 15 for each concept","Compute steering vector: mean(concept_A_activations) - mean(concept_B_activations)","Add scaled steering vector to residual stream during inference","Test: does adding 'formal' vector change outputs toward formal register?","Document: how does steering magnitude affect output quality?"],output:"steering_experiment.ipynb — reproducible activation steering with examples"},
+  ],
+  del:"One publishable alignment project — Transformer Circuits blog quality"},
+
+  {id:"w25c",label:"Track C",title:"Reasoning + Code — OpenAI",
+  why:"OpenAI's o1/o3 are built on PRMs and test-time compute. SWE-bench is their standard eval. Know both deeply to interview for OpenAI research roles.",
+  resources:[
+   {tp:"paper",n:"SWE-bench",a:"Jimenez et al., 2023 · arXiv:2310.06770",d:"Evaluating LLMs on real GitHub issues.",u:"https://arxiv.org/abs/2310.06770"},
+   {tp:"paper",n:"Let's Verify Step by Step",a:"Lightman et al., 2023 · arXiv:2305.20050",d:"PRMs for reasoning — critical for o1-style models.",u:"https://arxiv.org/abs/2305.20050"},
+   {tp:"paper",n:"Scaling LLM Test-Time Compute",a:"Snell et al., 2024 · arXiv:2408.03314",d:"★ Test-time scaling — the paradigm behind o1/o3.",u:"https://arxiv.org/abs/2408.03314",isnew:true},
+   {tp:"tool",n:"SWE-bench Evaluation Harness",a:"github/SWE-bench",d:"Local setup for benchmarking your code agent.",u:"https://github.com/SWE-bench/SWE-bench"},
+   {tp:"video",n:"Yannic Kilcher — o1 and Test-Time Compute Scaling",a:"YouTube · 1hr",d:"★ Analysis of the test-time compute scaling paradigm.",u:"https://www.youtube.com/watch?v=eaAonE58sLU",isnew:true},
+  ],
+  build:[
+   {title:"Build code agent on SWE-bench",time:"6hrs",diff:"hard",steps:["Set up SWE-bench evaluation harness locally (Docker required)","Agent tools: read_file, list_files, write_file, run_tests, search_code","Flow: read issue → explore repo → identify root cause → write fix → verify tests pass","Test on 5 SWE-bench-lite instances first — iterate on agent design","Scale to 20 instances — log: success rate, steps per issue, cost per issue"],output:"code_agent.py — SWE-bench results on 20 instances with success rate"},
+   {title:"Process reward model for step-by-step code",time:"4hrs",diff:"hard",steps:["Generate 50 coding problems with step-by-step solutions","For each solution: manually label each step as correct/incorrect","Train PRM: classifier on intermediate reasoning steps","Test: does PRM-guided beam search outperform vanilla sampling?","Compare: best-of-N vs PRM reranking at same inference budget"],output:"prm_code.py — trained PRM with best-of-N vs PRM comparison"},
+  ],
+  del:"One publishable code reasoning project with SWE-bench benchmark results"},
+ ]},
+
+ {month:"M7.5 — Frontier AI/ML Topics",short:"M7.5",tag:true,weeks:[
+  {id:"w28b",label:"W28.5",title:"Long-Context & Extended Architecture",isnew:true,
+  why:"★ NEW. Gemini processes 1M+ tokens. Understanding YaRN, Ring Attention, and sliding window is essential — every 2025 model uses some form of context extension.",
+  resources:[
+   {tp:"paper",n:"YaRN: Efficient Context Window Extension",a:"Peng et al., 2023 · arXiv:2309.00071",d:"★ Extends context length by modifying RoPE scaling. Used to extend LLaMA from 4K to 128K tokens.",u:"https://arxiv.org/abs/2309.00071",isnew:true},
+   {tp:"paper",n:"Ring Attention for Blockwise Transformers",a:"Liu et al., 2023 · arXiv:2310.01889",d:"★ Distributes long sequences across multiple GPUs — enables near-infinite context length.",u:"https://arxiv.org/abs/2310.01889",isnew:true},
+   {tp:"paper",n:"LongRoPE: Extending LLM Context to 2M Tokens",a:"Ding et al., 2024 · Microsoft · arXiv:2402.13753",d:"★ Progressive RoPE extension + short-context recovery — extends models to 2M tokens.",u:"https://arxiv.org/abs/2402.13753",isnew:true},
+   {tp:"paper",n:"Gemini 1.5: Processing Over 10M Tokens",a:"Reid et al., 2024 · arXiv:2403.05530",d:"★ How Google achieved 10M token context with MoE + ring attention + efficient KV cache.",u:"https://arxiv.org/abs/2403.05530",isnew:true},
+   {tp:"blog",n:"Context Length Extension Techniques Survey",a:"Extending Transformer Context Length (blog)",d:"Comprehensive overview of all context extension methods: interpolation, extrapolation, attention sinks.",u:"https://kaiokendev.github.io/context",isnew:true},
+   {tp:"paper",n:"Landmark Attention: Memory-Efficient Long Context",a:"Mohtashami & Jaggi, 2023 · arXiv:2305.16300",d:"Random access attention — efficient retrieval from very long sequences.",u:"https://arxiv.org/abs/2305.16300",isnew:true},
+  ],
+  build:[
+   {title:"Implement YaRN context extension",time:"3hrs",diff:"hard",steps:["Take a pre-trained 4K context model (e.g. LLaMA-2-7B)","Implement NTK-aware RoPE scaling in the attention layer","Apply dynamic temperature scaling for different frequency components","Fine-tune on 128K-length data for 200 steps (use slimpajama or scrolls)","Evaluate: perplexity at 4K, 16K, 32K, 64K, 128K — plot degradation curve"],output:"yarn_extended.py — model extended from 4K to 128K with perplexity curves"},
+   {title:"Build a long-context retrieval benchmark",time:"2hrs",diff:"med",steps:["Create 'needle-in-a-haystack' test: hide facts at various positions in long documents","Test with context lengths: 4K, 16K, 32K, 64K, 128K","For each length: measure fact retrieval accuracy at positions 10%, 25%, 50%, 75%, 90%","Create a heatmap: context length × position → retrieval accuracy","Compare: your YaRN-extended model vs original 4K model"],output:"long_context_eval.png — heatmap showing retrieval accuracy across lengths + positions"},
+   {title:"Sliding window + chunked summarization pipeline",time:"2hrs",diff:"med",steps:["For documents exceeding context length: implement sliding window processing","Window=4K, stride=2K — process each window, generate intermediate summaries","Then: hierarchical map-reduce — summarize the summaries to produce final answer","Compare: sliding window vs full context (on model that supports it)","Use case: process a 500-page book and answer questions about it"],output:"long_doc_pipeline.py — process unlimited length documents with quality equivalent"},
+  ],
+  del:"YaRN context extension + long-context benchmark + sliding window pipeline"},
+
+  {id:"w28c",label:"W28.7",title:"AI Ethics + Responsible AI",isnew:true,
+  why:"★ NEW. Every frontier lab has a safety/ethics team. Understanding bias, fairness, model cards, and emerging regulation (EU AI Act) is table stakes for research engineer interviews — especially at Anthropic.",
+  resources:[
+   {tp:"paper",n:"Model Cards for Model Reporting",a:"Mitchell et al., 2019 · arXiv:1810.03993",d:"★ Standard for documenting model capabilities, limitations, and ethical considerations.",u:"https://arxiv.org/abs/1810.03993",isnew:true},
+   {tp:"paper",n:"On the Dangers of Stochastic Parrots",a:"Bender et al., 2021 · FAccT",d:"★ Influential critique of large language models — environmental cost, bias, and misuse risks.",u:"https://dl.acm.org/doi/10.1145/3442188.3445922",isnew:true},
+   {tp:"docs",n:"EU AI Act — Summary & Requirements",a:"artificialintelligenceact.eu",d:"★ Understand the regulation: risk categories, documentation requirements, compliance obligations.",u:"https://artificialintelligenceact.eu/",isnew:true},
+   {tp:"paper",n:"HELM: Holistic Evaluation of Language Models",a:"Liang et al., 2023 · Stanford CRFM",d:"★ Comprehensive LLM evaluation including accuracy, calibration, robustness, fairness, bias, toxicity.",u:"https://arxiv.org/abs/2211.09110",isnew:true},
+   {tp:"tool",n:"Responsible AI Toolbox",a:"github/microsoft",d:"Tools for model interpretability, fairness assessment, and error analysis.",u:"https://github.com/microsoft/responsible-ai-toolbox",isnew:true},
+   {tp:"blog",n:"Anthropic — Core Views on AI Safety",a:"anthropic.com",d:"★ Anthropic's published position on responsible AI development — crucial reading for Anthropic interviews.",u:"https://www.anthropic.com/research",isnew:true},
+  ],
+  build:[
+   {title:"Bias audit on your fine-tuned model",time:"3hrs",diff:"med",steps:["Choose your best fine-tuned model from W7-W8","Create 100 test prompts testing for: gender bias, racial bias, political bias, age bias","Run all prompts — score each response for neutrality, stereotyping, harmful content","Use BBQ benchmark (Bias Benchmark for QA) for systematic evaluation","Document: what biases exist? What mitigation strategies could you apply?"],output:"bias_audit_report.md — systematic bias assessment with mitigation recommendations"},
+   {title:"Write a comprehensive model card",time:"2hrs",diff:"easy",steps:["Choose your best model from this roadmap","Follow Mitchell et al. format: intended use, limitations, training data, evaluation, ethical considerations","Include: performance across demographic groups, known failure modes, appropriate use cases","Add: environmental impact estimate (compute used, CO2 equivalent)","Publish on HuggingFace Hub alongside the model"],output:"MODEL_CARD.md — published on HuggingFace with your model"},
+   {title:"Build a red-teaming evaluation framework",time:"3hrs",diff:"hard",steps:["Create 50 adversarial prompts across categories: jailbreaks, harmful content, misinformation, PII extraction, prompt injection","Run against 3 models: your fine-tuned model, Claude, GPT-4o","Score: which model refuses appropriately? Which are too restrictive? Which are too permissive?","Implement automated red-team scoring using an LLM judge","Create pass/fail report with recommendations for model improvement"],output:"red_team_eval.py — automated red-teaming framework with comparative results"},
+  ],
+  del:"Bias audit report + model card on HuggingFace + red-teaming evaluation framework"},
+ ]},
+
+ {month:"M8-9 — Portfolio + Jobs",short:"M8–9",weeks:[
+  {id:"w29",label:"W29",title:"Portfolio Polish + Research Presence",isnew:true,
+  why:"★ EXPANDED. Research labs hire from public presence. An arXiv preprint + active ML Twitter can get you an interview faster than cold applying.",
+  resources:[
+   {tp:"tool",n:"Loom",a:"loom.com",d:"2–5 min demo videos for all capstones.",u:"https://www.loom.com/"},
+   {tp:"tool",n:"Medium / Substack",a:"medium.com",d:"4 technical blog posts — one per capstone.",u:"https://medium.com/"},
+   {tp:"tool",n:"arXiv",a:"arxiv.org",d:"★ Submit specialization project — visibility boost.",u:"https://arxiv.org/",isnew:true},
+   {tp:"tool",n:"Twitter/X — ML Community",a:"twitter.com",d:"★ Share 1 insight/day from your learning. Tag paper authors.",u:"https://twitter.com/",isnew:true},
+   {tp:"tool",n:"Excalidraw",a:"excalidraw.com",d:"Architecture diagrams for all READMEs.",u:"https://excalidraw.com/"},
+  ],
+  build:[
+   {title:"Complete portfolio documentation",time:"8hrs",diff:"easy",steps:["Write detailed READMEs for all 4 capstones: problem, approach, results, architecture diagram","Record Loom demo for each (2–5 min): show it running, show eval results, explain tradeoffs","Build GitHub profile README: your story, skills, links to all projects + blog posts","Create personal website or use GitHub Pages — your name should be googleable","Write 4 blog posts (one per capstone): publish on Medium or Substack"],output:"Complete public portfolio: 4 capstones + 4 blog posts + demos + personal page"},
+   {title:"Submit arXiv preprint + grow ML presence",time:"4hrs",diff:"med",steps:["Format your specialization project as an arXiv paper (LaTeX template)","Abstract (250 words): problem, method, results, significance","Submit to cs.LG or cs.CL — review takes ~1 week","Share on Twitter/X: explain your key finding in 5 tweets","Tag relevant researchers — if they retweet, you get interview attention"],output:"arXiv preprint live + Twitter thread with >100 impressions"},
+  ],
+  del:"Complete public portfolio: GitHub + blog + demos + arXiv preprint"},
+
+  {id:"w30",label:"W30–31",title:"Mock Interviews + Open Source",
+  why:"Research lab interviews include paper deep-dives, from-scratch implementations, and system design. Practice all three. Record yourself explaining papers — most people are worse at this than they think.",
+  resources:[
+   {tp:"tool",n:"interviewing.io",a:"interviewing.io",d:"Mock interviews with Anthropic/OpenAI/DeepMind engineers.",u:"https://interviewing.io/"},
+   {tp:"tool",n:"Pramp",a:"pramp.com",d:"Free peer mocks — 1/day during active phase.",u:"https://www.pramp.com/"},
+   {tp:"tool",n:"Glassdoor — Research Engineer Reports",a:"glassdoor.com",d:"Read interview reports specifically for Research Engineer roles.",u:"https://www.glassdoor.com/Interview/Anthropic-Interview-Questions-E9010511.htm"},
+   {tp:"tool",n:"vLLM / HuggingFace / LlamaIndex",a:"github.com",d:"Make 2–3 meaningful open source contributions.",u:"https://github.com/vllm-project/vllm"},
+  ],
+  build:[
+   {title:"Mock interview circuit",time:"6hrs",diff:"med",steps:["Do 3 mock technical interviews on interviewing.io (schedule in advance — waitlist exists)","Practice explaining 5 papers: record yourself, watch playback — are you clear?","Papers to explain: Attention, LoRA, DPO, FlashAttention, Toy Models of Superposition","Practice: implement attention from scratch on a whiteboard/blank file in <30 min","Prepare 5 STAR behavioral stories per company — reference their specific published research"],output:"3 mock interview reports + 5 paper explanations recorded"},
+   {title:"Open source contributions",time:"6hrs",diff:"hard",steps:["Browse issues labeled 'good first issue' on vLLM, HuggingFace, LlamaIndex","Choose 2–3 issues you can genuinely fix — not just docs changes","Submit PRs with clear descriptions — include test coverage","Engage on issues: ask clarifying questions, review others' PRs","Document your contributions in your README"],output:"2–3 merged PRs on major open-source ML repos"},
+  ],
+  del:"Interview-ready + 2–3 merged open source PRs + paper explanation fluency"},
+
+  {id:"w32",label:"W32–36",title:"Applications + Active Interviewing",
+  why:"Research lab hiring is relationship-driven. A warm intro is 10x more effective than cold applying. Attend workshops, engage on Twitter, reach out directly to researchers whose work you've read.",
+  resources:[
+   {tp:"tool",n:"levels.fyi",a:"levels.fyi",d:"Compensation benchmarks for Anthropic, OpenAI, DeepMind.",u:"https://www.levels.fyi/"},
+   {tp:"tool",n:"TPU Research Cloud",a:"sites.research.google",d:"★ Apply if targeting DeepMind — signals commitment.",u:"https://sites.research.google/trc/about/"},
+   {tp:"tool",n:"NeurIPS / ICML / ICLR Workshops",a:"neurips.cc",d:"Many free virtually. Meet researchers. Submit your work.",u:"https://neurips.cc/"},
+   {tp:"tool",n:"LeetCode",a:"leetcode.com",d:"3 problems/day to stay sharp during active interviewing.",u:"https://leetcode.com/"},
+  ],
+  build:[
+   {title:"Application + networking strategy",time:"ongoing",diff:"easy",steps:["Apply to 5–10 target positions per week (not all at once)","Cold DMs to 3–5 researchers/week — 3 sentences max, reference their specific paper, ask a specific question","Attend at least 1 virtual workshop per month — introduce yourself to 2 speakers","1 small portfolio improvement per week — shows active momentum to recruiters","Keep LeetCode streak: 3 problems/day during interview season","After each interview: write down questions asked — study gaps for next one"],output:"Applications sent + 2+ networking conversations per week"},
+  ],
+  del:"Offers. If not: identify portfolio gaps, add one targeted project, iterate."},
+ ]},
+];
+
+// ─── WEEK ID → DELIVERABLE MAP ───
+const ALL_WEEKS={};
+DATA.forEach(m=>m.weeks.forEach(w=>{ALL_WEEKS[w.id]=w}));
+const WEEK_IDS=Object.keys(ALL_WEEKS);
+
+function getTotalTasks(){
+  let t=0;
+  WEEK_IDS.forEach(id=>t+=(ALL_WEEKS[id].build||[]).length);
+  return t;
+}
+
+function getCompletedTasks(){
+  let c=0;
+  Object.keys(PROGRESS).forEach(k=>PROGRESS[k]&&c++);
+  return c;
+}
+
+function renderProgress(){
+  const total=getTotalTasks();
+  const done=getCompletedTasks();
+  const pct=total?Math.round(done/total*100):0;
+  const el=document.getElementById('prog-fill');
+  const pt=document.getElementById('prog-pct');
+  const gb=document.getElementById('gpbar');
+  const hd=document.getElementById('h-done');
+  if(el)el.style.width=pct+'%';
+  if(pt)pt.textContent=pct+'%';
+  if(gb)gb.style.width=pct+'%';
+  const weeksDone=WEEK_IDS.filter(id=>{
+    const w=ALL_WEEKS[id];
+    const tasks=w.build||[];
+    return tasks.length>0&&tasks.every((_,ti)=>PROGRESS[id+'-'+ti]);
+  }).length;
+  if(hd)hd.textContent=weeksDone;
+  // update sidebar checkmarks
+  WEEK_IDS.forEach(id=>{
+    const w=ALL_WEEKS[id];
+    const tasks=w.build||[];
+    const allDone=tasks.length>0&&tasks.every((_,ti)=>PROGRESS[id+'-'+ti]);
+    const btn=document.querySelector(`.wb[data-id="${id}"] .wb-done`);
+    if(btn){btn.classList.toggle('checked',allDone);btn.textContent=allDone?'✓':''}
+  });
+  // update month progress in sidebar
+  DATA.forEach(m=>{
+    let mt=0,mc=0;
+    m.weeks.forEach(w=>{
+      const tasks=w.build||[];
+      mt+=tasks.length;
+      tasks.forEach((_,ti)=>{if(PROGRESS[w.id+'-'+ti])mc++});
+    });
+    const pEl=document.querySelector(`.mb[data-month="${m.short}"] .mb-prog`);
+    if(pEl)pEl.textContent=mt?mc+'/'+mt:'';
+  });
+}
+
+const TM2={paper:"rt-paper",video:"rt-video",course:"rt-course",blog:"rt-blog",docs:"rt-docs",tool:"rt-tool"};
+const DIFF={easy:"td-easy easy",med:"td-med med",hard:"td-hard hard"};
+
+function toggleTask(weekId,taskIdx){
+  const key=weekId+'-'+taskIdx;
+  PROGRESS[key]=!PROGRESS[key];
+  saveProgress(PROGRESS);
+  renderProgress();
+  const el=document.querySelector(`[data-task-key="${key}"]`);
+  if(el){el.classList.toggle('done',PROGRESS[key]);el.textContent=PROGRESS[key]?'✓':''}
+  const titleEl=el&&el.closest('.build-task-head')&&el.closest('.build-task-head').querySelector('.task-title');
+  if(titleEl)titleEl.style.textDecoration=PROGRESS[key]?'line-through':'none';
+}
+
+function toggleTaskSteps(el){
+  const steps=el.nextElementSibling;
+  if(steps&&steps.classList.contains('task-steps'))steps.classList.toggle('open');
+}
+
+function renderWeek(w){
+  const res=w.resources.map(r=>`
+  <a class="rc" href="${r.u}" target="_blank" rel="noopener">
+    <span class="rtype ${TM2[r.tp]}">${r.tp}</span>
+    <div class="ri">
+      <div class="rn">${r.n}${r.print?'<span class="pstar">✦ print</span>':''}${r.isnew?'<span class="rnew">★ new</span>':''}</div>
+      <div class="rauth">${r.a}</div>
+      <div class="rd">${r.d}</div>
+    </div>
+    <span class="rarr">↗</span>
+  </a>`).join('');
+
+  const builds=(w.build||[]).map((t,i)=>{
+    const key=w.id+'-'+i;
+    const done=PROGRESS[key]||false;
+    const steps=(t.steps||[]).map((s,si)=>`<div class="task-step"><span class="step-num">${si+1}.</span><span>${s}</span></div>`).join('');
+    const outHtml=t.output?`<div class="task-output">${t.output}</div>`:'';
+    const cmdHtml=t.cmd?`<div class="task-cmd">${t.cmd}</div>`:'';
+    return`<div class="build-task">
+      <div class="build-task-head" onclick="toggleTaskSteps(this)">
+        <div class="task-check${done?' done':''}" data-task-key="${key}" onclick="event.stopPropagation();toggleTask('${w.id}',${i})">${done?'✓':''}</div>
+        <div class="task-content">
+          <div class="task-title" style="${done?'text-decoration:line-through':''}">${t.title}</div>
+          <div class="task-meta">
+            ${t.time?`<span class="task-time">⏱ ${t.time}</span>`:''}
+            ${t.diff?`<span class="task-diff ${DIFF[t.diff]||''}">${t.diff}</span>`:''}
+          </div>
+        </div>
+      </div>
+      <div class="task-steps">
+        ${steps}${cmdHtml}${outHtml}
+      </div>
+    </div>`;
+  }).join('');
+
+  return`<div class="wv on">
+  <div class="whead">
+    <div class="wbadge">${w.label}</div>
+    ${w.isnew?'<div class="wnewbadge">★ New / Expanded in v3</div>':''}
+    <div class="wtitle">${w.title}</div>
+    <div class="wwhy"><strong>Why this week</strong>${w.why}</div>
+  </div>
+  <div class="sh">Resources</div>
+  <div class="rg">${res}</div>
+  <div class="sh">What to build — click task to expand steps, check to mark done</div>
+  <div class="build-list">${builds}</div>
+  <div class="sh">Deliverable</div>
+  <div class="dv"><span class="dv-lbl">✦ Deliverable</span>${w.del}</div>
+  </div>`;
+}
+
+// ─── PROGRESS EXPORT/IMPORT ───
+function exportProgress(){
+  const data=JSON.stringify(PROGRESS);
+  const b64=btoa(data);
+  const url=location.href.split('?')[0]+'?p='+b64;
+  navigator.clipboard&&navigator.clipboard.writeText(url).catch(()=>{});
+  const el=document.getElementById('exp-status');
+  if(el){el.textContent='✓ Copied to clipboard';setTimeout(()=>el.textContent='',3000)}
+}
+function importProgress(){
+  const params=new URLSearchParams(location.search);
+  const p=params.get('p');
+  if(p){try{const d=JSON.parse(atob(p));Object.assign(PROGRESS,d);saveProgress(PROGRESS);renderProgress();}catch(e){}}
+}
+importProgress();
+
+function renderHome(){
+  const printCards=PRINT_PAPERS.map(p=>`
+  <div class="pc">
+    <div class="pc-icon">📄</div>
+    <div class="pc-info">
+      <div class="pc-name">${p.n}</div>
+      <div class="pc-auth">${p.auth}</div>
+      <div class="pc-week">${p.week}</div>
+    </div>
+    <div class="pc-links">
+      ${p.pdf?`<a class="pc-link pdf" href="${p.pdf}" target="_blank">PDF ↗</a>`:'<span style="font-size:.6rem;color:var(--tx3);font-family:\'JetBrains Mono\',monospace">browser print</span>'}
+      <a class="pc-link html" href="${p.html}" target="_blank">abs ↗</a>
+    </div>
+  </div>`).join('');
+
+  const total=getTotalTasks();
+  const done=getCompletedTasks();
+  const pct=total?Math.round(done/total*100):0;
+
+  const monthProg=DATA.map(m=>{
+    let mt=0,mc=0;
+    m.weeks.forEach(w=>{
+      const tasks=w.build||[];
+      mt+=tasks.length;
+      tasks.forEach((_,ti)=>{if(PROGRESS[w.id+'-'+ti])mc++});
+    });
+    const p=mt?Math.round(mc/mt*100):0;
+    return`<div class="mp-row">
+      <span class="mp-label">${m.short}</span>
+      <div class="mp-track"><div class="mp-fill" style="width:${p}%"></div></div>
+      <span class="mp-pct">${mc}/${mt}</span>
+    </div>`;
+  }).join('');
+
+  const improvements=["Week 0 (NEW): Math prerequisites — linear algebra, calculus, probability self-check","Week 3 (NEW): Modern architectures — MoE (Mixtral), SSMs (Mamba), GQA","Week 5 (EXPANDED): LLM security + prompt injection benchmarking","Week 9 (EXPANDED): Synthetic data generation — Self-Instruct, Phi-1, Distilabel","Week 13 (EXPANDED): Tree of Thoughts beyond linear ReAct/CoT","Week 14 (EXPANDED): Native Anthropic tool use + AgentBench eval framework","Week 15 (EXPANDED): STORM multi-agent paper + collaborative synthesis","Week 16 (EXPANDED): Custom MCP server building","Week 18 (NEW): LLM Security + Red-Teaming full module with Garak","Week 22 (EXPANDED): Towards Monosemanticity + activation steering","Week 23 (EXPANDED): Constitutional AI + RLAIF pipeline","All build tasks: step-by-step instructions + time estimates + expected outputs","Progress tracking: checkboxes per task, per-week completion, overall progress bar","Videos: 20+ new courses added — Karpathy, Umar Jamil, Yannic Kilcher, NeetCode, and more"];
+
+  const SKILLS=[
+    {cat:"Core ML Theory",color:"var(--pp)",items:["Transformer architecture — derive from scratch","Backpropagation + gradient flow","Scaling laws (Kaplan + Chinchilla)","Rotary positional embeddings (RoPE)","FlashAttention IO-aware tiling","Distributed training: DDP, ZeRO, tensor parallelism","Modern architectures: MoE, SSMs (Mamba), GQA"]},
+    {cat:"Fine-Tuning & Alignment",color:"var(--co)",items:["Parameter-efficient fine-tuning: LoRA, QLoRA, DoRA","Supervised fine-tuning (SFT) pipelines","Direct Preference Optimization (DPO + SimPO)","RLHF: reward model training + PPO","Constitutional AI + RLAIF","Synthetic data generation (Self-Instruct, Phi-style)","Data curation, dedup, quality filtering"]},
+    {cat:"RAG Engineering",color:"var(--vi)",items:["Dense + sparse + hybrid retrieval","BM25 + vector DB (Qdrant) integration","Reranking with cross-encoders","HyDE query rewriting","GraphRAG + knowledge graphs (Neo4j)","RAGAS evaluation framework","RAFT: RAG-adapted fine-tuning"]},
+    {cat:"LLM Agents",color:"var(--tl)",items:["ReAct loop from scratch","LangGraph stateful agents","Tree of Thoughts deliberate reasoning","Multi-agent: supervisor + worker patterns","STORM collaborative synthesis","Custom MCP server development","Structured outputs + reliability engineering"]},
+    {cat:"Production MLOps",color:"var(--bl)",items:["vLLM model serving + PagedAttention","Continuous batching (Orca)","Docker + docker-compose deployment","Kubernetes + HPA autoscaling","Semantic caching with Redis","CI/CD eval pipelines (GitHub Actions)","Prometheus + Grafana monitoring","LiteLLM model routing + cost control"]},
+    {cat:"LLM Security",color:"var(--rd)",items:["Prompt injection attack taxonomy","GCG adversarial suffix attacks","Many-shot jailbreaking","Automated red-teaming (Garak)","Llama Guard input/output safety","Guardrails AI: PII detection + toxicity filtering","Security audit report writing"]},
+    {cat:"Mechanistic Interpretability",color:"var(--pu)",items:["Superposition and polysemanticity","Sparse Autoencoders (SAE) training","Feature visualization + labeling","Activation steering (ActAdd)","Representation engineering","Circuits-based analysis","ARENA curriculum (Chapters 1 + 2)"]},
+    {cat:"Interview & Research Skills",color:"var(--ac3)",items:["LeetCode DSA: Arrays, Trees, DP, Graphs","ML system design (10 written cases)","Paper derivation fluency (12 core papers)","From-scratch implementations on demand","arXiv preprint writing + submission","Open source contribution workflow","ML Twitter / research community presence"]},
+  ];
+
+  const skillCards=SKILLS.map(s=>`
+  <div class="skill-card">
+    <div class="skill-cat" style="color:${s.color}">${s.cat}</div>
+    <div class="skill-items">${s.items.map(i=>`<div class="skill-item">
+      <span class="skill-dot" style="background:${s.color}"></span>${i}</div>`).join('')}
+    </div>
+  </div>`).join('');
+
+  const HOSTING=[
+    {name:"GitHub Pages",tag:"Recommended · Free",color:"var(--tl)",steps:["Rename the file to index.html","Create a new public GitHub repo (e.g. llm-roadmap)","Push index.html to the main branch","Go to Settings → Pages → Source: main branch, / (root)","Your URL: username.github.io/llm-roadmap — live in ~1 min"],note:"⚠️ Progress saves to localStorage — device-specific only. Use the Export button below to copy a shareable URL with your progress encoded in it.",url:"https://pages.github.com/"},
+    {name:"Netlify Drop",tag:"Drag & Drop · Free",color:"var(--co)",steps:["Go to drop.netlify.app","Drag your index.html file onto the page","Get instant HTTPS URL (e.g. abc123.netlify.app)","Optional: add custom domain in Netlify settings","Optional: connect to GitHub for auto-deploy on changes"],note:"⚠️ Same localStorage caveat — use Export button to sync across devices.",url:"https://drop.netlify.app/"},
+    {name:"Vercel",tag:"GitHub sync · Free",color:"var(--ac)",steps:["Push index.html to GitHub repo","Go to vercel.com → Import Project → select repo","Auto-deploys on every git push","Get URL: your-repo.vercel.app","Add custom domain (optional) in project settings"],note:"Best option if you plan to evolve the file over time — auto-deploys on push.",url:"https://vercel.com/"},
+    {name:"Cloudflare Pages",tag:"Fastest CDN · Free",color:"var(--vi)",steps:["Go to pages.cloudflare.com → Create project","Connect GitHub repo or upload directly","Deploys to Cloudflare's global CDN — fastest load times","URL: project.pages.dev","Free custom domain support"],note:"Overkill for a single HTML file, but fastest globally if you share with others.",url:"https://pages.cloudflare.com/"},
+  ];
+
+  const hostCards=HOSTING.map(h=>`
+  <div class="host-card">
+    <div class="host-head">
+      <div>
+        <div class="host-name">${h.name}</div>
+        <div class="host-tag" style="color:${h.color}">${h.tag}</div>
+      </div>
+      <a class="pc-link html" href="${h.url}" target="_blank" style="flex-shrink:0">Open ↗</a>
+    </div>
+    <div class="host-steps">${h.steps.map((s,i)=>`<div class="host-step"><span class="step-num">${i+1}.</span><span>${s}</span></div>`).join('')}</div>
+    <div class="host-note">${h.note}</div>
+  </div>`).join('');
+
+  const RASCHKA=[
+    {type:"book",name:"Build a Large Language Model From Scratch",desc:"THE book for this roadmap. Implements GPT from scratch in PyTorch with clear explanations. Use alongside W1–W2.",url:"https://github.com/rasbt/LLMs-from-scratch",badge:"W1–W2"},
+    {type:"video",name:"Sebastian Raschka — LLM YouTube Channel",desc:"Step-by-step video lectures covering transformers, fine-tuning, and evaluation. Pairs perfectly with the book.",url:"https://www.youtube.com/@SebastianRaschka",badge:"W1–W8"},
+    {type:"blog",name:"Ahead of AI Newsletter",desc:"Best LLM research newsletter. New paper summaries every week. Subscribe and read every issue.",url:"https://magazine.sebastianraschka.com/",badge:"All months"},
+    {type:"blog",name:"Understanding Large Language Models",desc:"Comprehensive survey of LLM concepts — architectures, training, alignment. Read before W1.",url:"https://magazine.sebastianraschka.com/p/understanding-large-language-models",badge:"W0"},
+    {type:"blog",name:"Finetuning LLMs with LoRA and QLoRA: Insights from Hundreds of Experiments",desc:"Deep empirical analysis of LoRA hyperparameters. Essential reading before W7.",url:"https://magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms",badge:"W7"},
+    {type:"blog",name:"RLHF, PPO, and Reward Models Explained",desc:"Clear explanation of the full RLHF pipeline with PyTorch examples. Best complement to InstructGPT paper.",url:"https://magazine.sebastianraschka.com/p/llm-training-rlhf-and-its-variants",badge:"W23"},
+    {type:"blog",name:"Evaluating LLMs: A Deep Dive",desc:"Comprehensive guide to LLM evaluation metrics, benchmarks, and LLM-as-judge approaches.",url:"https://magazine.sebastianraschka.com/p/llm-evaluation",badge:"W17"},
+    {type:"blog",name:"Improving LoRA: From DoRA to QLoRA and Beyond",desc:"Full comparison of PEFT methods with empirical results. Answers the LoRA vs DoRA vs QLoRA question definitively.",url:"https://magazine.sebastianraschka.com/p/lora-and-dora-from-scratch",badge:"W7"},
+  ];
+
+  const raschkaCards=RASCHKA.map(r=>`
+  <a class="rc" href="${r.url}" target="_blank" rel="noopener" style="border-color:rgba(240,192,64,.2)">
+    <span class="rtype ${r.type==='book'?'rt-paper':r.type==='video'?'rt-video':'rt-blog'}">${r.type}</span>
+    <div class="ri">
+      <div class="rn">${r.name}<span class="pstar">${r.badge}</span></div>
+      <div class="rd">${r.desc}</div>
+    </div>
+    <span class="rarr">↗</span>
+  </a>`).join('');
+
+  return`<div class="wv on">
+  <div class="whead">
+    <div class="wbadge">Overview</div>
+    <div class="wtitle">LLM Research Engineer Roadmap v3</div>
+    <div class="wwhy"><strong>Target</strong>Anthropic · OpenAI · Google DeepMind. 38 weeks, 820 hours, 4 capstones, 55+ papers. Every week includes step-by-step build instructions with time estimates and expected outputs. Check tasks as you complete them — progress saves to your browser automatically.</div>
+  </div>
+
+  <div class="sh">🗺️ Learning journey — 10-month path</div>
+  <div class="timeline-wrap reveal">
+    <div class="timeline">
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'W0\\']')&&document.querySelector('[data-month=\\'W0\\']').click()"><div class="tl-dot active"></div><div class="tl-label">W0</div><div class="tl-sub">Prerequisites</div></div>
+      <div class="tl-line filled"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M1\\']')&&document.querySelector('[data-month=\\'M1\\']').click()"><div class="tl-dot"></div><div class="tl-label">M1</div><div class="tl-sub">Transformers</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M2\\']')&&document.querySelector('[data-month=\\'M2\\']').click()"><div class="tl-dot"></div><div class="tl-label">M2</div><div class="tl-sub">RAG + FT</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M3\\']')&&document.querySelector('[data-month=\\'M3\\']').click()"><div class="tl-dot"></div><div class="tl-label">M3</div><div class="tl-sub">Scale + Serve</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M4\\']')&&document.querySelector('[data-month=\\'M4\\']').click()"><div class="tl-dot"></div><div class="tl-label">M4</div><div class="tl-sub">Agents</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M5\\']')&&document.querySelector('[data-month=\\'M5\\']').click()"><div class="tl-dot"></div><div class="tl-label">M5</div><div class="tl-sub">MLOps + Security</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M6\\']')&&document.querySelector('[data-month=\\'M6\\']').click()"><div class="tl-dot"></div><div class="tl-label">M6</div><div class="tl-sub">Deep Theory</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M7\\']')&&document.querySelector('[data-month=\\'M7\\']').click()"><div class="tl-dot"></div><div class="tl-label">M7</div><div class="tl-sub">Specialize</div></div>
+      <div class="tl-line"></div>
+      <div class="tl-node" onclick="document.querySelector('[data-month=\\'M8–9\\']')&&document.querySelector('[data-month=\\'M8–9\\']').click()"><div class="tl-dot"></div><div class="tl-label">M8–9</div><div class="tl-sub">Portfolio + Jobs</div></div>
+    </div>
+  </div>
+
+  <div class="sh">🎯 Target companies — what each lab values</div>
+  <div class="target-grid reveal">
+    <div class="target-card tc-anthropic">
+      <div class="tc-glow"></div>
+      <div class="tc-logo">🛡️</div>
+      <div class="tc-name">Anthropic</div>
+      <div class="tc-focus">Safety · Alignment · Interpretability</div>
+      <div class="tc-skills">
+        <div class="tc-skill">Constitutional AI + RLAIF pipelines</div>
+        <div class="tc-skill">Mechanistic interpretability (SAEs)</div>
+        <div class="tc-skill">Activation steering & probing</div>
+        <div class="tc-skill">Red-teaming & adversarial robustness</div>
+        <div class="tc-skill">Custom MCP server development</div>
+      </div>
+      <div class="tc-weeks">Weeks: W8, W16, W18, W22, W23, Track B</div>
+    </div>
+    <div class="target-card tc-openai">
+      <div class="tc-glow"></div>
+      <div class="tc-logo">🧠</div>
+      <div class="tc-name">OpenAI</div>
+      <div class="tc-focus">Reasoning · Code · Test-Time Compute</div>
+      <div class="tc-skills">
+        <div class="tc-skill">Process reward models (o1/o3-style)</div>
+        <div class="tc-skill">SWE-bench code agent development</div>
+        <div class="tc-skill">Test-time compute scaling</div>
+        <div class="tc-skill">RLHF + InstructGPT training pipeline</div>
+        <div class="tc-skill">LeetCode + system design fluency</div>
+      </div>
+      <div class="tc-weeks">Weeks: W8, W17, W23, W24, Track C</div>
+    </div>
+    <div class="target-card tc-deepmind">
+      <div class="tc-glow"></div>
+      <div class="tc-logo">🔬</div>
+      <div class="tc-name">Google DeepMind</div>
+      <div class="tc-focus">Multimodal · Scientific AI · Scale</div>
+      <div class="tc-skills">
+        <div class="tc-skill">Vision-language models (CLIP, LLaVA)</div>
+        <div class="tc-skill">Multimodal RAG over documents</div>
+        <div class="tc-skill">JAX/Flax ML framework proficiency</div>
+        <div class="tc-skill">Distributed training (Megatron, ZeRO)</div>
+        <div class="tc-skill">Long-context architecture (Gemini-style)</div>
+      </div>
+      <div class="tc-weeks">Weeks: W1, W3, W10, W21, Track A</div>
+    </div>
+  </div>
+
+  <div class="sh">🚀 AI/ML career paths — what you can become</div>
+  <div class="career-grid reveal">
+    <div class="career-card">
+      <div class="career-icon">🔬</div>
+      <div class="career-title">LLM Research Engineer</div>
+      <div class="career-salary">💰 $180K–$400K+ (US) · Target of this roadmap</div>
+      <div class="career-desc">Design, train, and evaluate large language models. Work on RLHF, alignment, scaling, and novel architectures at frontier labs. The primary target of this roadmap.</div>
+      <div class="career-skills"><span class="career-stag">Transformers</span><span class="career-stag">RLHF/DPO</span><span class="career-stag">Scaling Laws</span><span class="career-stag">Interpretability</span><span class="career-stag">PyTorch</span></div>
+    </div>
+    <div class="career-card">
+      <div class="career-icon">⚡</div>
+      <div class="career-title">ML/AI Engineer</div>
+      <div class="career-salary">💰 $150K–$350K (US)</div>
+      <div class="career-desc">Build production ML systems — data pipelines, model serving, inference optimization, and end-to-end MLOps. Bridge research and production with vLLM, Kubernetes, and CI/CD eval pipelines.</div>
+      <div class="career-skills"><span class="career-stag">vLLM</span><span class="career-stag">FastAPI</span><span class="career-stag">Docker/K8s</span><span class="career-stag">RAG</span><span class="career-stag">MLOps</span></div>
+    </div>
+    <div class="career-card">
+      <div class="career-icon">🤖</div>
+      <div class="career-title">AI Agent Developer</div>
+      <div class="career-salary">💰 $140K–$300K (US)</div>
+      <div class="career-desc">Build autonomous AI agent systems — ReAct loops, multi-agent orchestration, tool use, custom MCP servers, and reliable structured outputs for enterprise automation.</div>
+      <div class="career-skills"><span class="career-stag">LangGraph</span><span class="career-stag">ReAct/CoT</span><span class="career-stag">MCP</span><span class="career-stag">Multi-Agent</span><span class="career-stag">Tool Use</span></div>
+    </div>
+    <div class="career-card">
+      <div class="career-icon">🛡️</div>
+      <div class="career-title">AI Safety Researcher</div>
+      <div class="career-salary">💰 $170K–$380K (US)</div>
+      <div class="career-desc">Work on alignment, interpretability, and robustness of AI systems. Conduct red-teaming, develop safety guardrails, and research deceptive alignment in frontier models.</div>
+      <div class="career-skills"><span class="career-stag">Constitutional AI</span><span class="career-stag">SAEs</span><span class="career-stag">Red-teaming</span><span class="career-stag">RLAIF</span><span class="career-stag">Probing</span></div>
+    </div>
+    <div class="career-card">
+      <div class="career-icon">📊</div>
+      <div class="career-title">Applied AI Scientist</div>
+      <div class="career-salary">💰 $160K–$350K (US)</div>
+      <div class="career-desc">Apply LLMs to real-world domains — healthcare, finance, legal, science. Fine-tune models for domain tasks, build evaluation frameworks, and publish applied research.</div>
+      <div class="career-skills"><span class="career-stag">Fine-tuning</span><span class="career-stag">LoRA/QLoRA</span><span class="career-stag">Domain Evals</span><span class="career-stag">Synthetic Data</span><span class="career-stag">RAFT</span></div>
+    </div>
+    <div class="career-card">
+      <div class="career-icon">👁️</div>
+      <div class="career-title">Multimodal AI Engineer</div>
+      <div class="career-salary">💰 $155K–$340K (US)</div>
+      <div class="career-desc">Build systems that process text, images, video, and audio together. Work on vision-language models, document intelligence, multimodal RAG, and cross-modal retrieval.</div>
+      <div class="career-skills"><span class="career-stag">CLIP</span><span class="career-stag">LLaVA</span><span class="career-stag">InternVL2</span><span class="career-stag">VLMs</span><span class="career-stag">JAX/Flax</span></div>
+    </div>
+  </div>
+
+  <div class="sh">🌐 AI/ML industry landscape — hot research areas in 2025</div>
+  <div class="landscape-grid reveal">
+    <div class="landscape-card">
+      <div class="ls-head"><div class="ls-icon" style="background:rgba(240,96,128,.1)">🧩</div><div class="ls-title">Reasoning & Planning</div><div class="ls-hot">HOT</div></div>
+      <div class="ls-items">
+        <div class="ls-item">Chain-of-Thought, Tree of Thoughts distillation</div>
+        <div class="ls-item">Process reward models (o1/o3 paradigm)</div>
+        <div class="ls-item">Test-time compute scaling for complex tasks</div>
+        <div class="ls-item">Math and code reasoning benchmarks</div>
+      </div>
+    </div>
+    <div class="landscape-card">
+      <div class="ls-head"><div class="ls-icon" style="background:rgba(108,99,245,.1)">🤖</div><div class="ls-title">Autonomous Agents</div><div class="ls-hot">HOT</div></div>
+      <div class="ls-items">
+        <div class="ls-item">Multi-agent orchestration (STORM, AutoGen)</div>
+        <div class="ls-item">Tool use & MCP server ecosystem</div>
+        <div class="ls-item">Code agents (SWE-bench, Devin-style)</div>
+        <div class="ls-item">Long-horizon task completion with memory</div>
+      </div>
+    </div>
+    <div class="landscape-card">
+      <div class="ls-head"><div class="ls-icon" style="background:rgba(62,207,184,.1)">🔍</div><div class="ls-title">Mechanistic Interpretability</div><div class="ls-hot">HOT</div></div>
+      <div class="ls-items">
+        <div class="ls-item">Sparse autoencoders at scale (Anthropic)</div>
+        <div class="ls-item">Activation steering & probing techniques</div>
+        <div class="ls-item">Feature visualization in 100B+ models</div>
+        <div class="ls-item">Representation engineering for control</div>
+      </div>
+    </div>
+    <div class="landscape-card">
+      <div class="ls-head"><div class="ls-icon" style="background:rgba(240,192,64,.1)">🖼️</div><div class="ls-title">Multimodal AI</div></div>
+      <div class="ls-items">
+        <div class="ls-item">Vision-language models (Gemini, GPT-4V, LLaVA)</div>
+        <div class="ls-item">Video understanding and generation</div>
+        <div class="ls-item">Cross-modal retrieval and embedding</div>
+        <div class="ls-item">Document intelligence & layout parsing</div>
+      </div>
+    </div>
+    <div class="landscape-card">
+      <div class="ls-head"><div class="ls-icon" style="background:rgba(192,132,252,.1)">⚡</div><div class="ls-title">Efficient Inference</div></div>
+      <div class="ls-items">
+        <div class="ls-item">Speculative decoding (Medusa, EAGLE)</div>
+        <div class="ls-item">Quantization: GPTQ, AWQ, GGUF formats</div>
+        <div class="ls-item">KV cache optimization (PagedAttention)</div>
+        <div class="ls-item">Mixture-of-Experts routing efficiency</div>
+      </div>
+    </div>
+    <div class="landscape-card">
+      <div class="ls-head"><div class="ls-icon" style="background:rgba(74,222,128,.1)">📐</div><div class="ls-title">Architecture Innovation</div></div>
+      <div class="ls-items">
+        <div class="ls-item">State space models (Mamba, S4)</div>
+        <div class="ls-item">Mixture-of-Experts (Mixtral, DBRX)</div>
+        <div class="ls-item">Grouped-query attention (GQA)</div>
+        <div class="ls-item">Long-context training (1M+ tokens)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">🧬 Key AI/ML concepts you'll master</div>
+  <div class="concepts-grid reveal">
+    <div class="concept-card"><div class="concept-emoji">⚛️</div><div class="concept-name">Attention Mechanism</div><div class="concept-desc">The foundation of all modern LLMs. Scaled dot-product attention: softmax(QK&#x1D40;/√d)V — enables tokens to attend to each other regardless of distance.</div><div class="concept-papers">📄 W1 · Vaswani et al., 2017</div></div>
+    <div class="concept-card"><div class="concept-emoji">🔄</div><div class="concept-name">RLHF & Alignment</div><div class="concept-desc">Training LLMs to follow human intentions. Reward model → PPO optimization → DPO shortcut. The core technique behind ChatGPT and Claude's helpfulness.</div><div class="concept-papers">📄 W8, W23 · InstructGPT, DPO, CAI</div></div>
+    <div class="concept-card"><div class="concept-emoji">🎯</div><div class="concept-name">Parameter-Efficient FT</div><div class="concept-desc">Fine-tune billion-param models on a single GPU. LoRA decomposes weight updates into low-rank matrices: ΔW = BA where B∈ℝ^(d×r), A∈ℝ^(r×d).</div><div class="concept-papers">📄 W7 · LoRA, QLoRA, DoRA</div></div>
+    <div class="concept-card"><div class="concept-emoji">🔎</div><div class="concept-name">Retrieval-Augmented Gen</div><div class="concept-desc">Ground LLM outputs in facts. Embed documents → retrieve relevant chunks → augment the prompt with context. Reduces hallucination, enables domain-specific QA.</div><div class="concept-papers">📄 W4–W6 · RAG, RAGAS, RAFT</div></div>
+    <div class="concept-card"><div class="concept-emoji">🧪</div><div class="concept-name">Sparse Autoencoders</div><div class="concept-desc">Decompose neural network activations into interpretable features. The core tool of Anthropic's mechanistic interpretability research — find what neurons actually represent.</div><div class="concept-papers">📄 W22 · Toy Models, Monosemanticity</div></div>
+    <div class="concept-card"><div class="concept-emoji">⚡</div><div class="concept-name">FlashAttention</div><div class="concept-desc">IO-aware attention algorithm. Tiles QKV computation into SRAM blocks, reducing HBM reads from O(N²) to O(N). Makes long-context training practical.</div><div class="concept-papers">📄 W21 · Dao, 2023</div></div>
+    <div class="concept-card"><div class="concept-emoji">🌀</div><div class="concept-name">Mixture-of-Experts</div><div class="concept-desc">Scale model capacity without proportional compute. Route each token to only top-k of N expert FFNs. Mixtral uses 8 experts, top-2 routing — 12B active of 46B total.</div><div class="concept-papers">📄 W3 · Switch Transformer, Mixtral</div></div>
+    <div class="concept-card"><div class="concept-emoji">🏗️</div><div class="concept-name">Scaling Laws</div><div class="concept-desc">Compute-optimal model training follows power laws. Chinchilla revised Kaplan: for a given compute budget, train a smaller model on more data for better performance.</div><div class="concept-papers">📄 W2 · Kaplan 2020, Chinchilla 2022</div></div>
+  </div>
+
+  <div class="sh">📅 Research breakthroughs — landmarks in LLM history</div>
+  <div class="bt-list reveal">
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2017</div><div class="bt-title">Attention Is All You Need</div><div class="bt-desc">Transformer architecture replaces RNNs. Multi-head self-attention enables parallelization and captures long-range dependencies.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2018</div><div class="bt-title">BERT & GPT-1 — Pre-training Era</div><div class="bt-desc">Pre-train on massive data, fine-tune on downstream tasks. BERT uses bidirectional context; GPT uses autoregressive left-to-right generation.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2020</div><div class="bt-title">GPT-3 & Scaling Laws</div><div class="bt-desc">175B parameters, few-shot prompting works. Kaplan reveals power-law relationships between compute, data, model size, and loss.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2021</div><div class="bt-title">CLIP, LoRA & Codex</div><div class="bt-desc">Vision-language alignment (CLIP), parameter-efficient fine-tuning (LoRA), and code generation (Codex/Copilot) expand the frontier.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2022</div><div class="bt-title">ChatGPT, InstructGPT & Constitutional AI</div><div class="bt-desc">RLHF makes models useful. Chain-of-thought prompting enables reasoning. Anthropic introduces RLAIF via Constitutional AI principles.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2023</div><div class="bt-title">GPT-4, Open Source Explosion & Agents</div><div class="bt-desc">GPT-4 sets multimodal benchmark. LLaMA democratizes open models. DPO simplifies alignment. ReAct and AutoGen launch the agent era.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2024</div><div class="bt-title">o1, Gemini 1.5, MoE & Test-Time Compute</div><div class="bt-desc">Reasoning models (o1) scale test-time compute. Gemini handles 1M+ tokens. Mixtral proves MoE efficiency. MCP standardizes tool connections.</div></div></div>
+    <div class="bt-item"><div class="bt-dot"></div><div class="bt-content"><div class="bt-year">2025</div><div class="bt-title">Your Turn — Build the Future</div><div class="bt-desc">Complete this roadmap, publish your research, and join the frontier labs building the next generation of AI systems.</div></div></div>
+  </div>
+
+  <div class="sh">⏱️ Estimated completion date</div>
+  <div class="calc-wrap reveal">
+    <span class="calc-label">Hours I can study per week:</span>
+    <input type="number" class="calc-input" id="calc-hours" value="20" min="5" max="80" oninput="calcCompletion()">
+    <span class="calc-result" id="calc-date-result"></span>
+  </div>
+
+  <div class="sh">Your progress</div>
+  <div class="ov-grid">
+    <div class="ov-item"><div class="ov-v">${done}</div><div class="ov-l">Tasks done</div></div>
+    <div class="ov-item"><div class="ov-v">${total}</div><div class="ov-l">Total tasks</div></div>
+    <div class="ov-item"><div class="ov-v">${pct}%</div><div class="ov-l">Complete</div></div>
+    <div class="ov-item"><div class="ov-v">38</div><div class="ov-l">Total weeks</div></div>
+    <div class="ov-item"><div class="ov-v">12</div><div class="ov-l">Print papers</div></div>
+    <div class="ov-item"><div class="ov-v">55+</div><div class="ov-l">Papers total</div></div>
+  </div>
+  <div style="margin-top:.8rem">
+    <div class="month-prog">${monthProg}</div>
+  </div>
+  <div style="display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap">
+    <button onclick="exportProgress()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:5px 12px;border-radius:5px;border:1px solid var(--b2);background:rgba(108,99,245,.08);color:var(--ac);cursor:pointer">↑ Export progress (copy URL)</button>
+    <button onclick="resetProgress()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:5px 12px;border-radius:5px;border:1px solid var(--b2);background:transparent;color:var(--tx3);cursor:pointer">✕ Reset progress</button>
+    <span id="exp-status" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--gn);align-self:center"></span>
+  </div>
+
+  <div class="sh">What you'll be able to do after this roadmap</div>
+  <div class="skills-grid">${skillCards}</div>
+
+  <div class="sh">Sebastian Raschka — highest-value content for this roadmap</div>
+  <div style="padding:.75rem 1rem;background:rgba(240,192,64,.06);border:1px solid rgba(240,192,64,.18);border-radius:8px;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:10px">
+    <div style="font-size:1.4rem">📚</div>
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--nw)">Sebastian Raschka — Lightning AI Research</div>
+      <div style="font-size:.75rem;color:var(--tx2);margin-top:3px;line-height:1.5">Professor → Lightning AI Staff Research Engineer. Author of the best LLM-from-scratch book. His newsletter "Ahead of AI" is the single best way to stay current on LLM research. Every resource below maps directly to a week in this roadmap.</div>
+    </div>
+  </div>
+  <div class="rg">${raschkaCards}</div>
+
+  <div class="sh">Where to host this — track progress across devices</div>
+  <div style="padding:.7rem 1rem;background:rgba(248,112,112,.05);border:1px solid rgba(248,112,112,.15);border-radius:6px;margin-bottom:.8rem;font-size:.78rem;color:var(--tx2);line-height:1.5">
+    <strong style="color:var(--rd);font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:3px">⚠️ Important: localStorage is device-specific</strong>
+    Your progress saves to the browser you're using right now. To sync across devices or preserve progress: click <strong style="color:var(--ac)">Export progress</strong> above — it generates a URL with your progress encoded in it. Open that URL on any device to restore. Or host on GitHub Pages / Netlify and always access it from the same URL.
+  </div>
+  <div class="host-grid">${hostCards}</div>
+
+  <div class="sh">Print-worthy papers — direct PDF links → open → Ctrl+P</div>
+  <div class="print-grid">${printCards}</div>
+
+  <div class="sh">Progress checkpoints</div>
+  <div class="flags">
+    <div class="fc"><div class="ft g">✦ Green flags — on track</div>${FLAGS.g.map(f=>`<div class="fi"><span class="fw">${f.w}</span>${f.t}</div>`).join('')}</div>
+    <div class="fc"><div class="ft r">✗ Red flags — course-correct</div>${FLAGS.r.map(f=>`<div class="fi">${f.t}</div>`).join('')}</div>
+  </div>
+
+  <div class="sh">What's new in v3</div>
+  <div class="imp"><div class="imp-t">Changes from v2</div>${improvements.map(i=>`<div class="imp-i">${i}</div>`).join('')}</div>
+  </div>`;
+}
+
+// ─── BUILD NAV ───
+const sb=document.getElementById('sb');
+const mn=document.getElementById('mn');
+
+// Search bar
+const searchWrap=document.createElement('div');
+searchWrap.className='sb-search';
+searchWrap.innerHTML=`<div class="sb-search-wrap"><span class="sb-search-icon">🔍</span><input type="text" class="sb-search-input" placeholder="Search weeks..." id="sb-search" autocomplete="off"></div>`;
+sb.appendChild(searchWrap);
+document.addEventListener('input',e=>{
+  if(e.target.id!=='sb-search')return;
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.sb-sec').forEach(sec=>{
+    let anyMatch=false;
+    sec.querySelectorAll('.wb').forEach(wb=>{
+      const match=!q||wb.textContent.toLowerCase().includes(q);
+      wb.style.display=match?'':'none';
+      if(match)anyMatch=true;
+    });
+    const mb=sec.querySelector('.mb');
+    if(mb)mb.style.display=(!q||anyMatch)?'':'none';
+  });
+});
+
+const homeBtn=document.createElement('button');
+homeBtn.className='mb on';
+homeBtn.setAttribute('data-month','home');
+homeBtn.innerHTML='<span class="mb-dot"></span>Home + Print List';
+homeBtn.onclick=()=>{
+  document.querySelectorAll('.mb,.wb').forEach(b=>b.classList.remove('on'));
+  homeBtn.classList.add('on');
+  mn.innerHTML=renderHome();
+  initHomeFeatures();
+};
+sb.appendChild(homeBtn);
+
+DATA.forEach(m=>{
+  const sec=document.createElement('div');
+  sec.className='sb-sec';
+  const mBtn=document.createElement('button');
+  mBtn.className='mb';
+  mBtn.setAttribute('data-month',m.short);
+  const tag=m.tag?`<span class="nb">NEW</span>`:'';
+  mBtn.innerHTML=`<span class="mb-dot"></span>${m.short}${tag}<span class="mb-prog"></span>`;
+  sec.appendChild(mBtn);
+
+  m.weeks.forEach(w=>{
+    const wBtn=document.createElement('button');
+    wBtn.className='wb';
+    wBtn.setAttribute('data-id',w.id);
+    const shortT=w.title.length>26?w.title.slice(0,24)+'…':w.title;
+    const nd=w.isnew?`<span style="width:4px;height:4px;border-radius:50%;background:var(--nw);flex-shrink:0;margin-left:auto"></span>`:'';
+    wBtn.innerHTML=`<span class="wb-n">${w.label}</span>${shortT}${nd}<span class="wb-done"></span>`;
+    wBtn.onclick=()=>{
+      document.querySelectorAll('.mb,.wb').forEach(b=>b.classList.remove('on'));
+      wBtn.classList.add('on');
+      mBtn.classList.add('on');
+      mn.innerHTML=renderWeek(w);
+      mn.scrollTop=0;
+    };
+    sec.appendChild(wBtn);
+  });
+
+  mBtn.onclick=()=>{const f=sec.querySelector('.wb');if(f)f.click()};
+  sb.appendChild(sec);
+});
+
+// ─── INIT HOME FEATURES ───
+function initHomeFeatures(){
+  initScrollReveal();
+  setTimeout(calcCompletion,100);
+}
+
+mn.innerHTML=renderHome();
+renderProgress();
+initHomeFeatures();
+</script>
+</body>
+</html>
